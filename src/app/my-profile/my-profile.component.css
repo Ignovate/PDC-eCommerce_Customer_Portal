@@ -1,0 +1,17 @@
+.text-red{
+    color: red !important;
+}
+.error_cls{
+    border-bottom: 1px solid red !important;
+}
+input[type="email"].input-new{
+    height:47px!important;
+    width:100%!important;
+}
+.disable{
+    cursor: not-allowed;
+}
+.save_cls{
+    margin-left:15px;
+    height: 42px!important;
+}

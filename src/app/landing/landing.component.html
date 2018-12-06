@@ -1,0 +1,239 @@
+<div class="wrapper">
+	<app-header></app-header>
+	<div>
+		<owl-carousel [options]="mySlideOptions" [items]="myCarouselImages">
+			<div class="item" *ngFor="let image of myCarouselImages;let i = index">
+				<div>
+					<img src="assets/img/slider/slider1.jpg" />
+				</div>
+			</div>
+		</owl-carousel>
+	</div>
+
+	<div class="slider-area mb-50">
+		<div class="hero-slider owl-carousel">
+		</div>
+	</div>
+
+	<!--Slider Area End-->
+	<!--Banner Section Area Start-->
+	<div class="carousel-section">
+		<div class="container">
+			<h2>Exclusives</h2>
+			<owl-carousel [options]="exclusivelOptions" [items]="exclusideSlides">
+				<div class="item" *ngFor="let image of exclusideSlides;let i = index">
+					<div>
+						<img src={{image.imageUrl}} class="img_css" />
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+	<div class="banner-section-area mb-50">
+		<div class="container">
+		</div>
+	</div>
+
+	<!--Banner Section Area End-->
+	<!--Amazing Offer Area Start-->
+	<div class="amazing-section-area mb-50">
+		<div class="container">
+			<div class="row">
+				<!--Section Title Start-->
+				<div class="col-12">
+					<div class="section-title section-title-left">
+						<span>
+							<h2>Amazing Offer Just for You</h2>
+						</span>
+						<a class="btn view-all-btn pull-right">View All</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="carousel-section">
+		<div class="container">
+			<owl-carousel [options]="amazeOptions" [items]="amazeImages">
+				<div class="item" *ngFor="let image of amazeImages;let i = index">
+					<div>
+						<img src={{image.imageUrl}} class="img_css_amaze" />
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+	<div class="amazing-section-area mb-50">
+		<div class="container">
+			<div class="row">
+			</div>
+		</div>
+	</div>
+	<!-- Amazing Offer Area End -->
+	<!-- User Inspired Wishlist Section Area Start-->
+	<div class="inspired-wishlist-area mb-50">
+		<div class="container">
+			<div class="row">
+				<!--Section Title Start-->
+				<div class="col-12">
+					<div class="section-title section-title-left">
+						<h2>Inspired by your Wishlist</h2>
+						<a class="btn view-all-btn pull-right">View All</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="carousel-section">
+		<div class="container">
+			<owl-carousel [options]="wishlistOptions" [items]="wishlist_images_arr">
+				<div class="item" *ngFor="let image of wishlist_images_arr;let i = index">
+					<div class="item-group">
+						<a href="#">
+							<div class="item-img">
+								<img src="assets/img/wishlist/wishlist1.jpg" alt="" style="width:auto;">
+							</div>
+							<div class="item-title">
+								{{wish_list[i].name}}
+							</div>
+						</a>
+						<div class="price-info">
+							<p class="sale-price">AED {{wish_list[i].specialPrice}}</p>
+							<p class="actual-price">AED {{wish_list[i].price}}</p>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+	<!-- User Inspired Wishlist Section Area End-->
+	<!-- Trending Brands Section Area Start-->
+	<div class="trending-brands-area mb-50">
+		<div class="container">
+			<div class="row">
+				<!--Section Title Start-->
+				<div class="col-12">
+					<div class="section-title section-title-left">
+						<h2>Trending Brands</h2>
+						<a class="btn view-all-btn pull-right">View All</a>
+					</div>
+				</div>
+				<!--Section Title End-->
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="trend-col-1">
+									<!-- {{trending_list[0].imageUrl}} -->
+								<div class="img-full">
+									<img src={{trend_images[0]}} alt="trend_image1" class="mb-20" />
+									<img src={{trend_images[1]}} alt="trend_image2" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="trend-col-2">
+								<div class="img-full">
+									<img src={{trend_images[2]}} alt="trend_image3" />
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="trend-col-3">
+								<div class="img-full">
+									<img src={{trend_images[3]}} alt="trend_image4" class="mb-20" />
+									<img src={{trend_images[4]}} alt="trend_image5" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- User Inspired Wishlist Section Area End-->
+	<!-- Top Selling Area Start -->
+	<div class="top-selling-section-area mb-50">
+		<div class="container">
+			<div class="row">
+				<!--Section Title Start-->
+				<div class="col-12">
+					<div class="section-title section-title-left">
+						<h2>Top Selling</h2>
+						<a class="btn view-all-btn pull-right">View All</a>
+					</div>
+				</div>
+				<!--Section Title End-->
+
+			</div>
+		</div>
+	</div>
+	<div class="carousel-section">
+		<div class="container">
+			<owl-carousel [options]="myCarouselTopOptions" [items]="top_selling_images_arr">
+				<div class="item" *ngFor="let image of top_selling_images_arr;let i = index">
+					<div class="item-group">
+						<a href="#">
+							<div class="item-img">
+								<img src="assets/img/wishlist/wishlist1.jpg" alt="">
+							</div>
+							<div class="item-title">
+								{{top_selling_list[i].name}}
+							</div>
+						</a>
+						<div class="price-info">
+							<p class="sale-price">AED {{top_selling_list[i].specialPrice}}</p>
+							<p class="actual-price">AED {{top_selling_list[i].price}}</p>
+						</div>
+					</div>
+				</div>
+			</owl-carousel>
+		</div>
+	</div>
+	<!-- Top Selling Area Start -->
+	<div class="top-selling-section-area mb-50">
+		<div class="container">
+			<div class="row">
+			</div>
+		</div>
+	</div>
+	<!-- Top Selling Area End -->
+	<!-- What's New Area Start -->
+	<div class="whats-new-section-area mb-50">
+		<div class="container">
+			<div class="row">
+				<!--Section Title Start-->
+				<div class="col-12">
+					<div class="section-title section-title-left">
+						<h2>What's New</h2>
+					</div>
+				</div>
+				<!--Section Title End-->
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="action-block">
+								<div class="action-block-inner">
+									<div class="section-title">
+										<h1>New Products</h1>
+										<p>and options have arrived.</p>
+										<p>"Brand new, just for you!"</p>
+									</div>
+									<div class="action-button mt-10">
+										<a class="btn view-all-btn">Shop Now</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-7">
+							<div class="new-products img-full">
+								<img src={{whats_new_images[0]}} alt="" />
+								<img src={{whats_new_images[1]}} alt="" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- What's New Area End -->
+	<app-footer></app-footer>
+ 

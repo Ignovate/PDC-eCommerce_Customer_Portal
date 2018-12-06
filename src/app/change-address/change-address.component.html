@@ -1,0 +1,173 @@
+<app-header></app-header>
+<!--Change Address Area-->	
+<section>
+  <div class="change-address ptb-40 gray-bg">
+    <div class="container">
+      <div class="row">
+        <!--left cart details Start-->
+        <div class="col-12 col-md-7">
+          <div class="col-sm-12 bg-white shadow pt-20 mb-30">
+            <div class="cart-title">
+              <h4>Delivery Address</h4>
+            </div><!--Title End-->
+            <!--Address One Start-->
+            <div class="address ptb-20">
+              <div class="address-block ptb-10">
+                <div class="add-select">
+                  <div class="custom-input">
+                    <div class="input-group">
+                      <input type="radio" name="selector" id="name" value="" />
+                      <label for="name">David</label>
+                      <div class="check"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="cust-add">											
+                  <span class="user-address">17 North Jennings Rd. Morrisville, USA, PA 19067</span>
+                </div>
+              </div>
+              <div class="row pt-10 btn-show">
+                <div class="col mt-10">
+                  <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
+                </div>
+                <div class="col mt-10">
+                  <a class="btn view-all-btn mx-auto d-block">Change Address</a>
+                </div>
+              </div>
+            </div><!--Address One End-->
+          </div><!--Delivery Address End-->
+          <div class="clearfix"></div>
+          <!--Change Address starts-->
+          <div class="col-sm-12 bg-white shadow pt-20">
+            <div class="add-new-address-block">
+              <!--New Address Form starts-->
+              
+                <div class="add-select">
+                  <div class="custom-input">
+                    <div class="input-group">
+                      <input type="radio" name="selector" id="address" value="" />
+                      <label for="address">Add New Address</label>
+                      <div class="check"></div>
+                    </div>
+                  </div>
+                  
+                </div>
+               
+                <div class="new-address-form pl-20 pr-20">
+                    <form  [formGroup]="contactform" >
+                  <div class="row mt-20 form-group">
+                    <div class="col ">
+                      <input type="text" class="form-control input-new m-0" formControlName="firstname"   [ngClass]="!contactform.controls['firstname'].valid && err_message==''?'error_cls':''" [(ngModel)]="user_request.firstname" 
+                      required placeholder="First name" autocomplete="off" />
+                      <div class="color_error shake" *ngIf="!contactform.controls['firstname'].valid && err_message==''">
+                        <a class="text-left shake text-red">
+                          Please enter firstname  </a>
+                    </div>
+                    </div>
+                    <div class="col">
+                      <input type="text" class="input-new m-0" [ngClass]="!contactform.controls['lastname'].valid && err_message==''?'error_cls':''" [(ngModel)]="user_request.lastname" formControlName="lastname" 
+                      required placeholder="Last name" autocomplete="off" />
+                      <div class="color_error shake" *ngIf="!contactform.controls['lastname'].valid && err_message==''">
+                        <a class="text-left shake text-red">
+                          Please enter lastname  </a>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row mt-20">
+                    <div class="col">
+                      <textarea class="textarea" rows="3" [ngClass]="!contactform.controls['streetname'].valid && err_message==''?'error_cls':''" [(ngModel)]="user_request.streetname" formControlName="streetname" 
+                      required placeholder="Address (Area and Street)" autocomplete="off"></textarea>
+                      <div class="color_error shake" *ngIf="!contactform.controls['streetname'].valid && err_message==''">
+                        <a class="text-left shake text-red">
+                          Please enter address  </a>
+                    </div>
+                    </div>	
+                  </div>
+                  <div class="row mt-20">
+                    <!-- <div class="col">
+                      <input type="text" class="input-new m-0" placeholder="Street" autocomplete="no" />
+                    </div> -->
+                    <div class="col">
+                        <!--<input type="text" class="input-new m-0" [(ngModel)]="countryId" formControlName="countryId" 
+                       required placeholder="Country" autocomplete="no" /> -->
+                        <select id="countryId"   [(ngModel)]="user_request.countryId" formControlName="countryId"  class="form-control" name="countryId" required>
+                         <option value="" selected disabled>Select Country  </option>
+                         <option *ngFor="let country of country_list" value={{country.name}}>{{country.name}}</option>
+                       </select> 
+                       <div class="color_error shake" *ngIf="!contactform.controls['countryId'].valid && err_message==''">
+                         <a class="text-left shake text-red">
+                           Please select a country </a>
+                     </div>
+                     </div>
+                   
+                    <div class="col">
+                      <select id="countryId"   [(ngModel)]="user_request.state" formControlName="state"  class="form-control" name="state" required>
+                        <option value="" selected disabled>Select State  </option>
+                        <option *ngFor="let state of state_list" value={{state.name}}>{{state.name}}</option>
+                      </select> 
+                      <div class="color_error shake" *ngIf="!contactform.controls['state'].valid && err_message==''?'error_cls':''">
+                        <a class="text-left shake text-red">
+                          Please select a state  </a>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="row mt-20">
+                      <div class="col">
+                          <select id="city"   [(ngModel)]="user_request.city" formControlName="city"  class="form-control" name="city" required>
+                              <option value="" selected disabled>Select City  </option>
+                            <option *ngFor="let city of city_list" value={{city.name}}>{{city.name}}</option>
+                          </select> 
+                          <div class="color_error shake" *ngIf="!contactform.controls['city'].valid && err_message==''">
+                            <a class="text-left shake text-red">
+                             Please select a city  </a>
+                        </div>
+                        </div>
+                    <div class="col">
+                      <input type="text" class="input-new m-0" onkeypress="return String.fromCharCode(event.charCode).match(/[0-9 ]/g) != null"  [(ngModel)]="user_request.post_code" formControlName="post_code"  placeholder="Postal code" autocomplete="off" />
+                      <div class="color_error shake" *ngIf="!contactform.controls['post_code'].valid && err_message==''">
+                        <a class="text-left shake text-red">
+                          Please enter postal code </a>
+                    </div>
+                    </div>
+                  </div>
+                 <div class="row mt-20">
+                    <div class="col">
+                      <input type="text" class="input-new m-0" [(ngModel)]="user_request.landmark" formControlName="landmark" placeholder="Landmark [optional]" autocomplete="off" />
+                    </div>
+                    <div class="col">
+                      <input type="text" class="input-new m-0" onkeypress="return String.fromCharCode(event.charCode).match(/[0-9 ]/g) != null" maxLength="10"  [(ngModel)]="user_request.mobile" formControlName="mobile" placeholder="Alternate Phone [optional]" autocomplete="off" />
+                    </div>
+                  </div>
+                  <div class="color_error shake" *ngIf="err_message!=''">
+                    <a class="text-left shake">
+                        {{err_message}} </a>
+                </div>
+                  <div class="row mtb-20">
+                    <input class="input-new form-control" type="checkbox" id="agree" formControlName="agree" 
+                    required>
+                    <span>I agree to <a class="text-danger" href="#" title="Donwload PDC">PDC</a> Privacy and Policy.</span>
+                    <div class="color_error shake col-md-12" *ngIf="!contactform.controls['agree'].valid && err_message==''">
+                      <a class="text-left shake text-red">
+                        Please check this field.  </a>
+                  </div>
+                  </div>
+                  <div class="row pt-10 pb-20">
+                    <div class="col mt-10">
+                      <a class="btn view-all-btn mx-auto d-block">Cancel</a>
+                    </div>
+                    <div class="col mt-10">
+                      <a class="btn view-all-btn mx-auto d-block" (click)="contactSubmit()">Save & Deliver Here</a>
+                    </div>
+                  </div>  
+                </form><!--New Address Form End-->
+                </div>
+              
+            </div>
+          </div><!--Change Address End-->
+        </div><!--left cart details End-->						
+      </div>
+    </div>
+  </div>
+</section>
+<!--Cart Area End-->
+<app-footer></app-footer>

@@ -1,0 +1,40 @@
+.card_left {
+    float: left;
+    /* width: calc(100% - 200px);
+    
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold; */
+}
+.card_left img{
+    width:25px;
+}
+.card_right{
+    float: left;
+    /* width: 200px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold; */
+    
+}
+.card_right img{
+    width:25px;
+}
+.card_center{
+    width: 19%;
+    float: left;
+    text-align: center;
+    
+}
+.target{
+    width: 65px;
+    text-align: center;
+}
+.product-add-to-cart span.control-label{
+    float: left;
+    vertical-align: middle;
+    line-height: 35px;
+    color: #000;
+    font-size: 20px;
+    margin: 0px 10px 10px 23px;
+}
