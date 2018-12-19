@@ -10,7 +10,7 @@
           <div class="col-sm-12 bg-white shadow pt-20">
             <div class="cart-title">
               <h4>My Cart
-                <span class="cart-product-values">({{salesOrderData.totalItemsQty}})</span>
+                <span class="cart-product-values">{{salesOrderData.totalItems}}</span>
               </h4>
             </div>
             <!--Cart Title End-->
@@ -18,7 +18,7 @@
             <div class="products pt-30" *ngFor="let salesproduct of salesOrderList;let i=index;">
               <div class="row">
                 <div class="col-12 col-md-3 img-full">
-                  <img src="assets/img/single-product/related-products/item2.jpg" />
+                  <img src={{salesproduct.imageUrl}} />
                 </div>
                 <div class="col-12 col-md-9">
                   <div class="single-product-content">
@@ -51,7 +51,7 @@
                         <div class="card_right" (click)="targetPlus(salesproduct,i)">
                           <img src="assets/img/plus.png">
                         </div>
-                        <span class="control-label">
+                        <span class="control-label"  style="cursor:pointer">
                           <a (click)="removeOrder(salesproduct)">Remove</a>
                         </span>
                       </div>

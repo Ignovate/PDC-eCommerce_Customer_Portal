@@ -112,7 +112,7 @@ export class HyperService {
     headers.append("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
     headers.append('Access-Control-Allow-Origin', '*');
     requestoptions = new RequestOptions({
-        method: RequestMethod.Post,
+        method: RequestMethod.Put,
         url: CONFIG._url + endPoint,
         headers: headers,
         body: theBody

@@ -6,54 +6,66 @@
       <div class="container">
         <div class="row">
           <!--Header Top Left Start-->
-          <div class="col-3 col-md-3 col-lg-2">
+          <div class="col-4 col-md-4 col-lg-3">
             <div class="header-cur-lang text-md-left">
               <ul>
                 <li class="drodown-show">
                   <a href="#">English
-                   <!--<i class="zmdi zmdi-chevron-down"></i>-->
+                   <i class="zmdi zmdi-chevron-down"></i>
                   </a>
-                 <!--<ul class="ht-dropdown">
+                 <ul class="ht-dropdown">
                     <li>
                       <a href="#">English</a>
                     </li>
                     <li>
                       <a href="#">اللغة العربية</a>
                     </li>
-                  </ul>-->
+                  </ul>
                 </li>
-                <li class="">
-                  <a href="#">USD
-                    <!--<i class="zmdi zmdi-chevron-down"></i>-->
+                <li class="drodown-show">
+                  <a href="#">AED
+                    <i class="zmdi zmdi-chevron-down"></i>
                   </a>
-                  <!--<ul class="ht-dropdown">
+                  <ul class="ht-dropdown">
                     <li>
-                      <a href="#"> € Euro</a>
+                      <a href="#">AED</a>
                     </li>
                     <li>
+                      <a href="#">USD</a>
+                    </li>
+                    <!--<li>
                       <a href="#"> $ US Dollar</a>
-                    </li>
-                  </ul>-->
+                    </li>-->
+                  </ul>
                 </li>
-                <li class="">
+                <li class="drodown-show">
                   <a href="#">UAE
-                    <!--<i class="zmdi zmdi-chevron-down"></i>-->
+                    <i class="zmdi zmdi-chevron-down"></i>
                   </a>
-                  <!--<ul class="ht-dropdown">
+                  <ul class="ht-dropdown">
                     <li>
-                      <a href="#"> € Euro</a>
+                      <a href="#">UAE</a>
                     </li>
                     <li>
-                      <a href="#"> $ US Dollar</a>
+                      <a href="#">Qatar</a>
                     </li>
-                  </ul>-->
+                    <li>
+                      <a href="#">Bahrain</a>
+                    </li>
+                    <li>
+                      <a href="#">Jordan</a>
+                    </li>
+                    <li>
+                      <a href="#">Kuwait</a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </div>
           </div>
           <!--Header Top Left End-->
           <!--Header Top Left Start-->
-          <div class="col-9 col-lg-4 col-xl-5 d-md-none d-lg-inline-block">
+          <div class="col-8 col-lg-3 col-xl-4 d-md-none d-lg-inline-block">
             <div class="header-contact text-center text-md-left">
               <ul>
                 <li>24/7 Customer Service</li>
@@ -103,9 +115,9 @@
     </div>
     <!--Header Top Area End-->
     <!--Header Bottom Area Start-->
-    <div class="header-bottom-area" *ngIf="loggedIn && showmenu">
+    <div class="header-bottom-area" *ngIf="showmenu">
       <div class="container">
-        <div class="row align-items-center mob-mar-10">
+        <div class="row align-items-center mob-mar-10 m-0 header-sticky">
           <!--Header Logo Start-->
           <div class="col-12 col-md-3 col-lg-2">
             <div class="logo">
@@ -120,7 +132,28 @@
               <div class="search-input">
                 <form action="#" method="POST">
                   <div class="form-search">
-                    <input id="search" class="input-text" value="" placeholder="Search Entire Store" type="search" />
+                    <input id="search" class="input-text" value="" placeholder="Search Entire Store" type="search" [(ngModel)]="search_text"  (keypress)="search_text=$event.target.value"  (ngModelChange)="onvalueChange($event)" [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                    <div class="search-dropdown-box" *ngIf="search_text!=''">
+                        <h5 class="drop_title">Categories</h5>
+                        <div class="prod_box">
+                          <div *ngFor="let categ of categ">
+                            <li><a (click)="goToCategory(categ.categoryId,categ)">{{categ.name}}</a></li>
+                          </div>
+                          </div>
+                        
+                      <h5 class="drop_title">Brands</h5>
+                      <div class="prod_box">
+                        <div *ngFor="let brand of brand">
+                          <li><a (click)="goToCategory(brand.brandId,brand)">{{brand.name}}</a></li>
+                        </div>
+                        </div>
+                       <h5 class="drop_title">Products</h5>
+                       <div class="prod_box">
+                        <div *ngFor="let prod of prod">
+                          <li><a (click)="goToCategory(prod.productId,brand)">{{prod.name}}</a></li>
+                        </div>
+                        </div>
+                      </div>
                     <button>
                       <i class="zmdi zmdi-search"></i>
                     </button>
@@ -134,27 +167,36 @@
               <div class="account text-left text-md-right">
                 <ul>
                   <li class="drodown-show">
-                    <a href="#">My account
+                    <a href="#" *ngIf="!loggedIn">My account
+                      <i class="zmdi zmdi-chevron-down"></i>
+                    </a>
+                    <a href="#" *ngIf="loggedIn">{{firstname.firstName | titlecase}}
                       <i class="zmdi zmdi-chevron-down"></i>
                     </a>
                     <ul class="ht-dropdown">
-                      <li >
+                      <li *ngIf="!loggedIn">
                         <a [routerLink]="['/login']">Login</a>
                       </li>
                       <li *ngIf="loggedIn">
                           <a  [routerLink]="['/profile']">My Profile</a>
                       </li>
-                      <li >
-                        <a href="#">Checkout</a>
+                      <li *ngIf="loggedIn" >
+                        <a [routerLink]="['/order-history']">My Orders</a>
                       </li>
-                      <li >
+                      <li *ngIf="loggedIn">
+                        <a [routerLink]="['/checkout']">Checkout</a>
+                      </li>
+                      <li *ngIf="!loggedIn">
                         <a [routerLink]="['/register']">Register</a>
                       </li>
-                      <li>
-                        <a href="#">Cart</a>
+                      <li *ngIf="loggedIn">
+                        <a [routerLink]="['/cart']">Cart</a>
                       </li>
-                      <li>
+                      <!--<li>
                         <a href="#">Wishlist</a>
+                      </li>-->
+                      <li *ngIf="loggedIn">
+                        <a (click)="signOut()">SignOut</a>
                       </li>
                     </ul>
                   </li>
@@ -173,7 +215,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a [routerLink]="['/cart']">
                       <img src="assets/img/icon/cart.png">
                     </a>
                   </li>
@@ -212,7 +254,7 @@
                 </ul>
               </nav>
             </div> -->
-            <div class="header-menu-area float-left header-sticky">
+            <div class="header-menu-area float-left">
               <nav class="nav">
                   <ul class="menu">
                     <!-- <li class="menu-item"><a href="">Sports</a></li>

@@ -4,6 +4,8 @@ import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LocalStorage } from '../core/services/local_storage.service';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel';
 declare var $: any;
 @Component({
   selector: 'app-single-product',
@@ -19,7 +21,7 @@ export class SingleProductComponent implements OnInit {
   salesItems: any = [];
   salesQuoteItems:any=[];
   productList:any=[];
-  relatedproductList:any=[];
+  relatedproductList:any;
   productTypeList:any=[];
   productId:any;
   categoryId;any;
@@ -31,7 +33,8 @@ export class SingleProductComponent implements OnInit {
   subscribe: any;
   categoryid: number;
   product_item_list:any=[];
-
+  relatedImages:any;
+  wishlistOptions={items: 5, dots: false, nav: true};
   constructor(private route: ActivatedRoute,private router: Router,private customs: CustomScript, private server: HyperService) {
     this.customs.loadScript()
     
@@ -42,15 +45,10 @@ export class SingleProductComponent implements OnInit {
       this.categoryId = params['catid'];
       this.productId = params['id'];
   });
-  this.getProductItemDetails();
+ 
   this.getRelatedPrduct();
-    // this.productId = LocalStorage.getValue('product_id');
-    // this.categoryId = LocalStorage.getValue('category_id');
-    this.imageSrc = "";
-    // this.getProduct();
-    // this.getProductsPrice();
-    
-    
+   this.imageSrc = "";
+   this.getProductItemDetails();
   }
 
 
@@ -160,12 +158,22 @@ export class SingleProductComponent implements OnInit {
         }
       })
   }
+  thumbnail:any;description:any;composition:any;usage:any;specialPrice:any;price:any;stockStatus:any;image:any;name:any;
   getProductItemDetails(){
     this.server.get("product/single?productId="+this.productId)
     .then((data) => {
       console.log(data)
       if (data.status == 200) {
         this.product_item_list = data.result;
+        this.thumbnail=this.product_item_list.image.thumbnail1;
+        this.description=this.product_item_list.attribute.description;
+        this.composition=this.product_item_list.attribute.composition;
+        this.usage=this.product_item_list.attribute.usage;
+        this.specialPrice=this.product_item_list.price.specialPrice;
+        this.price=this.product_item_list.price.price;
+        this.stockStatus=this.product_item_list.inventory.stockStatus;
+        this.image=this.product_item_list.image.image;
+        this.name=this.product_item_list.attribute.name;
         let maxvalue:number;
         maxvalue =  this.product_item_list.inventory.stock;
         this.maxvalue =  this.product_item_list.inventory.stock;

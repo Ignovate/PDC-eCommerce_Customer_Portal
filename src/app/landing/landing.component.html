@@ -1,16 +1,16 @@
 <div class="wrapper">
 	<app-header></app-header>
-	<div>
+	<div class="land-owl-caro hero-slider owl-carousel">
 		<owl-carousel [options]="mySlideOptions" [items]="myCarouselImages">
 			<div class="item" *ngFor="let image of myCarouselImages;let i = index">
 				<div>
-					<img src="assets/img/slider/slider1.jpg" />
+					<img (click)="goToCategory(image)" src={{image.imageUrl}} />
 				</div>
 			</div>
 		</owl-carousel>
 	</div>
 
-	<div class="slider-area mb-50">
+	<div class="slider-area mb-30">
 		<div class="hero-slider owl-carousel">
 		</div>
 	</div>
@@ -20,23 +20,24 @@
 	<div class="carousel-section">
 		<div class="container">
 			<h2>Exclusives</h2>
+			
 			<owl-carousel [options]="exclusivelOptions" [items]="exclusideSlides">
 				<div class="item" *ngFor="let image of exclusideSlides;let i = index">
 					<div>
-						<img src={{image.imageUrl}} class="img_css" />
+						<img (click)="goToCategory(image)" src={{image.imageUrl}} class="img_css" />
 					</div>
 				</div>
 			</owl-carousel>
 		</div>
 	</div>
-	<div class="banner-section-area mb-50">
+	<div class="banner-section-area mb-30">
 		<div class="container">
 		</div>
 	</div>
 
 	<!--Banner Section Area End-->
 	<!--Amazing Offer Area Start-->
-	<div class="amazing-section-area mb-50">
+	<div class="amazing-section-area mb-10">
 		<div class="container">
 			<div class="row">
 				<!--Section Title Start-->
@@ -45,7 +46,7 @@
 						<span>
 							<h2>Amazing Offer Just for You</h2>
 						</span>
-						<a class="btn view-all-btn pull-right">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToCategory(amazeImages[0])">View All</a>
 					</div>
 				</div>
 			</div>
@@ -56,7 +57,7 @@
 			<owl-carousel [options]="amazeOptions" [items]="amazeImages">
 				<div class="item" *ngFor="let image of amazeImages;let i = index">
 					<div>
-						<img src={{image.imageUrl}} class="img_css_amaze" />
+						<img (click)="goToCategory(image)" src={{image.imageUrl}} class="img_css_amaze" />
 					</div>
 				</div>
 			</owl-carousel>
@@ -70,14 +71,14 @@
 	</div>
 	<!-- Amazing Offer Area End -->
 	<!-- User Inspired Wishlist Section Area Start-->
-	<div class="inspired-wishlist-area mb-50">
+	<div class="inspired-wishlist-area mb-10">
 		<div class="container">
 			<div class="row">
 				<!--Section Title Start-->
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>Inspired by your Wishlist</h2>
-						<a class="btn view-all-btn pull-right">View All</a>
+						<a class="btn view-all-btn pull-right"(click)="goToProduct('22')">View All</a>
 					</div>
 				</div>
 			</div>
@@ -88,9 +89,9 @@
 			<owl-carousel [options]="wishlistOptions" [items]="wishlist_images_arr">
 				<div class="item" *ngFor="let image of wishlist_images_arr;let i = index">
 					<div class="item-group">
-						<a href="#">
+						<a (click)="goToSingleProduct(wish_list[i].categoryId,wish_list[i].productId)">
 							<div class="item-img">
-								<img src="assets/img/wishlist/wishlist1.jpg" alt="" style="width:auto;">
+								<img src={{image}} alt="" style="width:100%;">
 							</div>
 							<div class="item-title">
 								{{wish_list[i].name}}
@@ -107,14 +108,14 @@
 	</div>
 	<!-- User Inspired Wishlist Section Area End-->
 	<!-- Trending Brands Section Area Start-->
-	<div class="trending-brands-area mb-50">
+	<div class="trending-brands-area mb-20">
 		<div class="container">
 			<div class="row">
 				<!--Section Title Start-->
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>Trending Brands</h2>
-						<a class="btn view-all-btn pull-right">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToCategory(trend_images[0])">View All</a>
 					</div>
 				</div>
 				<!--Section Title End-->
@@ -124,23 +125,23 @@
 							<div class="trend-col-1">
 									<!-- {{trending_list[0].imageUrl}} -->
 								<div class="img-full">
-									<img src={{trend_images[0]}} alt="trend_image1" class="mb-20" />
-									<img src={{trend_images[1]}} alt="trend_image2" />
+									<img (click)="goToCategory(trend_images[0])" src={{trend_images[0]}} alt="trend_image1" class="mb-20" />
+									<img (click)="goToCategory(trend_images[1])" src={{trend_images[1]}} alt="trend_image2" />
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="trend-col-2">
 								<div class="img-full">
-									<img src={{trend_images[2]}} alt="trend_image3" />
+									<img (click)="goToCategory(trend_images[2])" src={{trend_images[2]}} alt="trend_image3" />
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="trend-col-3">
 								<div class="img-full">
-									<img src={{trend_images[3]}} alt="trend_image4" class="mb-20" />
-									<img src={{trend_images[4]}} alt="trend_image5" />
+									<img (click)="goToCategory(trend_images[3])" src={{trend_images[3]}} alt="trend_image4" class="mb-20" />
+									<img (click)="goToCategory(trend_images[4])" src={{trend_images[4]}} alt="trend_image5" />
 								</div>
 							</div>
 						</div>
@@ -151,14 +152,14 @@
 	</div>
 	<!-- User Inspired Wishlist Section Area End-->
 	<!-- Top Selling Area Start -->
-	<div class="top-selling-section-area mb-50">
+	<div class="top-selling-section-area mb-10">
 		<div class="container">
 			<div class="row">
 				<!--Section Title Start-->
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>Top Selling</h2>
-						<a class="btn view-all-btn pull-right">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToProduct('23')">View All</a>
 					</div>
 				</div>
 				<!--Section Title End-->
@@ -171,9 +172,9 @@
 			<owl-carousel [options]="myCarouselTopOptions" [items]="top_selling_images_arr">
 				<div class="item" *ngFor="let image of top_selling_images_arr;let i = index">
 					<div class="item-group">
-						<a href="#">
+						<a (click)="goToSingleProduct(wish_list[i].categoryId,wish_list[i].productId)">
 							<div class="item-img">
-								<img src="assets/img/wishlist/wishlist1.jpg" alt="">
+								<img src={{image}} alt="">
 							</div>
 							<div class="item-title">
 								{{top_selling_list[i].name}}
@@ -204,6 +205,7 @@
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>What's New</h2>
+						<a class="btn view-all-btn pull-right" (click)="goToProduct('23')">View All</a>
 					</div>
 				</div>
 				<!--Section Title End-->
@@ -218,15 +220,15 @@
 										<p>"Brand new, just for you!"</p>
 									</div>
 									<div class="action-button mt-10">
-										<a class="btn view-all-btn">Shop Now</a>
+										<a class="btn view-all-btn" (click)="goToCategory(whats_new_images[0])">Shop Now</a>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-7">
 							<div class="new-products img-full">
-								<img src={{whats_new_images[0]}} alt="" />
-								<img src={{whats_new_images[1]}} alt="" />
+								<img (click)="goToCategory(whats_new_images[0])" src={{whats_new_images[0]}} alt="" />
+								<img (click)="goToCategory(whats_new_images[1])" src={{whats_new_images[1]}} alt="" />
 							</div>
 						</div>
 					</div>
@@ -236,4 +238,5 @@
 	</div>
 	<!-- What's New Area End -->
 	<app-footer></app-footer>
+	
  

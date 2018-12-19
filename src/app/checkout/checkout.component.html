@@ -23,7 +23,7 @@
               <h4>Delivery Address</h4>
             </div><!--Title End-->
             <!--Address One Start-->
-            <div class="address ptb-20">
+            <div class="address ptb-20" *ngIf="customerAddressList.length>0">
               <div class="address-block ptb-10" *ngFor="let addressList of customerAddressList;let i=index">
                 <div class="add-select">
                   <div class="custom-input">
@@ -35,13 +35,13 @@
                   </div>
                 </div>
                 <div class="cust-add">											
-                  <span class="user-address">17 North Jennings Rd. Morrisville, USA, PA 19067</span>
+                  <span class="user-address">{{addressList.streetname}}. {{addressList.areaname}}, {{addressList.region}}, {{addressList.country}} </span>
                 </div>
                 <div class="row pt-10 btn-show" *ngIf="is_selected==i">
-                  <div class="col mt-10">
+                  <!-- <div class="col mt-10">
                     <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
-                  </div>
-                  <div class="col mt-10">
+                  </div> -->
+                  <div class="">
                     <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress()">Change Address</a>
                   </div>
                 </div>
@@ -55,17 +55,18 @@
                 </div>
               </div> -->
             </div><!--Address Block End-->
+            <div class="_2Y8lQ1"><img height="14" width="14" src="" class="_2hT5Bw"><a (click)="goToChangeAddress()">Add a new address</a></div>
           </div><!--Address Block Wrapper End-->
           <!--Order Summary Starts-->
           <div class="col-sm-12 bg-white shadow pt-20">
             <div class="cart-title">
-              <h4>Order Summary <span class="cart-product-values" *ngIf="salesOrderData!=undefined">({{salesOrderData.totalItemsQty}})</span></h4>
+              <h4>Order Summary <span class="cart-product-values" *ngIf="salesOrderData!=undefined">({{salesOrderData.totalItems}})</span></h4>
             </div><!--Cart Title End-->
             <!--Product One-->
             <div class="products pt-30" *ngFor="let salesproduct of salesOrderList;let i=index;">
               <div class="row">
                 <div class="col-12 col-md-3 img-full">
-                  <img  src="assets/img/single-product/related-products/item2.jpg"/>
+                  <img  src={{salesproduct.imageUrl}}/>
                 </div>
                 <div class="col-12 col-md-9">
                   <div class="single-product-content">
@@ -92,7 +93,7 @@
                         <div class="card_right" (click)="targetPlus(salesproduct,i)">
                           <img src="assets/img/plus.png">
                         </div>
-                      <span class="control-label"><a (click)="removeOrder(salesproduct)">Remove</a></span>
+                      <span class="control-label" style="cursor:pointer"><a (click)="removeOrder(salesproduct)">Remove</a></span>
                       </div>
                       <div>
                       </div>
@@ -103,7 +104,7 @@
             </div><!--Product End-->
             <div class="row ptb-20 btn-show">
               <div class="col-12 col-md-6 offset-md-6 pull-right">
-                <a class="btn view-all-btn d-block" title="Next Step" (click)="goToNext()">Continue</a>
+                <a class="btn view-all-btn d-block" title="Next Step" (click)="goToNext()">Place Order</a>
               </div>
             </div>
           </div><!--Order Summary End-->

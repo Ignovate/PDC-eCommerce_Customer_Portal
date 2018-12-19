@@ -11,6 +11,7 @@ import { AuthGuardService } from '../app/core/services/auth-guard.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap'; 
 import { OwlModule } from 'ngx-owl-carousel';
 import {SlideshowModule} from 'ng-simple-slideshow';
+import { Ng2CompleterModule } from "ng2-completer";
 declare var $: any;
 import { CustomScript } from '../app/core/services/custom-script';
 
@@ -83,6 +84,7 @@ import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
     HttpClientModule,
     OwlModule,
     SlideshowModule,
+    Ng2CompleterModule,
     NgbModule.forRoot(),
     // Ng4FilesModule ,
     RouterModule.forRoot(routes, {

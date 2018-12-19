@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
 import { LocalStorage } from '../core/services/local_storage.service';
 import { HyperService } from '../core/services/http.service';
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',
@@ -10,21 +12,42 @@ import { HyperService } from '../core/services/http.service';
 })
 export class OrderHistoryComponent implements OnInit {
   salesOrderList:any=[];
+  salesOrderDate:any=[];
   userData:any=[];
+  dateFormat:any;
+  delivered_date:any;
   constructor(private router: Router,private customs: CustomScript, private server: HyperService) { 
     this.customs.loadScript()
   }
 
   ngOnInit() {
     this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
+   console.log(this.userData);
     this.getOrderList();
   }
   getOrderList(){
-    this.server.get("salesorders/"+24)
+    
+    this.server.get("salesorders/"+this.userData.customerId)
     .then((data) => {
       console.log(data)
       if (data.status == 200) {
         this.salesOrderList = data.result;
+        for(let i=0;i<this.salesOrderList.length;i++){
+          let obj:any={};
+          obj.year_data = this.salesOrderList[i].createdDate[0];
+          obj.month_data = this.salesOrderList[i].createdDate[1];
+          obj.date_data = this.salesOrderList[i].createdDate[2];
+          this.salesOrderDate.push(obj)
+         
+        }
+        console.log(this.salesOrderDate)
+        for(let j=0;j<this.salesOrderDate.length;j++){
+          this.salesOrderList[j].delivered=''
+          this.dateFormat = this.salesOrderDate[j].year_data+'-'+this.salesOrderDate[j].month_data+'-'+this.salesOrderDate[j].date_data;
+          this.delivered_date = moment(this.dateFormat, "YYYY-MM-DD").format("DD MMMM YYYY");
+         this.salesOrderList[j].delivered = this.delivered_date
+         console.log(this.salesOrderList)
+        }
       }
       else {
 

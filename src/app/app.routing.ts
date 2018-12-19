@@ -23,6 +23,7 @@ import { ShipDeliveryComponent } from './ship-delivery/ship-delivery.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
+
 export const routes: Routes = [
    { path: '', component: LandingComponent },
    { path: 'login', component: LoginComponent },

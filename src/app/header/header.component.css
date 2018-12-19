@@ -150,3 +150,26 @@
 .ht-dropdown:hover{
     color:#24e8e4;
 }
+
+.search-dropdown-box{
+    position: absolute;
+    z-index: 99;
+    height: 350px;
+    background: #fff;
+    width: 100%;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+    list-style-type:none;
+}
+.search-dropdown-box li:hover{
+    cursor: pointer;
+    background:rgba(0,0,0,0.08);
+}
+.drop_title{
+    font-weight: bold;
+    padding:8px 15px 8px;
+    border-top:1px solid #9e9b9b;
+}
+.prod_box{
+    padding:10px;
+}

@@ -14,16 +14,24 @@ export class MyProfileComponent implements OnInit {
   profileform1:FormGroup;
   profileform2:FormGroup;
   profileform3:FormGroup;
+  profileform4:FormGroup;
+  customerAddressList:any=[];
+  passwordPattern = "^{6,}$";
   is_name_edit: boolean = true;
   is_name_save: boolean = false;
   is_email_edit: boolean = true;
   is_email_save: boolean = false;
   is_mob_edit: boolean = true;
   is_mob_save: boolean = false;
+  is_password:boolean=false;
   err_message: string;
   user_profile:any={};
   err_message1:string;
   form1_message:string;
+  password_error:string='';
+  pass_error:any={};
+  pass_error_old:string='';pass_error_new:string='';pass_error_confirm:string='';pass_error_match:string='';pass_error_match_old:string='';
+  
   constructor(private server: HyperService, private customs: CustomScript, private formBuilder: FormBuilder) { 
     this.customs.loadScript()
     this.user_profile=LocalStorage.getValue('userData');
@@ -31,7 +39,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formBuild();this.mobileformBuild();this.nameformBuild()
+    this.formBuild();this.mobileformBuild();this.nameformBuild(); this.customerAddress()
   }
   nameformBuild() {
     this.profileform1 = this.formBuilder.group({
@@ -50,6 +58,13 @@ export class MyProfileComponent implements OnInit {
       mobile: [null, Validators.compose([Validators.required,Validators.minLength(10),Validators.maxLength(10)])],
      });
   }
+//   passwordformBuild(){
+//     this.profileform4 = this.formBuilder.group({
+//         oldpassword: [null, Validators.compose([Validators.required, Validators.pattern(this.passwordPattern)])],
+//         newpassword: [null, Validators.compose([Validators.required, Validators.pattern(this.passwordPattern)])],
+//         repassword: [null, Validators.compose([Validators.required])]
+//     });
+// }
   editName(){
     this.is_name_edit = false;
     this.is_name_save = true;
@@ -89,17 +104,26 @@ export class MyProfileComponent implements OnInit {
   }
   nameSave(){
     if (this.profileform1.valid) {
-      alert("success")
-      this.server.get("").then((data) => {
-        console.log(data)
-        if (data.status == 200 ) {
-             
-           
-        } 
-        else if (data.result.response == "failed") {
-             
-        }
-    })
+      console.log("lastname",this.user_profile.lastName)
+      this.server.put("customers/"+this.user_profile.customerId,{
+        "id": this.user_profile.customerId,
+        "username": this.user_profile.firstName,
+        "lastname":  this.user_profile.lastName,
+        "gender":this.user_profile.gender
+    }).then((data) => {
+    console.log(data)
+    if (data.status == 200 ) {
+      // alert("Updated successfully")
+      this.is_name_edit = true;
+      this.is_name_save = false;
+      this.form1_message='err';
+    } 
+    else if (data.result.response == "failed") {
+      alert("failed")
+    }else{
+      alert("failed")
+    }
+})  
     }else{
       this.validateAllFormFields1(this.profileform1);
       this.form1_message = "";
@@ -107,20 +131,20 @@ export class MyProfileComponent implements OnInit {
   }
   mobileSave(){
     if (this.profileform3.valid) {
-       this.server.put("customers",{
-            "id": this.user_profile.customerId,
-            "email": this.user_profile.email,
+       this.server.put("customers/"+this.user_profile.customerId,{
             "mobile": this.user_profile.mobile,
-            "username": this.user_profile.firstName,
-            "lastname":  this.user_profile.lastName,
-            "gender":this.user_profile.gender
-    }).then((data) => {
-        console.log(data)
-        if (data.status == 200 ) {
-           console.log("success")
+            "customerId":this.user_profile.customerId
+       }).then((data) => {
+       if (data.status == 200 ) {
+          // alert("Updated successfully");
+          this.is_mob_edit = true;
+          this.is_mob_save = false;
+          this.err_message='err';
         } 
         else if (data.result.response == "failed") {
-            
+          alert("failed")
+        }else{
+          alert("failed")
         }
     })
     }else{
@@ -130,20 +154,81 @@ export class MyProfileComponent implements OnInit {
   }
   emailSave(){
     if (this.profileform2.valid) {
-      alert("success")
-    //   this.server.get("customers?email="+this.emailid+"&password="+this.password).then((data) => {
-    //     console.log(data)
-    //     if (data.status == 200 ) {
-    
-    //     } 
-    //     else if (data.result.response == "failed") {
-    //         this.err_message = data.result.message;
-    //     }
-    // })
+        this.server.put("customers/"+this.user_profile.customerId,{
+        "customerId": this.user_profile.customerId,
+        "email": this.user_profile.email
+     }).then((data) => {
+     if (data.status == 200 ) {
+      // alert("Updated successfully")
+      this.is_email_edit = true;
+      this.is_email_save = false;
+      this.err_message1='err';
+    } 
+    else if (data.result.response == "failed") {
+      alert("failed")
+    }else{
+      alert("failed")
+    }
+})  
     }else{
       this.validateAllFormFields(this.profileform2);
       this.err_message1 = "";
     }
+  }
+  clickPassword(){
+    this.pass_error_old='';this.pass_error_confirm='';this.pass_error_new='';this.pass_error_match='';this.pass_error_match_old='';
+    this.user_profile.oldpassword='';
+    this.user_profile.newpassword='';
+    this.user_profile.confirmpassword='';
+    this.is_password=!this.is_password;
+  }
+  clearValidateMessages(){
+
+  }
+  customerAddress(){
+    this.server.get("fetchcustomersaddress?custId="+this.user_profile.customerId)
+      .then((data) => {
+        console.log(data)
+        if (data.status == 200) {
+          this.customerAddressList = data.result;
+          console.log(this.customerAddressList)
+        }
+        else {
+
+        }
+      })
+  }
+  
+  passwordSave(){
+  this.pass_error_old=(this.user_profile.oldpassword==undefined || this.user_profile.oldpassword=='' ) ? "Please enter the oldpassword" : '';
+  console.log(this.user_profile.oldpassword,this.pass_error_old,"this.user_profile.oldpassword",this.pass_error_old)
+  this.pass_error_new=(this.user_profile.newpassword==undefined || this.user_profile.newpassword=='') ? "Please enter the newpassword" : '';
+  this.pass_error_confirm=(this.user_profile.confirmpassword==undefined || this.user_profile.confirmpassword=='') ? "Please enter the confirmpassword" : '';
+  this.pass_error_match_old=((this.user_profile.oldpassword != this.user_profile.password) && (this.user_profile.oldpassword!=''))?"Old password is incorrect":'';
+  this.pass_error_match=((this.user_profile.newpassword != this.user_profile.confirmpassword) && (this.user_profile.confirmpassword!=undefined || this.user_profile.confirmpassword!=''))?"New & Confirm password are not matched":'';
+  return (this.pass_error_old==''&&  this.pass_error_new==''&& this.pass_error_confirm==''&& this.pass_error_match=='' && this.pass_error_match_old=='')? true : false;
+    
+  }
+  
+  onSavePassword(){
+     if(this.passwordSave()){
+      alert("success")
+      this.server.put("customers/"+this.user_profile.customerId,{
+        "customerId": this.user_profile.customerId,
+        "password": this.user_profile.confirmpassword
+     }).then((data) => {
+     if (data.status == 200 ) {
+      this.clickPassword();
+    } 
+    else if (data.result.response == "failed") {
+      alert("failed")
+    }else{
+      alert("failed")
+    }
+    })  
+     }else{
+
+     } 
   }
   validateAllFormFields(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(field => {

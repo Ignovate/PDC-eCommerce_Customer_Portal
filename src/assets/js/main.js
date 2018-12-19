@@ -68,7 +68,7 @@ if ($(this).scrollTop() >50){
     5.1 Hero Slider Active
 ------------------------------*/
 $('.hero-slider').owlCarousel({
-    smartSpeed: 1000,
+    smartSpeed: 5000,
     nav: true,
     loop: true,
 	dots: false,

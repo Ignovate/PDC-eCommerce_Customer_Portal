@@ -6,35 +6,44 @@
       <div class="row">
         <!--left cart details Start-->
         <div class="col-12 col-md-7">
-          <div class="col-sm-12 bg-white shadow pt-20 mb-30">
-            <div class="cart-title">
+          <div class="col-sm-12 bg-white shadow  ">
+            <!-- <div class="cart-title">
               <h4>Delivery Address</h4>
-            </div><!--Title End-->
+            </div> -->
+            <!--Title End-->
             <!--Address One Start-->
-            <div class="address ptb-20">
-              <div class="address-block ptb-10">
+            <div class="address ptb-20" *ngIf="customerAddressList.length>0">
+              <!-- <div class="address-block ptb-10" *ngFor="let addressList of customerAddressList;let i=index">
                 <div class="add-select">
                   <div class="custom-input">
                     <div class="input-group">
-                      <input type="radio" name="selector" id="name" value="" />
-                      <label for="name">David</label>
+                      <input type="radio" name="selector{{i}}" id="name{{i}}" value={{i}} [checked]="is_selected==i?true:false" (click)="activeAddress(addressList,i)" />
+                      <label for="name{{i}}">{{addressList.firstname}} {{addressList.lastname}}</label>
                       <div class="check"></div>
                     </div>
                   </div>
                 </div>
                 <div class="cust-add">											
-                  <span class="user-address">17 North Jennings Rd. Morrisville, USA, PA 19067</span>
+                  <span class="user-address">{{addressList.streetname}}. {{addressList.areaname}}, {{addressList.region}}, {{addressList.country}} </span>
                 </div>
-              </div>
-              <div class="row pt-10 btn-show">
+                <div class="row pt-10 btn-show" *ngIf="is_selected==i">
+                  <div class="col mt-10">
+                    <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
+                  </div>
+                  <div class="">
+                    <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress()">Change Address</a>
+                  </div>
+                </div>
+              </div> -->
+              <!-- <div class="row pt-10 btn-show">
                 <div class="col mt-10">
                   <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
                 </div>
                 <div class="col mt-10">
-                  <a class="btn view-all-btn mx-auto d-block">Change Address</a>
+                  <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress()">Change Address</a>
                 </div>
-              </div>
-            </div><!--Address One End-->
+              </div> -->
+            </div><!--Address Block End-->
           </div><!--Delivery Address End-->
           <div class="clearfix"></div>
           <!--Change Address starts-->
@@ -90,9 +99,9 @@
                     <div class="col">
                         <!--<input type="text" class="input-new m-0" [(ngModel)]="countryId" formControlName="countryId" 
                        required placeholder="Country" autocomplete="no" /> -->
-                        <select id="countryId"   [(ngModel)]="user_request.countryId" formControlName="countryId"  class="form-control" name="countryId" required>
+                        <select id="countryId"   [(ngModel)]="user_request.countryId" formControlName="countryId"  class="form-control" name="countryId" (change)="getState($event.target.value)" required>
                          <option value="" selected disabled>Select Country  </option>
-                         <option *ngFor="let country of country_list" value={{country.name}}>{{country.name}}</option>
+                         <option *ngFor="let country of country_list" value={{country.id}}>{{country.name}}</option>
                        </select> 
                        <div class="color_error shake" *ngIf="!contactform.controls['countryId'].valid && err_message==''">
                          <a class="text-left shake text-red">
@@ -101,9 +110,9 @@
                      </div>
                    
                     <div class="col">
-                      <select id="countryId"   [(ngModel)]="user_request.state" formControlName="state"  class="form-control" name="state" required>
+                      <select id="countryId"   [(ngModel)]="user_request.state" formControlName="state"  class="form-control" name="state" (change)="getCity($event.target.value)" required>
                         <option value="" selected disabled>Select State  </option>
-                        <option *ngFor="let state of state_list" value={{state.name}}>{{state.name}}</option>
+                        <option *ngFor="let state of state_list" value={{state.id}}>{{state.name}}</option>
                       </select> 
                       <div class="color_error shake" *ngIf="!contactform.controls['state'].valid && err_message==''?'error_cls':''">
                         <a class="text-left shake text-red">
@@ -113,9 +122,9 @@
                   </div>
                   <div class="row mt-20">
                       <div class="col">
-                          <select id="city"   [(ngModel)]="user_request.city" formControlName="city"  class="form-control" name="city" required>
+                          <select id="city"   [(ngModel)]="user_request.city" formControlName="city"  class="form-control" name="city" (change)="getCityId($event.target.value)" required>
                               <option value="" selected disabled>Select City  </option>
-                            <option *ngFor="let city of city_list" value={{city.name}}>{{city.name}}</option>
+                            <option *ngFor="let city of city_list" value={{city.id}}>{{city.name}}</option>
                           </select> 
                           <div class="color_error shake" *ngIf="!contactform.controls['city'].valid && err_message==''">
                             <a class="text-left shake text-red">
@@ -153,7 +162,7 @@
                   </div>
                   <div class="row pt-10 pb-20">
                     <div class="col mt-10">
-                      <a class="btn view-all-btn mx-auto d-block">Cancel</a>
+                      <a class="btn view-all-btn mx-auto d-block" (click)="cancelSubmit()">Cancel</a>
                     </div>
                     <div class="col mt-10">
                       <a class="btn view-all-btn mx-auto d-block" (click)="contactSubmit()">Save & Deliver Here</a>

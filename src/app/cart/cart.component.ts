@@ -23,6 +23,8 @@ export class CartComponent implements OnInit {
   salesOrderData: any;
   fieldName: any;
   text_value: any;
+  quote_data:any;
+  quoteId:any;
   constructor(private router: Router, private customs: CustomScript, private server: HyperService) {
     this.customs.loadScript()
     this.salesQuote_data = LocalStorage.getValue('salesQuoteItems');
@@ -33,13 +35,16 @@ export class CartComponent implements OnInit {
     this.totalQuantity = (LocalStorage.getValue('totalItems') != undefined) ? LocalStorage.getValue('totalItems') : '';
     this.productId = (LocalStorage.getValue('productIndex') != undefined) ? LocalStorage.getValue('productIndex') : '';
     this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
+    this.quote_data = (LocalStorage.getValue('quoteId') != undefined) ? LocalStorage.getValue('quoteId') :"";
     if (this.isLogged) {
       this.router.navigateByUrl('cart')
       let obj:any = {};
-      obj.quoteId = this.userData.quoteId;
+      obj.quoteId = (this.userData.quoteId==null)?this.quote_data:this.userData.quoteId;
+      this.quoteId = obj.quoteId;
       obj.productId = this.productId;
-      if(this.userData.quoteId!=null && this.userData.quoteId!=undefined){
+      if(this.userData.quoteId!=null && this.userData.quoteId!=undefined ||  this.quote_data!=''){
         this.cardUpdate(obj,this.totalQuantity)
+        console.log("cart",this.cardUpdate(obj,this.totalQuantity));
       }else{
         this.cardNew()
       }
@@ -100,7 +105,8 @@ export class CartComponent implements OnInit {
       customerId:this.userData.customerId,
       productId:this.productId,
       quantity:this.totalQuantity,
-      websiteId:2
+      websiteId:1,
+      addQuantity:false
       // customerId: 24,
       // productId: 3,
       // quantity: 4,
@@ -111,7 +117,7 @@ export class CartComponent implements OnInit {
         if (data.status == 200) {
           this.salesOrderData = data.result;
           this.salesOrderList = data.result.quoteOrderItems;
-
+          LocalStorage.setValue('quoteId',this.salesOrderData.id);
         }
         else {
 
@@ -125,7 +131,7 @@ export class CartComponent implements OnInit {
       customerId:this.userData.customerId,
       productId:item.productId,
       quantity:0,
-      websiteId:2,
+      websiteId:1,
       quoteId: item.quoteId,
       
     })
@@ -142,9 +148,7 @@ export class CartComponent implements OnInit {
       })
   }
   targetMinus(val, i) {
-    console.log(val, i)
     this.salesOrderList.forEach(function (item, index) {
-        console.log(item)
         if (index == i) {
             if (val.quantity > 1) {
                 item.quantity--;
@@ -154,12 +158,11 @@ export class CartComponent implements OnInit {
     this.cardUpdate(val, val.quantity);
 }
 targetPlus(val, i) {
-    console.log(val, i, parent)
-    this.salesOrderList.forEach(function (item, index) {
-        console.log(index)
+  console.log(val.quantity,"quantityeee")
+   this.salesOrderList.forEach(function (item, index) {
         if (index == i) {
             item.quantity++;
-            
+            console.log(item.quantity,"quantity")
         }
         
     });
@@ -169,10 +172,11 @@ targetPlus(val, i) {
 cardUpdate(list,quantity) {
   this.server.post("cart/update", {
     customerId:this.userData.customerId,
+    quoteId: list.quoteId,
     productId:list.productId,
-    quantity:quantity,
-    websiteId:2,
-    quoteId: list.quoteId
+    quantity:Number(quantity),
+   // addQuantity:true,
+    websiteId:1
   })
     .then((data) => {
       console.log(data)

@@ -11,7 +11,7 @@
               <h5 class="mb-0">
                 <div class="user-profile-img"></div>
                 <div class="user-profile-name">
-                  <span>Hello,</span><h3>David</h3>
+                  <span>Hello,</span><h3>{{user_profile.firstName}}</h3>
                 </div>
               </h5>
             </div>
@@ -86,12 +86,12 @@
         <!--Personal Information Starts-->
         <div class="card user-profile personalinfo shadow">
           <div class="card-header">
-              <form [formGroup]="profileform1" >
+           <form [formGroup]="profileform1" >
             <h4 class="mtb-20">
               <strong>Personal Information</strong>
               <span class="text-primary">
-                  <a  title=""  (click)="editName()" *ngIf="is_name_save==false">&emsp;Edit</a>
-                  <a  title=""  (click)="cancelName()" *ngIf="is_name_save==true">&emsp;Cancel</a>
+                  <a  title=""  (click)="editName()" *ngIf="is_name_save==false" style="cursor: pointer;">&emsp;Edit</a>
+                  <a  title=""  (click)="cancelName()" *ngIf="is_name_save==true" style="cursor: pointer;">&emsp;Cancel</a>
               </span>
             </h4>
             <div class="row pb-20">
@@ -119,24 +119,24 @@
             <div class="row pb-20">
               <div class="custom-input pl-15">
                 <div class="input-group" *ngIf="is_name_edit">
-                  <input type="radio" name="gender" id="male"  class="input-new disable" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'" *ngIf="is_name_edit"disabled="false" />
+                  <input type="radio" name="gender" id="male"  class="input-new disable" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'" *ngIf="is_name_edit"disabled="false"  [ngModelOptions]="{standalone: true}"/>
                   <label for="male" style="cursor:not-allowed">Male</label>
                   <div class="check"></div>
                 </div>
                 <div class="input-group" *ngIf="!is_name_edit">
-                    <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'"  />
+                    <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'"  [ngModelOptions]="{standalone: true}" />
                     <label for="male" >Male</label>
                     <div class="check"></div>
                   </div>
               </div>
               <div class="custom-input pl-15">
                 <div class="input-group"  *ngIf="is_name_edit">
-                  <input type="radio" name="gender" id="female"   class="input-new disable" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'" *ngIf="is_name_edit" disabled="false" />
+                  <input type="radio" name="gender" id="female"   class="input-new disable" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'" *ngIf="is_name_edit" disabled="false"  [ngModelOptions]="{standalone: true}"/>
                   <label for="female" style="cursor:not-allowed">Female</label>
                   <div class="check"></div>
                 </div>
                 <div class="input-group" *ngIf="!is_name_edit">
-                    <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'"   />
+                    <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'"  [ngModelOptions]="{standalone: true}"  />
                     <label for="female" >Female</label>
                     <div class="check"></div>
                   </div>
@@ -147,17 +147,17 @@
                      Please select</a>
               </div> -->
             </div>
-          
-              </form>
+            </form>
              
             <h4 class="mtb-20">
               Email Address
               <span class="text-primary">
-                <a  title=""  (click)="editEmail()" *ngIf="is_email_save==false">&emsp;Edit</a>
-                <a  title=""  (click)="cancelEmail()" *ngIf="is_email_save==true">&emsp;Cancel</a>
-                <a href="#" title="">&emsp;Change Password</a>
+                <a  title=""  (click)="editEmail()" *ngIf="is_email_save==false" style="cursor: pointer;">&emsp;Edit</a>
+                <a  title=""  (click)="cancelEmail()" *ngIf="is_email_save==true" style="cursor: pointer;">&emsp;Cancel</a>
+                <a  title=""  (click)="clickPassword()" style="cursor: pointer;">&emsp;Change Password</a>
               </span>
             </h4>
+           
             <form [formGroup]="profileform2" > 
             <div class="row pb-20	" >
               <input type="text" class="input-new col-sm-5 float-left disable"  [(ngModel)]="user_profile.email" disabled="false" *ngIf="is_email_edit" [ngModelOptions]="{standalone: true}"/>
@@ -173,12 +173,50 @@
             </div>
              
             </form>
+            <div  *ngIf="is_password">
+              <div class="row pb-20">
+                   <div class="col-sm-5  float-left"  >
+                    <input class="input-new "  type="password"   id="oldpassword" [(ngModel)]="user_profile.oldpassword"    placeholder="Enter your old password  " autocomplete="off" [ngClass]="(pass_error_old!='' || pass_error_match_old!='')?'error_cls':''"  required/>
+                    <div class="color_error shake" *ngIf="pass_error_old!=''">
+                        <a class="text-left shake text-red">
+                          Please enter oldpassword</a>
+                    </div>
+                    <div class="color_error shake" *ngIf="pass_error_match_old!=''">
+                      <a class="text-left shake text-red">
+                        Entered oldpassword is incorrect</a>
+                  </div>
+                  </div>
+                <div class="col-sm-5  float-left"  > 
+                  <input class="input-new "  type="password"  id="newpassword"  [(ngModel)]="user_profile.newpassword"   placeholder="Enter your new password" autocomplete="off"  [ngClass]="(pass_error_new!='')?'error_cls':''"  required />
+                  <div class="color_error shake" *ngIf="pass_error_new!=''">
+                      <a class="text-left shake text-red">
+                        Please enter newpassword</a>
+                  </div>
+               </div>
+                
+              </div>
+             <div class="row pb-20">
+              <div class="col-sm-5  float-left"  >
+                <input class="input-new "  type="password"   id="confirmpassword"   [(ngModel)]="user_profile.confirmpassword"   required placeholder="Enter your confirm password" autocomplete="off" [ngClass]="(pass_error_confirm!='' || pass_error_match!='')?'error_cls':''"   required/>
+                <div class="color_error shake" *ngIf="pass_error_confirm!=''">
+                    <a class="text-left shake text-red">
+                      Please enter confirmpassword</a>
+                </div>
+                <div class="color_error shake" *ngIf="pass_error_match!=''">
+                  <a class="text-left shake text-red">
+                    Password does'nt match</a>
+              </div>
+              </div>
+                <button type="button" class="btn btn-primary save_cls"   (click)="onSavePassword()">Save</button>
+                <button type="button" class="btn btn-primary save_cls"   (click)="clickPassword()">Cancel</button>
+              </div>
+            </div>
             <form [formGroup]="profileform3" > 
             <h4 class="mtb-20">
               Mobile Number									
               <span class="text-primary">
-                  <a  title=""  (click)="editMobile()" *ngIf="is_mob_save==false">&emsp;Edit</a>
-                  <a  title=""  (click)="cancelMobile()" *ngIf="is_mob_save==true">&emsp;Cancel</a>
+                  <a  title=""  (click)="editMobile()" *ngIf="is_mob_save==false" style="cursor: pointer;">&emsp;Edit</a>
+                  <a  title=""  (click)="cancelMobile()" *ngIf="is_mob_save==true" style="cursor: pointer;">&emsp;Cancel</a>
               </span>
             </h4>
             <div class="row pb-20">
@@ -203,22 +241,46 @@
         <div class="card user-profile manageaddress">
           <div class="card-header">
             <h5 class="mb-0">Manage Address</h5>
-            <div class="add-address col-12 col-md-5 float-left">
+            <div class="add-address col-12 col-md-5 float-left" [routerLink]="['/change-address']">
             
                 <h1>+</h1>
                 <h4>Add Address</h4>
               
             </div>
-            <div class="added-address col-12 col-md-5 float-left">
+            <!-- <div class="added-address col-12 col-md-5 float-left">
               <h5><b>David</b></h5>
               <p>17 North Jennings Rd.Morrisville,USA, PA 19067</p>
               <h5><b>Phone number</b></h5>
               <p>+971 524 920 866</p>
               <a href="#" title="" class="text-primary">Edit</a>&emsp;|&emsp;
               <a href="#" title="" class="text-primary">Delete</a>
-            </div>
+            </div> -->
           </div>
         </div>
+        <div class="address ptb-20" *ngIf="customerAddressList.length>0">
+          <div class="address-block ptb-10" *ngFor="let addressList of customerAddressList;let i=index">
+            <div class="add-select">
+              <div class="custom-input">
+                <div class="input-group">
+                  <!-- <input type="radio" name="selector{{i}}" id="name{{i}}" value={{i}} [checked]="is_selected==i?true:false" (click)="activeAddress(addressList,i)" /> -->
+                  <label >{{addressList.firstname}} {{addressList.lastname}}</label>
+                  <div class="check"></div>
+                </div>
+              </div>
+            </div>
+            <div class="cust-add">											
+              <span class="user-address">{{addressList.streetname}}. {{addressList.areaname}}, {{addressList.region}}, {{addressList.country}} </span>
+            </div>
+            <div class="row pt-10 btn-show" *ngIf="is_selected==i">
+              <!-- <div class="col mt-10">
+                <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
+              </div> -->
+              <div class="">
+                <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress()">Change Address</a>
+              </div>
+            </div>
+          </div>
+          </div>
         <!-- Manage Address Ends-->						
         <!--My Whishlist Starts-->
         <!-- <div class="mywhishlist white-bg shadow">

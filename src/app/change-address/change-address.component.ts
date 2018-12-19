@@ -1,33 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Location } from '@angular/common';
+import { Router, ActivatedRoute,RoutesRecognized } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { LocalStorage } from '../core/services/local_storage.service';
+import { filter, pairwise } from 'rxjs/operators';
 @Component({
   selector: 'app-change-address',
   templateUrl: './change-address.component.html',
   styleUrls: ['./change-address.component.css']
 })
 export class ChangeAddressComponent implements OnInit {
+  customerAddressList:any=[];
   contactform: FormGroup;
   country_list: any = [];
-  city_list: any = [];
-  state_list: any = [];
+  city_list: any ={};
+  state_list: any = {};
   err_message: string;
   firstname:any;
   user_request: any = {};
-  constructor(private router: Router, private customs: CustomScript, private server: HyperService, private formBuilder: FormBuilder) {
+  userData: any = [];
+  constructor(private router: Router, private customs: CustomScript, private server: HyperService, private formBuilder: FormBuilder,private Location:Location) {
     this.customs.loadScript()
   }
 
   ngOnInit() {
+    // console.log(this.Location.back(),"hi")
+    this.router.events
+    .pipe(filter((e: any) => e instanceof RoutesRecognized),
+        pairwise()
+    ).subscribe((e: any) => {
+      console.log(e,"eeeeeeeeeeeeeeeeeeeeee")
+        console.log(e[0].urlAfterRedirects,"url"); // previous url
+    });
+    console.log("hhhhhhhhhhhh")
     this.getCountry();
-    this.getState();
-    this.getCity();
+    // this.getState();
+    // this.getCity();
     this.formBuild();
     this.user_request.countryId = '';
     this.user_request.state = '';
     this.user_request.city = '';
+    this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
+    this.customerAddress()
+  }
+  customerAddress(){
+    this.server.get("fetchcustomersaddress?custId="+this.userData.customerId)
+      .then((data) => {
+        console.log(data)
+        if (data.status == 200) {
+          this.customerAddressList = data.result;
+          console.log(this.customerAddressList)
+        }
+        else {
+
+        }
+      })
   }
   formBuild() {
     this.contactform = this.formBuilder.group({
@@ -48,54 +77,59 @@ export class ChangeAddressComponent implements OnInit {
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
-          this.country_list = data.result._embedded.countriesEntities;
+          this.country_list = data.result.content;
           console.log(this.country_list)
         }
         else {
         }
       })
   }
-  getState() {
-    this.server.get("countriesregion?countryID=1")
+  getState(id) {
+     this.user_request.ctry_id=id;
+    this.server.get("countriesregion?countryID="+this.user_request.ctry_id)
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
-          this.state_list = data.result._embedded.countriesRegionEntities;
-          console.log(this.country_list)
+          this.state_list = data.result.content;
+          console.log(this.state_list)
         }
         else {
         }
       })
   }
-  getCity() {
-    this.server.get("countriesregionarea?countryID=1&regionID=1")
+  getCity(id) {
+    this.user_request.state_id=id;
+    this.server.get("countriesregionarea?countryID="+this.user_request.ctry_id+"&regionID="+this.user_request.state_id)
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
-          this.city_list = data.result._embedded.countriesRegionAreaEntities;
-          console.log(this.country_list)
+          this.city_list = data.result.content;
+          console.log(this.city_list)
         }
         else {
         }
       })
+  }
+  getCityId(id){
+    this.user_request.city_id=id;
   }
   contactSubmit() {
     if (this.contactform.valid) {
       this.server.post("customersaddress", {
-        "id": 7,
-        "custId": 1,
+        "customerId": this.userData.customerId,
         "firstname": this.user_request.firstname,
         "lastname": this.user_request.lastname,
         "streetname": this.user_request.streetname,
-        "countryId":1,
-        "regionId": 1,
-        "areaId": 1,
-        "postcode": 1
+        "countryId":this.user_request.ctry_id,
+        "regionId": this.user_request.state_id,
+        "areaId": this.user_request.city_id,
+        "postcode": this.user_request.post_code
       })
         .then((data) => {
           console.log(data)
           if (data.status == 200) {
-            alert("success")
+            this.Location.back()
+            // this.router.navigateByUrl('checkout')
           }
           else {
             this.err_message = "Please Fill all fields";
@@ -118,5 +152,8 @@ export class ChangeAddressComponent implements OnInit {
         this.validateAllFormFields(control);
       }
     });
+  }
+  cancelSubmit(){
+    this.router.navigateByUrl('checkout')
   }
 }

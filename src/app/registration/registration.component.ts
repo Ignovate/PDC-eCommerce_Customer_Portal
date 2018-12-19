@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from "@angular/router";
 import { HyperService } from '../core/services/http.service';
-
+import { CONFIG } from '../config'; 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -18,10 +18,12 @@ export class RegistrationComponent implements OnInit {
   reg_err_message: string;
   errorMessage: string = '';
   customer_details:any=[];
+  showmenu:boolean =false;
   passwordPattern = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
   constructor(private formBuilder: FormBuilder,  private router: Router, private server: HyperService) { }
 
   ngOnInit() {
+    CONFIG.showmenu = this.showmenu;
     this.formBuild()
   }
   goToSignIn(){
@@ -55,7 +57,7 @@ checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
 }
 onRegSubmit(){
   if (this.registrationform.valid) {
-    this.server.post("signup", {username: this.username,email:this.email, mobile:this.mobile,password: this.password,confirmPassword: this.repassword})
+    this.server.post("signup", {firstName: this.username,email:this.email, mobile:this.mobile,password: this.password,confirmPassword: this.repassword})
       .then((data) => {
         console.log(data)
         if (data.status == 200) {

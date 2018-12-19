@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute ,RoutesRecognized } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LocalStorage } from '../core/services/local_storage.service';
 import { CONFIG } from '../config'; 
+
 declare var $: any;
 
 @Component({
@@ -24,6 +25,8 @@ export class CheckoutComponent implements OnInit {
   salesOrderData: any;
   salesOrderList: any = [];
   is_selected:number;
+  quote_data:any;
+  quoteId:any;
   constructor(private route: ActivatedRoute,private router: Router,private customs: CustomScript, private server: HyperService) { 
     this.customs.loadScript()
     CONFIG.showmenu = false;
@@ -35,11 +38,13 @@ export class CheckoutComponent implements OnInit {
     this.totalQuantity = (LocalStorage.getValue('totalItems') != undefined) ? LocalStorage.getValue('totalItems') : '';
     this.productId = (LocalStorage.getValue('productIndex') != undefined) ? LocalStorage.getValue('productIndex') : '';
     this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
+    this.quote_data = (LocalStorage.getValue('quoteId') != undefined) ? LocalStorage.getValue('quoteId') :"";
     if (this.isLogged) {
       let obj:any = {};
-      obj.quoteId = this.userData.quoteId;
+      obj.quoteId = (this.userData.quoteId==null)?this.quote_data:this.userData.quoteId;
+      this.quoteId = obj.quoteId;
       obj.productId = this.productId;
-      if(this.userData.quoteId!=null && this.userData.quoteId!=undefined){
+      if(this.userData.quoteId!=null && this.userData.quoteId!=undefined || this.quote_data!=''){
         this.cardUpdate(obj,this.totalQuantity)
       }
       
@@ -47,13 +52,14 @@ export class CheckoutComponent implements OnInit {
       this.router.navigateByUrl('login')
     }
     this.active_show = false;
+   
     this.customerAddress();
   }
   goToChangeAddress(){
     this.router.navigateByUrl('change-address')
   }
   quoteItems(){
-    this.server.get("cart/read?quoteId="+1)
+    this.server.get("cart/read?quoteId="+this.userData.customerId)
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
@@ -65,11 +71,12 @@ export class CheckoutComponent implements OnInit {
       })
   }
   customerAddress(){
-    this.server.get("customersaddress?custId="+24)
+    this.server.get("fetchcustomersaddress?custId="+this.userData.customerId)
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
-          this.customerAddressList = data.result.content;
+          this.customerAddressList = data.result;
+          console.log(this.customerAddressList)
         }
         else {
 
@@ -155,18 +162,19 @@ removeOrder(item){
     })
 }
 goToNext(){
-  this.router.navigateByUrl('order-history')
-  // this.server.get("salesorder/add?quoteId="+this.userData.quoteId)
-  //   .then((data) => {
-  //     console.log(data)
-  //     if (data.status == 200) {
+  console.log("checkout")
+  // this.router.navigateByUrl('order-history')
+  this.server.get("salesorder/add?quoteId="+this.quoteId)
+    .then((data) => {
+      console.log(data)
+      if (data.status == 200) {
         
-  //       this.router.navigateByUrl('order-history')
-  //     }
-  //     else {
+        this.router.navigateByUrl('order-history')
+      }
+      else {
 
-  //     }
-  //   })
+      }
+    })
   
 }
 }

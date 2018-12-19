@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HyperService } from '../core/services/http.service';
 import { CustomScript } from '../core/services/custom-script';
+import { Router, ActivatedRoute } from "@angular/router";
 import { CONFIG } from '../../app/config';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
@@ -26,7 +27,7 @@ export class LandingComponent implements OnInit {
   top_selling_images_arr:any=[];
   wishlist_images_arr:any=[];
   mySlideImages = [1,2,3].map((i)=> `https://picsum.photos/640/480?image=${i}`);
-  myCarouselImages = [1,2,3,4,5,6].map((i)=> `https://picsum.photos/640/480?image=${i}`);
+  myCarouselImages:any = [];
   mySlideOptions={items: 1, dots: false, nav: true};
   myCarouselOptions={items:3, dots: false, nav: true};
   exclusideSlides:any;
@@ -36,7 +37,7 @@ export class LandingComponent implements OnInit {
   myCarouselTopOptions={items: 4, dots: false, nav: true};
   wishlistOptions={items: 3, dots: false, nav: true};
   
-  constructor(private server: HyperService, private customs: CustomScript) { 
+  constructor(private router: Router,private server: HyperService, private customs: CustomScript) { 
    
     this.customs.loadScript()
     CONFIG.showmenu =true;
@@ -83,10 +84,9 @@ export class LandingComponent implements OnInit {
     this.server.get("banners")
     .then((data) => {
         if (data.status == 200) {
-           console.log(data.result,"data")
            this.main_list=data.result;
            this.banner_list=this.main_list[0].bannerImages;
-          //  this.myCarouselImages = this.banner_list;
+           this.myCarouselImages = this.banner_list;
            this.exclusive_list=this.main_list[1].bannerImages;
            this.exclusideSlides = this.exclusive_list;
            this.exclusivelOptions = {items:3, dots: false, nav: true};
@@ -103,7 +103,6 @@ export class LandingComponent implements OnInit {
            for(let i=0;i<this.whats_new_list.length;i++){
             this.whats_new_images[i]=this.whats_new_list[i].imageUrl;
           }
-           console.log()
         } else  {
 
         }
@@ -115,13 +114,10 @@ export class LandingComponent implements OnInit {
     .then((data) => {
         if (data.status == 200) {
           this.top_selling_list=data.result;
-           console.log(data.result)
            this.top_selling_list.forEach(function (item, index) {
-            console.log(item)
             top_selling_images.push(item.imageUrl)
            })
            this.top_selling_images_arr = top_selling_images
-           console.log(top_selling_images)
         } else  {
 
         }
@@ -133,9 +129,7 @@ export class LandingComponent implements OnInit {
     .then((data) => {
         if (data.status == 200) {
           this.wish_list=data.result;
-           console.log(data.result)
            this.wish_list.forEach(function (item, index) {
-            console.log(item)
             wish_list_images.push(item.imageUrl)
            })
            this.wishlist_images_arr = wish_list_images
@@ -143,5 +137,15 @@ export class LandingComponent implements OnInit {
 
         }
     });
+  }
+  goToProduct(id){
+    console.log(id)
+    this.router.navigateByUrl('category/'+id)
+  }
+  goToSingleProduct(catId,prodId){
+    this.router.navigateByUrl('single-product/'+catId+'/'+prodId)
+  }
+  goToCategory(list){
+    this.router.navigateByUrl('category/'+list.bannerId)
   }
 }
