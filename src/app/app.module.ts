@@ -14,6 +14,12 @@ import {SlideshowModule} from 'ng-simple-slideshow';
 import { Ng2CompleterModule } from "ng2-completer";
 declare var $: any;
 import { CustomScript } from '../app/core/services/custom-script';
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from "angular-6-social-login";
 
 import { routes } from './app.routing';
 import { AboutComponent } from './about/about.component';
@@ -46,6 +52,24 @@ import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 // import { Ng4FilesModule } from 'angular4-files-upload';
 // import { FileDropModule } from 'ngx-file-drop';
+
+// Configs 
+export function getAuthServiceConfigs() {
+  let config = new AuthServiceConfig(
+      [
+        {
+          id: FacebookLoginProvider.PROVIDER_ID,
+          provider: new FacebookLoginProvider("Your-Facebook-app-id")
+        },
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider("129589406150-ibumfj7e47ql1js28fjn3pq3ldeo0voa.apps.googleusercontent.com")
+        },
+         
+      ]
+  );
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -85,13 +109,17 @@ import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
     OwlModule,
     SlideshowModule,
     Ng2CompleterModule,
+    SocialLoginModule,
     NgbModule.forRoot(),
     // Ng4FilesModule ,
     RouterModule.forRoot(routes, {
       useHash: true
     }),
   ],
-  providers: [HyperService, AuthGuardService, CustomScript],
+  providers: [HyperService, AuthGuardService, CustomScript,{
+    provide: AuthServiceConfig,
+    useFactory: getAuthServiceConfigs
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

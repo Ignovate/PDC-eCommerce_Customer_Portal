@@ -5,6 +5,11 @@ import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LocalStorage } from '../core/services/local_storage.service';
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider
+} from 'angular-6-social-login';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +22,7 @@ export class LoginComponent implements OnInit {
   err_message: string;
   userData: any = [];
   showmenu: boolean = false;
-  constructor(private router: Router, private customs: CustomScript, private server: HyperService, private formBuilder: FormBuilder) {
+  constructor(private router: Router, private customs: CustomScript, private server: HyperService, private formBuilder: FormBuilder, private socialAuthService: AuthService) {
     // if(LocalStorage.isSetJWT()) {
     //   LocalStorage.loadJWT()
     //  }else{
@@ -27,7 +32,23 @@ export class LoginComponent implements OnInit {
     CONFIG.showmenu = this.showmenu;
     LocalStorage.loadJWT()
   }
-
+  public socialSignIn(socialPlatform : string) {
+    let socialPlatformProvider;
+    if(socialPlatform == "facebook"){
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    }else if(socialPlatform == "google"){
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    } 
+    
+    this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => {
+        console.log(socialPlatform+" sign in data : " , userData);
+        // Now sign-in with userData
+        // ...
+            
+      }
+    );
+  }
   ngOnInit() {
     this.formBuild();
     LocalStorage.setValue('loggedIn', false);

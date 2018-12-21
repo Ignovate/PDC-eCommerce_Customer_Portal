@@ -37,10 +37,10 @@
     <div class="divider">
       <span>OR <!--Padding is optional--></span>
     </div>			  
-    <button type="submit" class="mx-auto d-block btn btn-primary text-center google-btn">
+    <button type="submit" class="mx-auto d-block btn btn-primary text-center google-btn" (click)="socialSignIn('google')">
       <img class="float-left" src="assets/img/icon/google-plus.png"/> Sign in with Google
     </button>
-    <button type="submit" class="mx-auto d-block btn btn-primary fb-btn">
+    <button type="submit" class="mx-auto d-block btn btn-primary fb-btn" (click)="socialSignIn('facebook')">
       <img class="float-left" src="assets/img/icon/facebook.png"/>Sign in with Facebook
     </button>
   </form>
