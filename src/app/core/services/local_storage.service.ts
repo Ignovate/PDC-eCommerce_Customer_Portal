@@ -1,5 +1,5 @@
 export class LocalStorage{
-	
+ 
 	//USED SESSION  STORAGE
 
 	private static jwtString:string='';
@@ -64,5 +64,5 @@ export class LocalStorage{
 			console.log('LocalStorage.removeValue('+itm+') is called when local_json is empty');
 		};
 	}	
-
+ 
 }

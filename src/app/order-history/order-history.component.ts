@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
-import { LocalStorage } from '../core/services/local_storage.service';
 import { HyperService } from '../core/services/http.service';
 import * as moment from 'moment';
+import { LocalStore } from '../store/local-store';
 
 @Component({
   selector: 'app-order-history',
@@ -11,23 +11,33 @@ import * as moment from 'moment';
   styleUrls: ['./order-history.component.css']
 })
 export class OrderHistoryComponent implements OnInit {
+  
   salesOrderList:any=[];
   salesOrderDate:any=[];
   userData:any=[];
   dateFormat:any;
   delivered_date:any;
-  constructor(private router: Router,private customs: CustomScript, private server: HyperService) { 
+  
+  constructor(private router: Router,
+    private customs: CustomScript,
+    private server: HyperService) { 
     this.customs.loadScript()
   }
 
   ngOnInit() {
-    this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
+    // this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
+    this.userData = LocalStore.getJson("user");
    console.log(this.userData);
-    this.getOrderList();
+    // this.getOrderList();
+    if(LocalStore.get("loggedIn")) {
+      this.getOrderList(LocalStore.get("userId"));
+    } else {
+      this.router.navigateByUrl('login');
+    }  
   }
-  getOrderList(){
-    
-    this.server.get("salesorders/"+this.userData.customerId)
+
+  getOrderList(userId){
+    this.server.get("salesorders/"+userId)
     .then((data) => {
       console.log(data)
       if (data.status == 200) {
@@ -38,7 +48,6 @@ export class OrderHistoryComponent implements OnInit {
           obj.month_data = this.salesOrderList[i].createdDate[1];
           obj.date_data = this.salesOrderList[i].createdDate[2];
           this.salesOrderDate.push(obj)
-         
         }
         console.log(this.salesOrderDate)
         for(let j=0;j<this.salesOrderDate.length;j++){
@@ -52,9 +61,11 @@ export class OrderHistoryComponent implements OnInit {
       else {
 
       }
-    })
+    });
   }
+
   goToDetail(){
     this.router.navigateByUrl('order-detail')
   }
+  
 }

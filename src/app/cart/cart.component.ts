@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { LocalStore } from '../store/local-store';
+import { Util } from '../util/util';
 import { LocalStorage } from '../core/services/local_storage.service';
 declare var $: any;
 @Component({
@@ -11,6 +13,7 @@ declare var $: any;
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  
   isLogged: boolean;
   salesOrderList: any = [];
   salesQuote_data: any;
@@ -25,168 +28,125 @@ export class CartComponent implements OnInit {
   text_value: any;
   quote_data:any;
   quoteId:any;
-  constructor(private router: Router, private customs: CustomScript, private server: HyperService) {
+  input:any;
+  cart_count:number=0;
+  cart_count_quantity:number=0;
+
+  constructor(private router: Router,
+    private activatedroute:ActivatedRoute,
+    private customs: CustomScript,
+    private server: HyperService) {
     this.customs.loadScript()
-    this.salesQuote_data = LocalStorage.getValue('salesQuoteItems');
+    // this.salesQuote_data = LocalStorage.getValue('salesQuoteItems');
   }
 
   ngOnInit() {
-    this.isLogged = (LocalStorage.getValue('loggedIn') != undefined) ? LocalStorage.getValue('loggedIn') : '';
-    this.totalQuantity = (LocalStorage.getValue('totalItems') != undefined) ? LocalStorage.getValue('totalItems') : '';
-    this.productId = (LocalStorage.getValue('productIndex') != undefined) ? LocalStorage.getValue('productIndex') : '';
-    this.userData = (LocalStorage.getValue('userData') != undefined) ? LocalStorage.getValue('userData') : [];
-    this.quote_data = (LocalStorage.getValue('quoteId') != undefined) ? LocalStorage.getValue('quoteId') :"";
-    if (this.isLogged) {
-      this.router.navigateByUrl('cart')
-      let obj:any = {};
-      obj.quoteId = (this.userData.quoteId==null)?this.quote_data:this.userData.quoteId;
-      this.quoteId = obj.quoteId;
-      obj.productId = this.productId;
-      if(this.userData.quoteId!=null && this.userData.quoteId!=undefined ||  this.quote_data!=''){
-        this.cardUpdate(obj,this.totalQuantity)
-        console.log("cart",this.cardUpdate(obj,this.totalQuantity));
-      }else{
-        this.cardNew()
+    console.log(LocalStorage.getValue('cartItemCount'),"cartItemCountcartItemCount11")
+    if(LocalStore.get("loggedIn")) {
+      this.input = LocalStore.getAndRemove("cart");
+      if(this.input) {
+        this.addToCart(this.input);
+      } else if(LocalStore.get("quoteId")) {
+        this.server.get("cart/read?quoteId="+LocalStore.get("quoteId"))
+            .then((data) => {
+            console.log("cart", data);
+            if (data.status == 200) {
+              this.salesOrderData = data.result;
+               this.salesOrderList = data.result.quoteOrderItems;
+               this.cart_count=this.salesOrderData.totalItems;
+               console.log("cart_count",this.cart_count)
+              // LocalStore.add('quoteId', this.salesOrderData.id);
+              LocalStorage.setValue('cartItemCount',data.result.totalItems)
+            }
+            else {
+  
+            }
+          });
+      } else {
+        console.log("input not available");
+        this.router.navigateByUrl('');
       }
-      
     } else {
-      this.router.navigateByUrl('login')
+      this.router.navigateByUrl('login');
     }
-
   }
+
   goToContinue() {
-    if (this.isLogged) {
+    if (LocalStore.get("loggedIn")) {
       this.router.navigateByUrl('')
     } else {
       this.router.navigateByUrl('login')
     }
   }
-  ///////////////////// old service ///////////////////////////////
-  // getSalesQuote() {
-  //   this.server.get("salesquote")
-  //     .then((data) => {
-  //       console.log(data)
-  //       if (data.status == 200) {
-  //         this.salesQuotePrice = data.result._embedded.salesQuoteEntities;
-  //       }
-  //       else {
-
-  //       }
-  //     })
-  // }
-  // getSalesQuoteItems() {
-  //   console.log(this.salesQuote_data)
-  //   this.server.get("salesquoteitems?quoteId=" + this.salesQuote_data.quoteId)
-  //     .then((data) => {
-  //       console.log(data)
-  //       if (data.status == 200) {
-  //         this.salesOrderList = data.result._embedded.salesQuoteItemsEntities;
-  //         console.log(this.salesOrderList)
-  //         for (let i = 0; i < this.salesOrderList.length; i++) {
-  //           this.salesOrderList[i].imageSrc = ''
-  //           this.imageSrc = this.imageUrl + '&type=1' + '&id=' + this.salesOrderList[i].productId;
-  //           this.salesOrderList[i].imageSrc = (this.imageSrc)
-  //         }
-  //         console.log(this.salesOrderList)
-  //       }
-  //       else {
-
-  //       }
-  //     })
-  // }
-
+  
   placeOrder() {
-    this.router.navigateByUrl('checkout')
+    this.router.navigateByUrl('checkout');
   }
 
-  ////////////////////////////////// Add TO Cart //////////////////
-  cardNew() {
-    this.server.post("cart/new", {
-      customerId:this.userData.customerId,
-      productId:this.productId,
-      quantity:this.totalQuantity,
-      websiteId:1,
-      addQuantity:false
-      // customerId: 24,
-      // productId: 3,
-      // quantity: 4,
-      // websiteId: 2
-    })
+  addToCart(params) {
+    this.server.post("cart/new", params)
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
           this.salesOrderData = data.result;
           this.salesOrderList = data.result.quoteOrderItems;
-          LocalStorage.setValue('quoteId',this.salesOrderData.id);
+          this.cart_count=this.salesOrderData.totalItems;
+          this.cart_count_quantity=this.salesOrderData.totalItemsQty;
+          LocalStore.add('quoteId', this.salesOrderData.id);
+          // LocalStore.add("cartItemCount", data.result.totalItems);
+          LocalStorage.setValue('cartItemCount',data.result.totalItems)
         }
         else {
 
         }
-      })
+    });
   }
-  
-  
-  removeOrder(item){
-    this.server.post("cart/delete", {
-      customerId:this.userData.customerId,
-      productId:item.productId,
-      quantity:0,
-      websiteId:1,
-      quoteId: item.quoteId,
-      
-    })
+
+  updateToCart(params) {
+    this.server.post("cart/update", params)
       .then((data) => {
         console.log(data)
         if (data.status == 200) {
           this.salesOrderData = data.result;
           this.salesOrderList = data.result.quoteOrderItems;
-
+          this.cart_count_quantity=this.salesOrderData.totalItemsQty;
+          LocalStore.add('quoteId', this.salesOrderData.id);
+          LocalStore.add('quoteId', this.salesOrderData.id);
+          LocalStore.add("cartItemCount", data.result.totalItems);
+          // LocalStorage.setValue("cartItemCount", data.result.totalItems);
+          LocalStorage.setValue('cartItemCount',data.result.totalItems)
         }
         else {
 
         }
-      })
+    });
   }
-  targetMinus(val, i) {
-    this.salesOrderList.forEach(function (item, index) {
-        if (index == i) {
-            if (val.quantity > 1) {
-                item.quantity--;
-            }
-        }
-    });
-    this.cardUpdate(val, val.quantity);
-}
-targetPlus(val, i) {
-  console.log(val.quantity,"quantityeee")
-   this.salesOrderList.forEach(function (item, index) {
-        if (index == i) {
-            item.quantity++;
-            console.log(item.quantity,"quantity")
-        }
-        
-    });
-    this.cardUpdate(val, val.quantity);
-}
-////////////////////////////////// Update TO Cart //////////////////
-cardUpdate(list,quantity) {
-  this.server.post("cart/update", {
-    customerId:this.userData.customerId,
-    quoteId: list.quoteId,
-    productId:list.productId,
-    quantity:Number(quantity),
-   // addQuantity:true,
-    websiteId:1
-  })
-    .then((data) => {
-      console.log(data)
-      if (data.status == 200) {
-        this.salesOrderData = data.result;
-        this.salesOrderList = data.result.quoteOrderItems;
-      }
-      else {
 
-      }
-    })
-}
+  removeFromCart(productId){
+    this.server.post("cart/delete", Util.buildCartParam(productId, 0))
+      .then((data) => {
+        console.log(data)
+        if (data.status == 200) {
+          this.salesOrderData = data.result;
+          this.cart_count=this.salesOrderData.totalItems;
+          this.cart_count_quantity=this.salesOrderData.totalItemsQty;
+          this.salesOrderList = data.result.quoteOrderItems;
+          LocalStore.add('quoteId', this.salesOrderData.id);
+          LocalStore.add("cartItemCount", data.result.totalItems);
+          LocalStorage.setValue('cartItemCount',data.result.totalItems)
+        }
+        else {
+
+        }
+    });
+  }
+
+  increaseQuantity(productId, quantity) {
+    this.updateToCart(Util.buildCartParam(productId, quantity));
+  }
+
+  decreaseQuantity(productId, quantity) {
+    this.updateToCart(Util.buildCartParam(productId, quantity));
+  }
+
 }

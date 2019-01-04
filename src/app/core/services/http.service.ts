@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { LocalStorage } from "./local_storage.service";
 import { CONFIG } from '../../../app/config';
 import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
 import { Router } from "@angular/router";
+import { LocalStore } from '../../store/local-store';
 
 @Injectable()
 
@@ -25,7 +25,7 @@ export class HyperService {
         headers.append("Cache-Control", 'no-cache');
         headers.append("Pragma", 'no-cache');
         headers.append("Content-Type", 'application/json');
-        headers.append("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
+        headers.append("Authorization", 'Bearer ' + LocalStore.get('token'));
         headers.append('Access-Control-Allow-Origin', '*');
         requestoptions = new RequestOptions({
             method: RequestMethod.Get,
@@ -68,7 +68,7 @@ export class HyperService {
             theBody = data
         }
         headers.append("Content-Type", 'application/json');
-        headers.append("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
+        headers.append("Authorization", 'Bearer ' + LocalStore.get('token'));
         headers.append('Access-Control-Allow-Origin', '*');
         requestoptions = new RequestOptions({
             method: RequestMethod.Post,
@@ -109,7 +109,7 @@ export class HyperService {
         theBody = data
     }
     headers.append("Content-Type", 'application/json');
-    headers.append("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
+    headers.append("Authorization", 'Bearer ' + LocalStore.get('token'));
     headers.append('Access-Control-Allow-Origin', '*');
     requestoptions = new RequestOptions({
         method: RequestMethod.Put,
@@ -165,7 +165,7 @@ export class HyperService {
             }, 2000);
         };
         xhr.open('post', CONFIG._url + endPoint, true);
-        if (tokenRequired) xhr.setRequestHeader("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
+        if (tokenRequired) xhr.setRequestHeader("Authorization", 'Bearer ' + LocalStore.get('token'));
         xhr.upload.addEventListener("progress", function (e) {
             if (e.lengthComputable) {
                 let percentage = Math.round((e.loaded * 100) / e.total);
@@ -191,7 +191,7 @@ export class HyperService {
             theBody = (isJSON) ? JSON.stringify(data) : data;
         }
         headers.append("Content-Type", 'application/json');
-        headers.append("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
+        headers.append("Authorization", 'Bearer ' + LocalStore.get('token'));
         headers.append('Access-Control-Allow-Origin', '*');
         requestoptions = new RequestOptions({
             method: RequestMethod.Delete,
@@ -232,7 +232,7 @@ export class HyperService {
             theBody = data
         }
         headers.append("Content-Type", 'application/json');
-        headers.append("Authorization", 'Bearer ' + LocalStorage.getValue('token'));
+        headers.append("Authorization", 'Bearer ' + LocalStore.get('token'));
         headers.append('Access-Control-Allow-Origin', '*');
         requestoptions = new RequestOptions({
             method: RequestMethod.Post,
@@ -268,8 +268,9 @@ export class HyperService {
 
     //CLEAR DATA //
     logOut() {
-        LocalStorage.removeValue('userData');
-        LocalStorage.createJWT();
+        LocalStore.remove('userData');
+        LocalStore.remove('user');
+        // LocalStorage.createJWT();
         this.router.navigate(['']);
         //CONFIG.GET_APP.getRootNav().setRoot(SignIn);        
     }

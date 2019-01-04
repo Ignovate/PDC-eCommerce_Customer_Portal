@@ -7,9 +7,7 @@ import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 import { makeStateKey } from '@angular/platform-browser';
 import { materialize } from 'rxjs/operators';
 import { markParentViewsForCheckProjectedViews } from '@angular/core/src/view/util';
- 
 import { HyperService } from '../core/services/http.service';
-import { LocalStorage } from '../core/services/local_storage.service';
  
  
 

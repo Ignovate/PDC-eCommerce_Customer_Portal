@@ -1,4 +1,4 @@
-<app-header></app-header>
+ 
 <!--Cart Area Start-->
 <section>
   <div class="cart-area bg-light ptb-30">
@@ -9,8 +9,8 @@
           <!--Order Summary Starts-->
           <div class="col-sm-12 bg-white shadow pt-20">
             <div class="cart-title">
-              <h4>My Cart
-                <span class="cart-product-values">{{salesOrderData.totalItems}}</span>
+              <h4>My Cart (
+                <span class="cart-product-values">{{cart_count}}</span> )
               </h4>
             </div>
             <!--Cart Title End-->
@@ -42,17 +42,20 @@
                         <!-- <input type='button' value='-' (click)="minus($event,i,salesproduct)" class='qtyminus'  />
                         <input type='text' name='quantity' [value]="salesproduct.quantity" class='qty' id='test_{{i}}' readonly/>
                         <input type='button' value='+' class='qtyplus' (click)="add($event,i,salesproduct)" /> -->
-                        <div class="card_left" (click)="targetMinus(salesproduct,i)">
+                        <div class="card_left" *ngIf="salesproduct.quantity-1<=0" >
+                          <img src="assets/img/minus.png">
+                        </div>
+                        <div class="card_left" *ngIf="salesproduct.quantity-1>0" (click)="decreaseQuantity(salesproduct.productId, salesproduct.quantity-1)">
                           <img src="assets/img/minus.png">
                         </div>
                         <div class="card_center">
                           <p>{{salesproduct.quantity}}</p>
                         </div>
-                        <div class="card_right" (click)="targetPlus(salesproduct,i)">
+                        <div class="card_right" (click)="increaseQuantity(salesproduct.productId, salesproduct.quantity+1)">
                           <img src="assets/img/plus.png">
                         </div>
                         <span class="control-label"  style="cursor:pointer">
-                          <a (click)="removeOrder(salesproduct)">Remove</a>
+                          <a (click)="removeFromCart(salesproduct.productId)">Remove</a>
                         </span>
                       </div>
                       <div>
@@ -90,7 +93,7 @@
                 <div class="sub-total">
                   <div class="w-75">
                     <h5 class="font-weight-bold">Price (
-                      <span class="cart-product-values">{{salesOrderData.totalItemsQty}} </span>items)
+                      <span class="cart-product-values">{{cart_count_quantity}} </span>items)
                     </h5>
                   </div>
                   <div class="w-25 product-price">
@@ -113,4 +116,4 @@
 </section>
 <!--Cart Area Section End-->
 
-<app-footer></app-footer>
+ 

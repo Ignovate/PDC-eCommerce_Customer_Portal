@@ -173,3 +173,18 @@
 .prod_box{
     padding:10px;
 }
+.badge{
+    position: absolute;
+    left: 28px;
+    top: -5px;
+    text-align: center;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    background-color: #ff6161;
+    border: 1px solid #fff;
+    font-weight: 400;
+    color: #f0f0f0;
+    line-height: 11px;
+    font-size: 12px;
+}

@@ -18,7 +18,7 @@
                       <a href="#">English</a>
                     </li>
                     <li>
-                      <a href="#">اللغة العربية</a>
+                      <a (click)="underConstruction()">اللغة العربية</a>
                     </li>
                   </ul>
                 </li>
@@ -121,7 +121,7 @@
           <!--Header Logo Start-->
           <div class="col-12 col-md-3 col-lg-2">
             <div class="logo">
-              <a href="index.html">
+              <a [routerLink]="['/']">
                 <img src="assets/img/logo/logo.png" alt="">
               </a>
             </div>
@@ -132,27 +132,33 @@
               <div class="search-input">
                 <form action="#" method="POST">
                   <div class="form-search">
-                    <input id="search" class="input-text" value="" placeholder="Search Entire Store" type="search" [(ngModel)]="search_text"  (keypress)="search_text=$event.target.value"  (ngModelChange)="onvalueChange($event)" [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                    <input id="search" class="input-text" value="" placeholder="Search products in Entire store" type="search" [(ngModel)]="search_text"  (keypress)="search_text=$event.target.value"  (ngModelChange)="onvalueChange($event)" [ngModelOptions]="{standalone: true}" autocomplete="off"/>
                     <div class="search-dropdown-box" *ngIf="search_text!=''">
-                        <h5 class="drop_title">Categories</h5>
+                      <h5 class="drop_title">Categories</h5>
                         <div class="prod_box">
                           <div *ngFor="let categ of categ">
-                            <li><a (click)="goToCategory(categ.categoryId,categ)">{{categ.name}}</a></li>
+                            <li><a (click)="clickSearchResult('categoryId', categ)">{{categ.name}}</a></li>
                           </div>
-                          </div>
+                      </div>
                         
                       <h5 class="drop_title">Brands</h5>
                       <div class="prod_box">
                         <div *ngFor="let brand of brand">
-                          <li><a (click)="goToCategory(brand.brandId,brand)">{{brand.name}}</a></li>
+                          <li><a (click)="clickSearchResult('brandId', brand)">
+                            <img [src]="brand.imageUrl" width="100" height="75"/><br/>
+                            {{brand.name}}</a></li>
                         </div>
-                        </div>
-                       <h5 class="drop_title">Products</h5>
-                       <div class="prod_box">
+                      </div>
+                      <h5 class="drop_title">Products</h5>
+                      <div class="prod_box">
                         <div *ngFor="let prod of prod">
-                          <li><a (click)="goToCategory(prod.productId,brand)">{{prod.name}}</a></li>
+                          <li><a (click)="clickSearchResult('productId', prod)">
+                              <img [src]="prod.imageUrl" width="100" height="75"/><br/>
+                            {{prod.name}}</a><br/>
+                            <span>{{prod.price}}</span>
+                          </li>
                         </div>
-                        </div>
+                      </div>
                       </div>
                     <button>
                       <i class="zmdi zmdi-search"></i>
@@ -170,7 +176,7 @@
                     <a href="#" *ngIf="!loggedIn">My account
                       <i class="zmdi zmdi-chevron-down"></i>
                     </a>
-                    <a href="#" *ngIf="loggedIn">{{firstname.firstName | titlecase}}
+                    <a href="#" *ngIf="loggedIn">{{user.firstName | titlecase}}
                       <i class="zmdi zmdi-chevron-down"></i>
                     </a>
                     <ul class="ht-dropdown">
@@ -178,7 +184,7 @@
                         <a [routerLink]="['/login']">Login</a>
                       </li>
                       <li *ngIf="loggedIn">
-                          <a  [routerLink]="['/profile']">My Profile</a>
+                          <a  [routerLink]="['/customer-profile']">My Profile</a>
                       </li>
                       <li *ngIf="loggedIn" >
                         <a [routerLink]="['/order-history']">My Orders</a>
@@ -216,7 +222,7 @@
                   </li>
                   <li>
                     <a [routerLink]="['/cart']">
-                      <img src="assets/img/icon/cart.png">
+                      <img src="assets/img/icon/cart.png"><span class="badge">{{cartItemCount}}</span>
                     </a>
                   </li>
                   <li>
@@ -259,13 +265,13 @@
                   <ul class="menu">
                     <!-- <li class="menu-item"><a href="">Sports</a></li>
                     <li class="menu-item"><a href="">Wish List</a></li> -->
-                    <li class="menu-item has-children" *ngFor="let mainCategory of categoryList;let i=index;"><a (click)="goToCategory(mainCategory.categoryId,mainCategory)">{{mainCategory.categoryName}} <span *ngIf="mainCategory.subCategories.length>0" class="dropdown-icon" ></span></a>
+                    <li class="menu-item has-children" *ngFor="let mainCategory of categoryList;let i=index;"><a (click)="clickMenu(mainCategory.categoryId, mainCategory)">{{mainCategory.categoryName}} <span *ngIf="mainCategory.subCategories.length>0" class="dropdown-icon" ></span></a>
                       <ul class="sub-menu" *ngIf="mainCategory.subCategories.length>0">
                         <!-- <li class="menu-item"><a href="">Lorem</a></li>
                         <li class="menu-item"><a href="">Nisi</a></li> -->
-                        <li class="menu-item has-children" *ngFor="let precat of mainCategory.subCategories;let i=index;"><a  (click)="goToCategory(precat.categoryId,precat)">{{precat.categoryName}} <span class="dropdown-icon" *ngIf="precat.subCategories.length>0"></span></a>
+                        <li class="menu-item has-children" *ngFor="let precat of mainCategory.subCategories;let i=index;"><a  (click)="clickMenu(precat.categoryId, precat)">{{precat.categoryName}} <span class="dropdown-icon" *ngIf="precat.subCategories.length>0"></span></a>
                           <ul class="sub-menu" *ngIf="precat.subCategories.length>0">
-                            <li class="menu-item" *ngFor="let subcat of precat.subCategories;let i=index;"><a  (click)="goToCategory(subcat.categoryId,subcat)">{{subcat.categoryName}}</a></li>
+                            <li class="menu-item" *ngFor="let subcat of precat.subCategories;let i=index;"><a  (click)="clickMenu(subcat.categoryId, subcat)">{{subcat.categoryName}}</a></li>
                            <!--  <li class="menu-item"><a href="">Nisi</a></li>
                             <li class="menu-item"><a href="">Tenetur</a></li>
                           <li class="menu-item has-children"><a href="">Laborum <span class="dropdown-icon"></span></a>

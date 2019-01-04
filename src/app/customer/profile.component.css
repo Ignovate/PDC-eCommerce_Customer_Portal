@@ -1,0 +1,26 @@
+.text-red{
+    color: red !important;
+}
+.error_cls{
+    border-bottom: 1px solid red !important;
+}
+input[type="email"].input-new{
+    height:47px!important;
+    width:100%!important;
+}
+.disable{
+    cursor: not-allowed;
+}
+.save_cls{
+    margin-left:15px;
+    height: 42px!important;
+}
+.card-header > h4 > span {
+    font-size: 18px;
+    font-weight: normal;
+}
+input[type="password"].input-new{
+    margin: 0 2%;
+    height: 47px;
+    width: 100%;
+}

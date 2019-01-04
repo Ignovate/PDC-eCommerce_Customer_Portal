@@ -1,10 +1,10 @@
-<app-header></app-header>
-<div class="col-12 col-sm-8 col-md-4 mx-auto d-block mt-50 mb-30">
-  <!--Header Logo Start--> 
+ 
+<!-- <div class="col-12 col-sm-8 col-md-4 mx-auto d-block mt-50 mb-30">
   <div class="logo text-center">
-    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+    <a [routerLink]="['/']"><img src="assets/img/logo/logo.png" alt=""></a>
   </div>
-</div><!--Logo End-->
+</div> -->
+<!--Logo End-->
 <!--Login Area Start-->
 <div class="col-12 col-sm-8 col-md-4 mx-auto d-block login-wrap shadow-lg mb-50">
   <form [formGroup]="loginform" >
@@ -31,7 +31,7 @@
       <a class="text-left shake">
           {{err_message}} </a>
   </div>
-    <a (click)="goToResiter()">New User? <span class="color-blue-nano">Signup</span></a>
+    <a (click)="goToResiter()" class="cursor-pointer">New User? <span class="color-blue-nano">Signup</span></a>
     <a class="float-right" href="#"><span class="color-blue-nano">Forgot Password</span></a>
     <button type="submit" class="mx-auto d-block btn btn-primary" (click)="onSubmitLogin()">Submit</button>
     <div class="divider">
@@ -43,7 +43,8 @@
     <button type="submit" class="mx-auto d-block btn btn-primary fb-btn" (click)="socialSignIn('facebook')">
       <img class="float-left" src="assets/img/icon/facebook.png"/>Sign in with Facebook
     </button>
+    
   </form>
 </div>
 <!--Login Area End-->     
-<app-footer></app-footer>
+ 

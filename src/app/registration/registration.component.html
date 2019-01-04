@@ -1,8 +1,8 @@
-<app-header></app-header>
+ 
 <div class="col-12 col-sm-8 col-md-4 mx-auto d-block mt-50 mb-30">
   <!--Header Logo Start--> 
   <div class="logo text-center">
-    <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+    <a [routerLink]="['/']"><img src="assets/img/logo/logo.png" alt=""></a>
   </div>
 </div><!--Logo End-->
 <!--Registeration Form Area Start-->
@@ -71,11 +71,11 @@
     </button>
       <p class="text-center">
       Already have an account?
-      <a (click)="goToSignIn()">
+      <a (click)="goToSignIn()" class="cursor-pointer">
         <span class="color-blue-nano" >Sign in</span>
       </a>
     </p>
   </form>
 </div>			
 <!--Registeration Form End-->
-<app-footer></app-footer>
+ 

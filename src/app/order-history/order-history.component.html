@@ -1,4 +1,4 @@
-<app-header></app-header>
+ 
 <!--Breadcrumb Start--> 
 <div class="breadcrumb-area">
   <div class="container">
@@ -6,7 +6,7 @@
           <div class="col-md-12">
               <div class="breadcrumb-content">
                   <ul>
-                      <li><a [routerLink]="['/profile']">MyAccount</a></li>
+                      <li><a [routerLink]="['/customer-profile']">MyAccount</a></li>
                       <li class="active"><a >Orders</a></li>
                   </ul>
               </div>
@@ -65,7 +65,8 @@
                   </div>
                 </div>								
                 <div class="product-info">
-                  <p>{{orderItems.quantity}}</p>
+                  <p *ngIf="orderItems.quantity==1">{{orderItems.quantity}} item</p>
+                  <p *ngIf="orderItems.quantity>1">{{orderItems.quantity}} items</p>
                 </div>
               </div>
             </div>
@@ -156,4 +157,4 @@
   </div>
 </div>
 <!--Ordered Products Ends-->
-<app-footer></app-footer>
+ 

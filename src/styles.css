@@ -5556,3 +5556,6 @@ input[type="text"].input-new {
 	font-weight: bold;
 	cursor: pointer;
 }
+.cursor-pointer{
+	cursor:pointer;
+}

@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
-import { LocalStorage } from '../core/services/local_storage.service';
+import { LocalStore } from '../store/local-store';
+import { Util } from '../util/util';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -21,10 +22,8 @@ export class CategoryComponent implements OnInit {
    
   }
  
-  product(id,catid) {
-    LocalStorage.setValue('product_id', id)
-    LocalStorage.setValue('category_id', catid)
-    
-    this.router.navigateByUrl('single-product')
+  product(productId, categoryId) {
+    LocalStore.add("product", Util.getProductParam(categoryId, productId));
+    this.router.navigateByUrl("product/"+productId);
   }
 }
