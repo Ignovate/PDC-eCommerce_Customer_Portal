@@ -1,0 +1,316 @@
+<!--Header Area Start-->
+<header>
+  <div class="header-container">
+    <!--Header Top Area Start-->
+    <div class="header-top-area">
+      <div class="container">
+        <div class="row">
+          <!--Header Top Left Start-->
+          <div class="col-4 col-md-4 col-lg-3">
+            <div class="header-cur-lang text-md-left">
+              <ul>
+                <li class="drodown-show">
+                  <a href="#">English
+                   <i class="zmdi zmdi-chevron-down"></i>
+                  </a>
+                 <ul class="ht-dropdown">
+                    <li>
+                      <a href="#">English</a>
+                    </li>
+                    <li>
+                      <a (click)="underConstruction()">اللغة العربية</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="drodown-show">
+                  <a href="#">AED
+                    <i class="zmdi zmdi-chevron-down"></i>
+                  </a>
+                  <ul class="ht-dropdown">
+                    <li>
+                      <a href="#">AED</a>
+                    </li>
+                    <li>
+                      <a href="#">USD</a>
+                    </li>
+                    <!--<li>
+                      <a href="#"> $ US Dollar</a>
+                    </li>-->
+                  </ul>
+                </li>
+                <li class="drodown-show">
+                  <a href="#">UAE
+                    <i class="zmdi zmdi-chevron-down"></i>
+                  </a>
+                  <ul class="ht-dropdown">
+                    <li>
+                      <a href="#">UAE</a>
+                    </li>
+                    <li>
+                      <a href="#">Qatar</a>
+                    </li>
+                    <li>
+                      <a href="#">Bahrain</a>
+                    </li>
+                    <li>
+                      <a href="#">Jordan</a>
+                    </li>
+                    <li>
+                      <a href="#">Kuwait</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!--Header Top Left End-->
+          <!--Header Top Left Start-->
+          <div class="col-8 col-lg-3 col-xl-4 d-md-none d-lg-inline-block">
+            <div class="header-contact text-center text-md-left">
+              <ul>
+                <li>24/7 Customer Service</li>
+                <li>
+                  <img src="assets/img/icon/phone.png" alt="" /> 9876543210</li>
+                <li class="d-lg-none hidden d-xl-inline-block none">Enhancing Life. Excelling in Care.</li>
+              </ul>
+            </div>
+          </div>
+          <!--Header Top Left End-->
+          <!--Header Top Right Start-->
+          <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+            <div class="contact-box mx-auto float-lg-right">
+              <div class="header-top-phone">
+                <p>
+                  <img src="assets/img/icon/blog.png" alt="" />
+                  <span>Blogs</span>
+                </p>
+              </div>
+              <div class="header-top-phone" [routerLink]='["/store-locator"]'>
+                <p>
+                  <img src="assets/img/icon/map.png" alt="" />
+                  <span>Find a Store</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-2 top-social-links text-lg-right">
+            <ul>
+              <li>
+                <a href="#" title="">
+                  <img src="assets/img/icon/facebook.png" alt="" /> </a>
+              </li>
+              <li>
+                <a href="#" title="">
+                  <img src="assets/img/icon/instagram.png" alt="" /> </a>
+              </li>
+              <li>
+                <a href="#" title="">
+                  <img src="assets/img/icon/linkedin.png" alt="" /> </a>
+              </li>
+            </ul>
+          </div>
+          <!--Header Top Right End-->
+        </div>
+      </div>
+    </div>
+    <!--Header Top Area End-->
+    <!--Header Bottom Area Start-->
+    <div class="header-bottom-area" *ngIf="showmenu">
+      <div class="container">
+        <div class="row align-items-center mob-mar-10 m-0 header-sticky">
+          <!--Header Logo Start-->
+          <div class="col-12 col-md-3 col-lg-2">
+            <div class="logo">
+              <a [routerLink]="['/']">
+                <img src="assets/img/logo/logo.png" alt="">
+              </a>
+            </div>
+          </div>
+          <!--Header Logo Start-->
+          <div class="col-12 col-md-3 col-lg-5">
+            <div class="header-search">
+              <div class="search-input">
+                <form action="#" method="POST">
+                  <div class="form-search">
+                    <input id="search" class="input-text" value="" placeholder="Search products in Entire store" type="search" [(ngModel)]="search_text"  (keypress)="search_text=$event.target.value"  (ngModelChange)="onvalueChange($event)" [ngModelOptions]="{standalone: true}" autocomplete="off"/>
+                    <div class="search-dropdown-box" *ngIf="search_text!=''">
+                      <h5 class="drop_title">Categories</h5>
+                        <div class="prod_box">
+                          <div *ngFor="let categ of categ">
+                            <li><a (click)="clickSearchResult('categoryId', categ)">{{categ.name}}</a></li>
+                          </div>
+                      </div>
+                        
+                      <h5 class="drop_title">Brands</h5>
+                      <div class="prod_box">
+                        <div *ngFor="let brand of brand">
+                          <li><a (click)="clickSearchResult('brandId', brand)">
+                            <img [src]="brand.imageUrl" width="100" height="75"/><br/>
+                            {{brand.name}}</a></li>
+                        </div>
+                      </div>
+                      <h5 class="drop_title">Products</h5>
+                      <div class="prod_box">
+                        <div *ngFor="let prod of prod">
+                          <li><a (click)="clickSearchResult('productId', prod)">
+                              <img [src]="prod.imageUrl" width="100" height="75"/><br/>
+                            {{prod.name}}</a><br/>
+                            <span>{{prod.price}}</span>
+                          </li>
+                        </div>
+                      </div>
+                      </div>
+                    <button>
+                      <i class="zmdi zmdi-search"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3 col-lg-2 col-xl-3">
+            <div class="header-bottom float-lg-right">
+              <div class="account text-left text-md-right">
+                <ul>
+                  <li class="drodown-show">
+                    <a href="#" *ngIf="!loggedIn">My account
+                      <i class="zmdi zmdi-chevron-down"></i>
+                    </a>
+                    <a href="#" *ngIf="loggedIn">{{user.firstName | titlecase}}
+                      <i class="zmdi zmdi-chevron-down"></i>
+                    </a>
+                    <ul class="ht-dropdown">
+                      <li *ngIf="!loggedIn">
+                        <a [routerLink]="['/login']">Login</a>
+                      </li>
+                      <li *ngIf="loggedIn">
+                          <a  [routerLink]="['/customer-profile']">My Profile</a>
+                      </li>
+                      <li *ngIf="loggedIn" >
+                        <a [routerLink]="['/order-history']">My Orders</a>
+                      </li>
+                      <li *ngIf="loggedIn">
+                        <a [routerLink]="['/checkout']">Checkout</a>
+                      </li>
+                      <li *ngIf="!loggedIn">
+                        <a [routerLink]="['/register']">Register</a>
+                      </li>
+                      <li *ngIf="loggedIn">
+                        <a [routerLink]="['/cart']">Cart</a>
+                      </li>
+                      <!--<li>
+                        <a href="#">Wishlist</a>
+                      </li>-->
+                      <li *ngIf="loggedIn">
+                        <a (click)="signOut()">SignOut</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!--Cart & Search Item Start-->
+          <div class="col-6 col-md-3 col-lg-3 col-xl-2">
+            <div class="header-bottom-right float-lg-right">
+              <div class="cart-wishlist">
+                <ul>
+                  <li>
+                    <a href="#">
+                      <img src="assets/img/icon/wishlist.png">
+                    </a>
+                  </li>
+                  <li>
+                    <a [routerLink]="['/cart']">
+                      <img src="assets/img/icon/cart.png"><span class="badge">{{cartItemCount}}</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <img src="assets/img/icon/track.png">
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <!--Header Menu Start-->
+          <div class="col-xl-12 col-lg-12 col-md-12">
+            <!--Menu Start-->
+            <!-- <div class="header-menu-area float-left header-sticky">
+              <nav>
+                <ul>
+                  <li *ngFor="let mainCategory of categoryList;let i=index;">
+                    <a  (click)="goToCategory(mainCategory.categoryId,mainCategory)">{{mainCategory.categoryName}}
+                      <i *ngIf="mainCategory.subCategories.length>0" class="zmdi zmdi-chevron-down"></i>
+                    </a>
+                    <ul class="mega-menu" *ngIf="mainCategory.subCategories.length>0">
+                      <li *ngFor="let precat of mainCategory.subCategories;let i=index;">
+                        <a (click)="goToCategory(precat.categoryId)">{{precat.categoryName}}</a>
+                        <ul *ngIf="precat.subCategories.length>0">
+                          <li *ngFor="let subcat of precat.subCategories;let i=index;">
+                            <a (click)="goToCategory(subcat.categoryId)">{{subcat.categoryName}}</a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div> -->
+            <div class="header-menu-area float-left">
+              <nav class="nav">
+                  <ul class="menu">
+                    <!-- <li class="menu-item"><a href="">Sports</a></li>
+                    <li class="menu-item"><a href="">Wish List</a></li> -->
+                    <li class="menu-item has-children" *ngFor="let mainCategory of categoryList;let i=index;"><a (click)="clickMenu(mainCategory.categoryId, mainCategory)">{{mainCategory.categoryName}} <span *ngIf="mainCategory.subCategories.length>0" class="dropdown-icon" ></span></a>
+                      <ul class="sub-menu" *ngIf="mainCategory.subCategories.length>0">
+                        <!-- <li class="menu-item"><a href="">Lorem</a></li>
+                        <li class="menu-item"><a href="">Nisi</a></li> -->
+                        <li class="menu-item has-children" *ngFor="let precat of mainCategory.subCategories;let i=index;"><a  (click)="clickMenu(precat.categoryId, precat)">{{precat.categoryName}} <span class="dropdown-icon" *ngIf="precat.subCategories.length>0"></span></a>
+                          <ul class="sub-menu" *ngIf="precat.subCategories.length>0">
+                            <li class="menu-item" *ngFor="let subcat of precat.subCategories;let i=index;"><a  (click)="clickMenu(subcat.categoryId, subcat)">{{subcat.categoryName}}</a></li>
+                           <!--  <li class="menu-item"><a href="">Nisi</a></li>
+                            <li class="menu-item"><a href="">Tenetur</a></li>
+                          <li class="menu-item has-children"><a href="">Laborum <span class="dropdown-icon"></span></a>
+                          <ul class="sub-menu">
+                            <li class="menu-item"><a href="">Lorem</a></li>
+                            <li class="menu-item"><a href="">Nisi</a></li>
+                            <li class="menu-item"><a href="">Tenetur</a></li>
+                            <li class="menu-item"><a href="">Ullam</a></li>
+                            <li class="menu-item"><a href="">Quidem</a></li>
+                          </ul>
+                            </li> 
+                            <li class="menu-item"><a href="">Quidem</a></li>-->
+                          </ul>
+                            </li>
+                            <!-- <li class="menu-item"><a href="">Ullam</a></li>
+                            <li class="menu-item"><a href="">Quidem</a></li> -->
+                      </ul>
+                    </li>
+                    <!-- <li class="menu-item"><a href="">Hair</a></li>
+                    <li class="menu-item"><a href="">Top Selling</a></li>
+                    <li class="menu-item"><a href="">Hygiene</a></li>
+                    <li class="menu-item"><a href="">Baby & Mom</a></li> -->
+                  </ul>
+                </nav>
+              </div>
+            <!--Menu End-->
+          </div>
+          <!--Header Menu End-->
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!--Mobile Menu Area Start-->
+            <div class="mobile-menu home d-lg-none d-xl-none"></div>
+            <!--Mobile Menu Area End-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Header Bottom Area End-->
+  </div>
+</header>
+<!--Header Area End-->

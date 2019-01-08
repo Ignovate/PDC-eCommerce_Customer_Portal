@@ -46,3 +46,11 @@
     border-bottom: 1px solid #f0f0f0;
     cursor: pointer;
 }
+.w-60{
+    width:60%;
+    float: left;
+}
+.w-40{
+    width:40%;
+    float: left;
+}

@@ -1,0 +1,9 @@
+.text-red{
+    color: red !important;
+}
+.error_cls{
+    border-bottom: 1px solid red !important;
+}
+.cursor-pointer{
+    cursor:pointer;
+}

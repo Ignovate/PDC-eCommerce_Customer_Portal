@@ -7,6 +7,8 @@ import { HyperService } from '../core/services/http.service';
 import { LocalStore } from '../store/local-store';
 import { Util } from '../util/util';
 import { LocalStorage } from '../core/services/local_storage.service';
+import { masterService } from '../core/services/master.service';
+
 import {
   AuthService,
   FacebookLoginProvider,
@@ -29,13 +31,12 @@ showmenu: boolean = false;
 cart:any;
 signedUserName:string;
 signedUserEmail:string;
-
 constructor(private router: Router,
   private activatedroute:ActivatedRoute,
   private customs: CustomScript,
   private server: HyperService,
   private formBuilder: FormBuilder,
-  private socialAuthService: AuthService) {
+  private socialAuthService: AuthService,private masterService: masterService) {
   if(LocalStorage.isSetJWT()) {
     LocalStorage.loadJWT()
    }else{
@@ -117,7 +118,9 @@ onlineLogin(){
           LocalStore.addJson("user", this.userData);
           LocalStore.add("userId", this.userData.customerId);
           LocalStore.add("loggedIn", true);
-          
+          LocalStorage.setValue('user', this.userData);
+          LocalStorage.setValue('loggedIn', true);
+          LocalStorage.setValue('user', this.userData);
          CONFIG._loggedIn = true;
         this.router.navigateByUrl('');
       }
@@ -143,13 +146,17 @@ onSubmitLogin() {
           this.userData = data.result.customer;
           // LocalStorage.setValue('userData', this.userData);
           // LocalStorage.setValue('quoteId', this.userData.quoteId);
-          // LocalStorage.setValue('loggedIn', true);
+          LocalStorage.setValue('loggedIn', true);
           CONFIG._loggedIn = true;
           // New code
           let user = data.result.customer;
           LocalStore.addJson("user", user);
           LocalStore.add("userId", user.customerId);
           LocalStore.add("loggedIn", true);
+          LocalStorage.setValue('loggedIn', true);
+          LocalStorage.setValue('user', user);
+          LocalStorage.setValue('cartItemCount',data.result.customer.cartItemCount)
+          this.masterService.variableWatchesLogin(LocalStorage.getValue('loggedIn'))
           if(user.quoteId)
             LocalStore.add("quoteId", user.quoteId);
           if(user.cartItemCount)

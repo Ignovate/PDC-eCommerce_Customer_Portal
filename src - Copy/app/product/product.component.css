@@ -1,0 +1,58 @@
+.qty {
+    width: 40px;
+    height: 25px;
+    text-align: center;
+}
+input.qtyplus { width:25px; height:25px;}
+input.qtyminus { width:25px; height:25px;}
+.text-red{
+    color: red;
+}
+.img_css_amaze{
+    width:158px!important;
+    height:188px!important;
+}
+.owl-carousel {
+    display: block!important;
+    width: 100%;
+    z-index: 1;
+}
+/deep/ owl-carousel-child{
+    display: block!important;
+}
+/deep/.owl-nav {
+    position: absolute!important;
+    top: 50%!important;
+    width: 100%!important;
+}
+/deep/.owl-carousel .owl-nav button.owl-prev{
+    left:0!important;
+ }
+/deep/.owl-carousel .owl-nav button.owl-next, /deep/.owl-carousel .owl-nav button.owl-prev, /deep/.owl-carousel button.owl-dot {
+    background: 0 0!important;
+    color: #949292!important;
+    border: none!important;
+    padding: 0!important ;
+    font: inherit!important;
+    position: absolute!important;
+    right:0px;
+}
+/deep/.owl-nav button span {
+    line-height: 0px!important;
+    color: #949292!important;
+    font-size: 50px!important;
+    font-weight: bold!important;
+}
+.item-group{
+    text-align: center;
+}
+.sale-price{
+    text-transform: uppercase;
+    color: #198adc;
+    font-weight: bold;
+    margin: 5px 0;
+}
+.actual-price{
+    text-decoration: line-through;
+    color: #999;
+}

@@ -1,0 +1,160 @@
+ 
+<!--Breadcrumb Start--> 
+<div class="breadcrumb-area">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="breadcrumb-content">
+                  <ul>
+                      <li><a [routerLink]="['/customer-profile']">MyAccount</a></li>
+                      <li class="active"><a >Orders</a></li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!--Breadcrumb End-->
+<!--Ordered Products Starts  01-->
+<div class="container mt-20 mb-20">
+  <div class="order-history-area shadow" *ngFor="let orderList of salesOrderList; let i=index;">
+    <div class="order-header-detail">
+      <div class="row">
+        <!-- <div class="col-6 col-md-3">
+          <span>Order Placed</span><br>
+          <span class="product-placed-date">
+            <strong>21 June 2018</strong>
+          </span>
+        </div> -->
+        <div class="col-6 col-md-4">
+          <span>Grand Total</span><br>
+          <span class="product-grandtotal">
+            <strong>AED {{orderList.grandTotal}}</strong>
+          </span>
+        </div>
+        <div class="col-6 col-md-4">
+          <span class="products-status">Ordered</span><br>
+          <span class="product-placed-date">
+            <strong>{{orderList.delivered}}</strong>
+          </span>
+        </div>
+        <div class="col-6 col-md-4">
+          <span>Order ID</span><br>
+          <span class="order-id">
+            <strong>{{orderList.id}}</strong>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="order-body-detail">
+      <div class="order-history-list row">
+        <div class="order-details-left col-md-9">
+
+          <div class="row product-list" *ngFor="let orderItems of orderList.saleOrderItems; let j=index;">
+            <div class="col-md-4 col-lg-3">
+              <img class="order-history-img" src={{orderItems.imageUrl}} style="width:115px;"/>
+            </div>
+            <div class="col-md-8 col-lg-9">
+              <div class="single-product-content">
+                <h4 class="single-product-name " style="padding-top:25px;">{{orderItems.productName}}</h4>
+                <div class="single-product-price">
+                  <div class="product-discount">
+                    <span class="price">AED {{orderItems.price}}</span>
+                    <!-- <span class="regular-price">AED {{orderItems.cost}}</span> -->
+                  </div>
+                </div>								
+                <div class="product-info">
+                  <p *ngIf="orderItems.quantity==1">{{orderItems.quantity}} item</p>
+                  <p *ngIf="orderItems.quantity>1">{{orderItems.quantity}} items</p>
+                </div>
+              </div>
+            </div>
+          </div> <!-- LIST ONE END -->
+           <!-- LIST ONE END -->
+        </div>
+        <div class="order-details-right col-md-3">
+          <div class="pl-0">
+            <!-- <ul class="order-history-links">
+              <li><a  title="Order Details" (click)="goToDetail()">Order Details</a></li>
+              <li><a href="#" title="Invoice">Invoice</a></li>
+            </ul> -->
+            <!--Price Table Starts-->
+            <div class="price-table">
+              <div class="pricedetail-title mb-20">
+                <h4>Order Summary</h4>
+              </div>
+              <!--Price Summary Starts-->
+              <div class="price-list-group">
+                <div class="sub-total">
+                  <div class="w-50">
+                    <h5 class="font-weight-bold">Sub Total 
+                      (<span class="cart-product-values">{{orderList.totalItemsQty}}</span>items)
+                    </h5>
+                  </div>
+                  <div class="w-50 product-price">
+                    <span class="price">AED {{orderList.subTotal}}</span>
+                  </div>
+                </div>
+              </div><!--Sub Total End-->
+              <div class="price-list-group">
+                <div class="w-50">
+                  <h5 class="font-weight-bold">Tax</h5>
+                </div>
+                <div class="w-50 product-price">
+                  <span class="price">AED {{orderList.taxAmount}}</span>
+                </div>
+              </div><!--Tax End-->								
+              <div class="price-list-group">
+                <div class="w-50">
+                  <h5 class="font-weight-bold">Shipping </h5>
+                </div>
+                <div class="w-50 product-price">
+                  <span class="price">AED {{orderList.shippingAmount}}</span>
+                </div>
+              </div><!--Shipping End-->								
+              <!-- <div class="price-list-group border-bottom">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Discount</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED 00</span>
+                </div>
+              </div> -->
+              <!--Discount End-->
+              <!-- <div class="price-list-group">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Promotional Discount</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED 24</span>
+                </div>
+              </div> -->
+              <!--Promotional Discount End-->
+              <!-- <div class="price-list-group border-bottom">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Total</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED 123</span>
+                </div>
+              </div> -->
+              <!--Total End-->								
+              <div class="price-list-group">
+                <div class="w-50">
+                  <h5 class="font-weight-bold">Grand Total</h5>
+                </div>
+                <div class="w-50 product-price">
+                  <span class="price">AED {{orderList.grandTotal}}</span>
+                </div>
+              </div><!--Grand Total End-->
+            </div><!--Price Table End-->
+          </div>
+        </div>
+      </div><!--Order History List-1 End-->
+    
+    </div>
+  </div>
+</div>
+<!--Ordered Products Ends-->
+ 

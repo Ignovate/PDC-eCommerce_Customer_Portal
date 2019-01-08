@@ -45,17 +45,18 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.subscribe = this.route.params.subscribe(params => {
-    //   this.categoryId = params['catid'];
-    //   this.productId = params['id'];
-    // });
-    this.input = LocalStore.getAndRemove("product");
-    if(this.input) {
-      this.categoryId = this.input.categoryId;
-      this.productId = this.input.productId;
-    } else {
-      console.log("input not available");
-    }
+    window.scroll(0,0);
+    this.subscribe = this.route.params.subscribe(params => {
+      this.categoryId = params['catid'];
+      this.productId = params['id'];
+    });
+    // this.input = LocalStore.getAndRemove("product");
+    // if(this.input) {
+    //   this.categoryId = this.input.categoryId;
+    //   this.productId = this.input.productId;
+    // } else {
+    //   console.log("input not available");
+    // }
 
     if(this.categoryId) {
       console.log("in")

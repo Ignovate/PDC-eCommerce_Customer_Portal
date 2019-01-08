@@ -1,0 +1,81 @@
+ 
+<div class="col-12 col-sm-8 col-md-4 mx-auto d-block mt-50 mb-30">
+  <!--Header Logo Start--> 
+  <div class="logo text-center">
+    <a [routerLink]="['/']"><img src="assets/img/logo/logo.png" alt=""></a>
+  </div>
+</div><!--Logo End-->
+<!--Registeration Form Area Start-->
+<div class="col-12 col-sm-8 col-md-4 mx-auto d-block login-wrap shadow-lg mb-50">
+  <form  [formGroup]="registrationform" (keyup.enter)="onRegSubmit()">
+    <h3 class="text-center">Create Account</h3>
+      <div class="form-group">
+      <label for="username">Your Name</label>
+      <input type="text" class="form-control" id="username" [ngClass]="!registrationform.controls['username'].valid&&reg_err_message==''?'error_cls':''" [(ngModel)]="username" formControlName="username" 
+      required aria-describedby="" placeholder="Enter your name" autocomplete="off" required/>
+      <div class="color_error shake" *ngIf="!registrationform.controls['username'].valid && reg_err_message==''">
+        <a class="text-left shake text-red">
+            Please enter the Username </a>
+    </div>
+      </div>
+      
+      <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" id="email" [ngClass]="!registrationform.controls['email'].valid&&reg_err_message==''?'error_cls':''" [(ngModel)]="email" formControlName="email" aria-describedby="emailHelp" placeholder="Enter your email" required/>
+      <div class="color_error shake" *ngIf="!registrationform.controls['email'].valid && reg_err_message==''">
+        <a class="text-left shake text-red">
+            Please enter the Email</a>
+    </div>
+      </div>
+      <div class="form-group">
+          <label for="exampleInputEmail1">Mobile</label>
+          <input type="tel" class="form-control" id="mobile" [ngClass]="!registrationform.controls['mobile'].valid&&reg_err_message==''?'error_cls':''" [(ngModel)]="mobile" formControlName="mobile" aria-describedby="emailHelp" placeholder="Enter your mobile" onkeypress="return String.fromCharCode(event.charCode).match(/[0-9 ]/g) != null" maxlength="10" required/>
+          <div class="color_error shake" *ngIf="!registrationform.controls['mobile'].valid && reg_err_message==''">
+            <a class="text-left shake text-red">
+                Please enter the Mobile number</a>
+        </div>
+          </div>
+      <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1" [ngClass]="!registrationform.controls['password'].valid&&reg_err_message==''?'error_cls':''" [(ngModel)]="password" formControlName="password" placeholder="Password" required/>
+      <div class="color_error shake" *ngIf="!registrationform.controls['password'].valid && reg_err_message==''">
+        <a class="text-left shake text-red">
+            Please enter the Password</a>
+    </div>
+      <small id="emailHelp" class="form-text text-muted">
+        <i class="fa fa-info-circle color-blue-nano" aria-hidden="true"></i> 
+        Password atleast 6 characters
+      </small>
+      </div>
+      <div class="form-group">
+      <label for="exampleInputPassword2">Re-enter Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword2" [ngClass]="!registrationform.controls['repassword'].valid&&reg_err_message==''?'error_cls':''" [(ngModel)]="repassword" formControlName="repassword" placeholder="Password" required/>
+      <div class="color_error shake" *ngIf="!registrationform.controls['repassword'].valid && reg_err_message==''">
+        <a class="text-left shake text-red">
+          Password does not match</a>
+    </div>
+      </div>
+      <div class="color_error shake text-red" *ngIf="reg_err_message!=''">
+        <a class="text-left shake">
+            {{reg_err_message}} </a>
+    </div>
+      <button type="submit" (click)="onRegSubmit()" class="mx-auto d-block btn btn-primary">Submit</button>			  
+      <div class="divider">
+      <span>OR <!--Padding is optional--></span>
+    </div>			  
+    <button type="submit" class="mx-auto d-block btn btn-primary text-center google-btn">
+      <img class="float-left" src="assets/img/icon/google-plus.png"/>Sign in with Google
+    </button>
+    <button type="submit" class="mx-auto d-block btn btn-primary fb-btn">
+      <img class="float-left" src="assets/img/icon/facebook.png"/>Sign in with Facebook
+    </button>
+      <p class="text-center">
+      Already have an account?
+      <a (click)="goToSignIn()" class="cursor-pointer">
+        <span class="color-blue-nano" >Sign in</span>
+      </a>
+    </p>
+  </form>
+</div>			
+<!--Registeration Form End-->
+ 

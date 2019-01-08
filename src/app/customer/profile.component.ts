@@ -5,6 +5,8 @@ import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { LocalStore } from '../store/local-store';
+import { ValueTransformer } from '@angular/compiler/src/util';
+import { checkAndUpdateBinding } from '@angular/core/src/view/util';
 
 @Component({
   selector: 'app-customer-profile',
@@ -71,6 +73,9 @@ export class CustomerProfileComponent implements OnInit {
 //         repassword: [null, Validators.compose([Validators.required])]
 //     });
 // }
+onChangeGender(gender :string){
+  this.user_profile.gender = gender;
+}
   editName(){
     this.is_name_edit = false;
     this.is_name_save = true;

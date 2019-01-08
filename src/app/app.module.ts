@@ -47,6 +47,7 @@ import { ShipDeliveryComponent } from './ship-delivery/ship-delivery.component';
 import { StoreLocatorComponent } from './store-locator/store-locator.component';
 import { ProductComponent } from './product/product.component';
 import { ProductsComponent } from './product/products.component';
+import { masterService } from '../app/core/services/master.service';
 // import { Ng4FilesModule } from 'angular4-files-upload';
 // import { FileDropModule } from 'ngx-file-drop';
 
@@ -110,7 +111,7 @@ export function getAuthServiceConfigs() {
       useHash: true
     }),
   ],
-  providers: [HyperService, AuthGuardService, CustomScript,{
+  providers: [HyperService, AuthGuardService,masterService, CustomScript,{
     provide: AuthServiceConfig,
     useFactory: getAuthServiceConfigs
   }],

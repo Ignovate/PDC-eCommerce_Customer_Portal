@@ -50,18 +50,18 @@
       <div class="sub-category-banner">
          <div class="row">
             <div class="col-md-9 single-img">
-               <img src="assets/img/banner/sub-category/banner1.jpg" alt="" />
+               <img src="assets/img/banner/sub-category/banner1.jpg" (click)="goToCategory('1018','Urban Veda Products')" alt="" />
             </div>
             <div class="col-md-3 double-ver">
-               <img src="assets/img/banner/sub-category/banner2.jpg" alt="" />
-               <img src="assets/img/banner/sub-category/banner3.jpg" alt="" />
+               <img src="assets/img/banner/sub-category/banner2.jpg" (click)="goToCategory('1019','Beach Products')" alt="" />
+               <img src="assets/img/banner/sub-category/banner3.jpg" (click)="goToCategory('1020','Conditioners')" alt="" />
             </div>
          </div>
       </div>
    </div>
 </div>
 <!--Product Filter Area Start-->
-<div class="product-filter-area pt-30">
+<div class="product-filter-area pt-30" style="display:none">
    <div class="container">
       <div class="row product-block-mob">
          <div class="col">
@@ -312,13 +312,13 @@
                   <div class="toolbar-short-area clearfix">
                      <div class="toolbar-shorter d-md-flex align-items-center">
                         <label>Sort By:</label>
-                        <select class="wide">
+                        <select class="wide" (change)="onChangeSortType($event.target.value)" [(ngModel)]="sortType">
                            <!--<option data-display="Select">Nothing</option>
                            <option value="Relevance">Relevance</option>-->
-                           <option value="Name, A to Z">Name, A to Z</option>
-                           <option value="Name, Z to A">Name, Z to A</option>
-                           <option value="Price, low to high">Price, low to high</option>
-                           <option value="Price, high to low">Price, high to low</option>
+                           <option value="asc">Name, A to Z</option>
+                           <option value="desc">Name, Z to A</option>
+                           <option value="low">Price, low to high</option>
+                           <option value="hign">Price, high to low</option>
                         </select>
                      </div>
                   </div>
@@ -352,7 +352,7 @@
                                           <i class="fa fa-star"></i>
                                        </div>
                                        <div class="product-price" (click)="goToSingleProduct(catProduct)">
-                                          <span class="price">AED{{catProduct.specialPrice}}</span>
+                                          <span class="price">AED {{catProduct.specialPrice}}</span>
                                           <span class="regular-price">AED {{catProduct.price}}</span>
                                        </div>
                                     </div>

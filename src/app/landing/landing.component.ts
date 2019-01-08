@@ -7,6 +7,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 import { Util } from '../util/util';
 import { LocalStore } from '../store/local-store';
+import { LocalStorage } from '../core/services/local_storage.service';
 declare var $:any;
 @Component({
 selector: 'app-landing',
@@ -14,7 +15,7 @@ templateUrl: './landing.component.html',
 styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-// categoryList:any=[];
+ categoryList:any=[];
 // category_id:any;
 // topBannerList:any=[];
 
@@ -41,7 +42,11 @@ wishlistOptions={items: 3, dots: false, nav: true};
 trend_images:any=[];
 whats_new_images:any=[];
 url_1:string=''
-
+exclusiveTempArray:any=[
+  {tempID:"1002"},
+  {tempID:"1003"},
+  {tempID:"1004"}
+]
 constructor(private router: Router,
   private server: HyperService,
   private customs: CustomScript) {
@@ -91,16 +96,25 @@ getLandingBanner(){
       if (data.status == 200) {
           this.main_list=data.result;
           this.banner_list=this.main_list[0].bannerImages;
+          this.banner_list.forEach(function (item, index) {
+            item.tempID="1001";
+            })
+          console.log(this.main_list)
           this.myCarouselImages = this.banner_list;
           this.exclusive_list=this.main_list[1].bannerImages;
+          for(let i=0; i<this.exclusive_list.length;i++){
+            for(let j=0;j<this.exclusiveTempArray.length;j++){
+              console.log(this.exclusiveTempArray)
+            }
+          }
           this.exclusideSlides = this.exclusive_list;
           this.exclusivelOptions = {items:3, dots: false, nav: true};
           this.amazing_list=this.main_list[2].bannerImages;
           this.amazeImages = this.amazing_list;
-        //  this.wish_list=this.main_list[3].bannerImages;
+         // this.wish_list=this.main_list[3].bannerImages;
           this.trending_list=this.main_list[3].bannerImages;
           this.whats_new_list=this.main_list[4].bannerImages;
-        //  this.top_selling_list=this.main_list[8].bannerImages;
+        //  this.top_selling_list=this.main_list[4].bannerImages;
           this.url_1=this.trending_list[0].imageUrl;
           for(let i=0;i<this.trending_list.length;i++){
             this.trend_images[i]=this.trending_list[i].imageUrl;
@@ -116,14 +130,16 @@ getLandingBanner(){
 
 getTopSelling(){
   let top_selling_images:any=[];
-  this.server.get("relatedproducts?categoryId="+23)
+  this.server.get("relatedproducts?categoryId="+1003)
   .then((data) => {
       if (data.status == 200) {
+        
         this.top_selling_list=data.result;
           this.top_selling_list.forEach(function (item, index) {
           top_selling_images.push(item.imageUrl)
           })
           this.top_selling_images_arr = top_selling_images
+          console.log('topselling',this.top_selling_images_arr);
       } else  {
 
       }
@@ -132,7 +148,7 @@ getTopSelling(){
 
 getWhislistList(){
   let wish_list_images:any=[];
-  this.server.get("relatedproducts?categoryId="+22)
+  this.server.get("relatedproducts?categoryId="+1002)
   .then((data) => {
       if (data.status == 200) {
         this.wish_list=data.result;
@@ -155,11 +171,17 @@ goToProduct(id){
 goToSingleProduct(categoryId, productId){
   // LocalStore.add('relate_product_id', this.realteProductList);
   LocalStore.add("product", Util.getProductParam(categoryId, productId));
-  this.router.navigateByUrl('product/'+productId);
+  this.router.navigateByUrl('product/'+categoryId+"/"+productId);
 }
 
-goToCategory(list) {
-  this.router.navigateByUrl('products/'+list.bannerId);
+// goToCategory(list) {
+//   console.log(list.bannerId)
+//   this.router.navigateByUrl('products/'+list.bannerId);
+// }
+goToCategory(id,name) {
+  LocalStore.add("products", Util.getProductsParam("categoryId", id,name));
+  LocalStorage.setValue("products",id)
+  this.router.navigateByUrl("products/"+id);
 }
 
 }

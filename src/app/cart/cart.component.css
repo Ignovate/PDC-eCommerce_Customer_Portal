@@ -45,3 +45,11 @@ input.qtyminus { width:25px; height:25px;}
     font-size: 20px;
     margin: 0px 10px 10px 23px;
 }
+.w-60{
+    width:60%;
+    float: left;
+}
+.w-40{
+    width:40%;
+    float: left;
+}

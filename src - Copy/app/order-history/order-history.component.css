@@ -1,0 +1,7 @@
+.order-history-list .order-details-left .product-list {
+    border-bottom: 1px solid #eee;
+    margin: 0 1px;
+}
+.order-history-list .order-details-left .product-list:last-child {
+    border-bottom: 0px solid;
+}

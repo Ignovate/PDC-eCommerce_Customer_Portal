@@ -1,0 +1,346 @@
+ 
+
+ <!--My Profile Starts-->
+ <div class="myprofile-wrapper bg-light pb-30">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 pt-30">
+        <div class="personal-nav-left shadow">
+          <div class="card user-profile">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <div class="user-profile-img"></div>
+                <div class="user-profile-name">
+                  <span>Hello,</span><h3>{{user_profile.firstName}}</h3>
+                </div>
+              </h5>
+            </div>
+          </div>
+          <!--Profile Avatar & Name End-->
+          <div class="card actives">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <a href="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <i class="fa fa-user-o" aria-hidden="true"></i> My Profile
+                </a>
+              </h5>
+            </div>
+            <div id="collapseOne" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <a href="" id="personalinfo" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Personal Information
+                </a>
+              </div>
+              <div class="card-body">
+                <a href="" id="manageaddress" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Manage Address
+                </a>
+              </div>
+            </div>
+          </div>
+          <!--Profile Avatar & Name End-->
+          <!-- <div class="card">
+            <div class="card-header">
+            <h5 class="mb-0">
+              <a href="" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="collapseOne">
+                <i class="fa fa-file-text-o" aria-hidden="true"></i> Order History
+              </a>
+            </h5>
+            </div>
+          </div> -->
+          <!--Order History End-->
+          <!-- <div class="card">
+            <div class="card-header">
+            <h5 class="mb-0">
+              <a href="" id="mywishlist" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="collapseOne">
+                <i class="fa fa-heart-o" aria-hidden="true"></i> My Whishlist
+              </a>
+            </h5>
+            </div>
+          </div> -->
+          <!--Wishlist End-->
+          <!-- <div class="card">
+            <div class="card-header">
+            <h5 class="mb-0">
+              <a href="" id="mywishlist" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="collapseOne">
+                <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+              </a>
+            </h5>
+            </div>
+          </div>						 -->
+          <!--Logout End-->
+          <!-- <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">
+                <a href="" id="" data-toggle="collapse" data-target="" aria-expanded="false" aria-controls="collapseOne">
+                  <i class="fa fa-ban" aria-hidden="true"></i> Deactivate Account
+                </a>
+              </h5>
+            </div>
+          </div> -->
+          <!--Deactivate End-->
+        </div>	
+      </div><!--Left End-->
+      <!--Right Start-->
+      <div class="col-md-8 pt-30">
+        <!--Personal Information Starts-->
+        <div class="card user-profile personalinfo shadow">
+          <div class="card-header">
+           <form [formGroup]="profileform1" >
+            <h4 class="mtb-20">
+              <strong>Personal Information</strong>
+              <span class="text-primary">
+                  <a  title=""  (click)="editName()" *ngIf="is_name_save==false" style="cursor: pointer;">&emsp;Edit</a>
+                  <a  title=""  (click)="cancelName()" *ngIf="is_name_save==true" style="cursor: pointer;">&emsp;Cancel</a>
+              </span>
+            </h4>
+            <div class="row pb-20">
+                <input type="text" class="input-new col-sm-5 float-left disable"  placeholder="Enter your first name"  [(ngModel)]="user_profile.firstName" disabled="false" *ngIf="is_name_edit" [ngModelOptions]="{standalone: true}"/>
+                <div class="col-sm-5  float-left" *ngIf="!is_name_edit">
+                  <input class="input-new "  type="text"   id="firstname" [ngClass]="!profileform1.controls['firstname'].valid&&form1_message==''?'error_cls':''" [(ngModel)]="user_profile.firstName" formControlName="firstname" 
+                  required aria-describedby="" placeholder="Enter your first name" autocomplete="off" *ngIf="!is_name_edit" required/>
+                  <div class="color_error shake" *ngIf="!profileform1.controls['firstname'].valid  && form1_message==''">
+                      <a class="text-left shake text-red">
+                        Please enter firstname</a>
+                  </div>
+                </div>
+              <input type="text" class="input-new col-sm-5 float-left disable" placeholder="Enter your last name" [(ngModel)]="user_profile.lastName" disabled="false" *ngIf="is_name_edit" [ngModelOptions]="{standalone: true}"/>
+              <div class="col-sm-5  float-left" *ngIf="!is_name_edit"> 
+                <input class="input-new "  type="text"  id="lastName"  [(ngModel)]="user_profile.lastname" formControlName="lastname" 
+                 aria-describedby="" placeholder="Enter your last name" autocomplete="off" *ngIf="!is_name_edit" required />
+                <!-- <div class="color_error shake" *ngIf="!profileform1.controls['lastname'].valid  && form1_message==''">
+                    <a class="text-left shake text-red">
+                      Please enter lastname</a>
+                </div> -->
+             </div>
+              
+            </div>
+            <h4 class="mtb-20">Gender</h4>
+            <div class="row pb-20">
+              <div class="custom-input pl-15">
+                <div class="input-group" *ngIf="is_name_edit">
+                  <input type="radio" name="gender" id="male"  class="input-new disable" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'" *ngIf="is_name_edit"disabled="false"  [ngModelOptions]="{standalone: true}"/>
+                  <label for="male" style="cursor:not-allowed">Male</label>
+                  <div class="check"></div>
+                </div>
+                <div class="input-group" *ngIf="!is_name_edit">
+                    <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'"  [ngModelOptions]="{standalone: true}" />
+                    <label for="male" >Male</label>
+                    <div class="check"></div>
+                  </div>
+              </div>
+              <div class="custom-input pl-15">
+                <div class="input-group"  *ngIf="is_name_edit">
+                  <input type="radio" name="gender" id="female"   class="input-new disable" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'" *ngIf="is_name_edit" disabled="false"  [ngModelOptions]="{standalone: true}"/>
+                  <label for="female" style="cursor:not-allowed">Female</label>
+                  <div class="check"></div>
+                </div>
+                <div class="input-group" *ngIf="!is_name_edit">
+                    <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'"  [ngModelOptions]="{standalone: true}"  />
+                    <label for="female" >Female</label>
+                    <div class="check"></div>
+                  </div>
+              </div>
+              <button type="button" class="btn btn-primary save_cls" *ngIf="is_name_save==true" (click)="nameSave()">Save</button>
+              <!-- <div class="color_error shake" *ngIf="!profileform1.controls['gender'].valid  && form1_message==''">
+                  <a class="text-left shake text-red">
+                     Please select</a>
+              </div> -->
+            </div>
+            </form>
+             
+            <h4 class="mtb-20">
+              Email Address
+              <span class="text-primary">
+                <a  title=""  (click)="editEmail()" *ngIf="is_email_save==false" style="cursor: pointer;">&emsp;Edit</a>
+                <a  title=""  (click)="cancelEmail()" *ngIf="is_email_save==true" style="cursor: pointer;">&emsp;Cancel</a>
+                <a  title=""  (click)="clickPassword()" style="cursor: pointer;">&emsp;Change Password</a>
+              </span>
+            </h4>
+           
+            <form [formGroup]="profileform2" > 
+            <div class="row pb-20	" >
+              <input type="text" class="input-new col-sm-5 float-left disable"  [(ngModel)]="user_profile.email" disabled="false" *ngIf="is_email_edit" [ngModelOptions]="{standalone: true}"/>
+              <div class="col-sm-5  float-left" *ngIf="!is_email_edit">
+              <input  Placeholder="david@gmail.com" type="email" id="emailid"  class="form-control input-new  " [ngClass]="!profileform2.controls['emailid'].valid&&err_message1==''?'error_cls':''" [(ngModel)]="user_profile.email" [maxlength]="100" formControlName="emailid" autocomplete="off"  [ngClass]="!profileform2.controls['emailid'].valid && err_message1==''?'error_cls':''"   *ngIf="!is_email_edit"
+              aria-describedby="emailHelp" placeholder="Enter email" required />
+              <div class="color_error shake" *ngIf="!profileform2.controls['emailid'].valid  && err_message1==''">
+                  <a class="text-left shake text-red">
+                     Please enter valid Email Id</a>
+              </div>
+              </div>
+              <button type="button" class="btn btn-primary save_cls" *ngIf="is_email_save==true" (click)="emailSave()">Save</button>
+            </div>
+             
+            </form>
+            <div  *ngIf="is_password">
+              <div class="row pb-20">
+                   <div class="col-sm-5  float-left"  >
+                    <input class="input-new "  type="password"   id="oldpassword" [(ngModel)]="user_profile.oldpassword"    placeholder="Enter your old password  " autocomplete="off" [ngClass]="(pass_error_old!='' || pass_error_match_old!='')?'error_cls':''"  required/>
+                    <div class="color_error shake" *ngIf="pass_error_old!=''">
+                        <a class="text-left shake text-red">
+                          Please enter oldpassword</a>
+                    </div>
+                    <div class="color_error shake" *ngIf="pass_error_match_old!=''">
+                      <a class="text-left shake text-red">
+                        Entered oldpassword is incorrect</a>
+                  </div>
+                  </div>
+                <div class="col-sm-5  float-left"  > 
+                  <input class="input-new "  type="password"  id="newpassword"  [(ngModel)]="user_profile.newpassword"   placeholder="Enter your new password" autocomplete="off"  [ngClass]="(pass_error_new!='')?'error_cls':''"  required />
+                  <div class="color_error shake" *ngIf="pass_error_new!=''">
+                      <a class="text-left shake text-red">
+                        Please enter newpassword</a>
+                  </div>
+               </div>
+                
+              </div>
+             <div class="row pb-20">
+              <div class="col-sm-5  float-left"  >
+                <input class="input-new "  type="password"   id="confirmpassword"   [(ngModel)]="user_profile.confirmpassword"   required placeholder="Enter your confirm password" autocomplete="off" [ngClass]="(pass_error_confirm!='' || pass_error_match!='')?'error_cls':''"   required/>
+                <div class="color_error shake" *ngIf="pass_error_confirm!=''">
+                    <a class="text-left shake text-red">
+                      Please enter confirmpassword</a>
+                </div>
+                <div class="color_error shake" *ngIf="pass_error_match!=''">
+                  <a class="text-left shake text-red">
+                    Password does'nt match</a>
+              </div>
+              </div>
+                <button type="button" class="btn btn-primary save_cls"   (click)="onSavePassword()">Save</button>
+                <button type="button" class="btn btn-primary save_cls"   (click)="clickPassword()">Cancel</button>
+              </div>
+            </div>
+            <form [formGroup]="profileform3" > 
+            <h4 class="mtb-20">
+              Mobile Number									
+              <span class="text-primary">
+                  <a  title=""  (click)="editMobile()" *ngIf="is_mob_save==false" style="cursor: pointer;">&emsp;Edit</a>
+                  <a  title=""  (click)="cancelMobile()" *ngIf="is_mob_save==true" style="cursor: pointer;">&emsp;Cancel</a>
+              </span>
+            </h4>
+            <div class="row pb-20">
+              <input class="input-new col-sm-5 float-left disable" type="text" value="" Placeholder="Enter Mobile Number"  [(ngModel)]="user_profile.mobile" disabled="false" *ngIf="is_mob_edit" [ngModelOptions]="{standalone: true}" />
+              <div class="col-sm-5  float-left" *ngIf="!is_mob_edit">
+              <input type="text" id="mobile"  onkeypress="return String.fromCharCode(event.charCode).match(/[0-9 ]/g) != null"
+               class="form-control input-new  " maxlength="10"  [ngClass]="!profileform3.controls['mobile'].valid&&err_message==''?'error_cls':''" [(ngModel)]="user_profile.mobile" [maxlength]="10" formControlName="mobile" autocomplete="off"  [ngClass]="!profileform3.controls['mobile'].valid && err_message==''?'error_cls':''"   *ngIf="!is_mob_edit"  placeholder="Enter Mobile Number" required />
+               <div class="color_error shake" *ngIf="!profileform3.controls['mobile'].valid  && err_message==''">
+                  <a class="text-left shake text-red">
+                     Please enter valid Mobile Number</a>
+              </div>
+              </div>
+              <button type="button" class="btn btn-primary save_cls" *ngIf="is_mob_save==true" (click)="mobileSave()">Save</button>
+            </div>
+           
+            </form>
+          </div>
+        </div>
+        <!--Personal Information Ends-->
+        
+        <!-- Manage Address Start-->
+        <div class="card user-profile manageaddress">
+          <div class="card-header">
+            <h5 class="mb-0">Manage Address</h5>
+            <div class="add-address col-12 col-md-5 float-left" [routerLink]="['/customer-address']">
+            
+                <h1>+</h1>
+                <h4>Add Address</h4>
+              
+            </div>
+            <!-- <div class="added-address col-12 col-md-5 float-left">
+              <h5><b>David</b></h5>
+              <p>17 North Jennings Rd.Morrisville,USA, PA 19067</p>
+              <h5><b>Phone number</b></h5>
+              <p>+971 524 920 866</p>
+              <a href="#" title="" class="text-primary">Edit</a>&emsp;|&emsp;
+              <a href="#" title="" class="text-primary">Delete</a>
+            </div> -->
+          </div>
+        </div>
+        <div class="address ptb-20" *ngIf="customerAddressList.length>0">
+          <div class="address-block ptb-10" *ngFor="let addressList of customerAddressList;let i=index">
+            <div class="add-select">
+              <div class="custom-input">
+                <div class="input-group">
+                  <!-- <input type="radio" name="selector{{i}}" id="name{{i}}" value={{i}} [checked]="is_selected==i?true:false" (click)="activeAddress(addressList,i)" /> -->
+                  <label >{{addressList.firstname}} {{addressList.lastname}}</label>
+                  <div class="check"></div>
+                </div>
+              </div>
+            </div>
+            <div class="cust-add">											
+              <span class="user-address">{{addressList.streetname}}. {{addressList.areaname}}, {{addressList.region}}, {{addressList.country}} </span>
+            </div>
+            <div class="row pt-10 btn-show" *ngIf="is_selected==i">
+              <!-- <div class="col mt-10">
+                <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
+              </div> -->
+              <div class="">
+                <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress()">Change Address</a>
+              </div>
+            </div>
+          </div>
+          </div>
+        <!-- Manage Address Ends-->						
+        <!--My Whishlist Starts-->
+        <!-- <div class="mywhishlist white-bg shadow">
+          <div class="">
+            <h4 class="mtb-20">
+              <strong>My Whishlist</strong>
+            </h4>
+            <div class="products border-bottom pt-30">
+              <div class="row">
+                <div class="col-12 col-md-5 col-lg-3">
+                  <img class="whishlist-img" src="img/single-product/related-products/item4.jpg"/>
+                </div>
+                <div class="col-12 col-md-7 col-lg-9">
+                  <div class="single-product-content">
+                    <h4 class="single-product-name ">Intex inflatable baby pool (Multicolor)</h4>
+                    <div class="single-product-price">
+                      <div class="product-discount">
+                        <span class="price">AED 3.05</span>
+                        <span class="regular-price">AED 82</span>
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <p>Quantity : 5</p>
+                    </div>
+                  </div>
+                  <div class="flexbox">
+                    <div class="fav-btn">
+                      <span href="" class="favme dashicons dashicons-heart active"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="products pt-30">
+              <div class="row">
+                <div class="col-12 col-md-5 col-lg-3">
+                  <img class="whishlist-img" src="img/single-product/related-products/item4.jpg"/>
+                </div>
+                <div class="col-12 col-md-7 col-lg-9">
+                  <div class="single-product-content">
+                    <h4 class="single-product-name ">Intex inflatable baby pool (Multicolor)</h4>
+                    <div class="single-product-price">
+                      <div class="product-discount">
+                        <span class="price">AED 3.05</span>
+                        <span class="regular-price">AED 82</span>
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <p>Quantity : 5</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- My Whishlist Starts-->
+      </div>
+    </div><!--Row-->
+  </div><!--Container-->
+</div><!--Wrapper-->		
+<!--My Profile Ends-->
+ 

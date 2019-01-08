@@ -1,0 +1,15 @@
+/* Additional Css */
+.bg-Gainsboro{
+    background:rgba(0,0,0,0.09)!important;
+    }
+    .p-42{
+        padding: 1rem 1.5rem!important;
+    }
+    .btn-link:hover {
+        text-decoration: none!important;
+        cursor: pointer!important;
+    }
+    .list{
+        width:100%;
+    }
+    

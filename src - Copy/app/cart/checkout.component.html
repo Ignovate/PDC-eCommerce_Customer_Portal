@@ -1,0 +1,206 @@
+ 
+<!--cart-breadcrumbs Start-->
+<div class="breadcrumb-wrapper bg-light ptb-30">
+  <div class="container">
+    <div id="cart-breadcrumbs">  
+      <ul>
+        <li  class="not-active"><a href="#">Payment</a></li>
+        <li class="active"><a href="#">Place Order</a></li>
+        <li><a href="#">Signin</a></li>
+      </ul>
+    </div> 
+  </div> 
+</div><!--cart-breadcrumbs End-->
+<!--Cart Area Start-->	
+<section>
+  <div class="cart-area p30 bg-light">
+    <div class="container">
+      <div class="row">
+        <!--Cart Details Start-->
+        <div class="col-12 col-md-6 col-lg-8 mb-30">
+          <div class="col-sm-12 bg-white shadow pt-20 mb-30">
+            <div class="cart-title">
+              <h4>Delivery Address</h4>
+            </div><!--Title End-->
+            <!--Address One Start-->
+            <div class="address ptb-20" *ngIf="customerAddressList.length>0">
+              <div class="address-block ptb-10" *ngFor="let addressList of customerAddressList;let i=index">
+                <div class="add-select">
+                  <div class="custom-input">
+                    <div class="input-group">
+                      <input type="radio" name="selector" id="name{{i}}" [value]="addressList.addressId" [checked]="i==0?true:false" (click)="updateAddress(addressList.addressId)" />
+                      <label for="name{{i}}">{{addressList.firstname}} {{addressList.lastname}}</label>
+                      <div class="check"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="cust-add">											
+                  <span class="user-address">{{addressList.streetname}}. {{addressList.areaname}}, {{addressList.region}}, {{addressList.country}} </span>
+                </div>
+                <div class="row pt-10 btn-show" *ngIf="addressList.addressId==addressId">
+                  <!-- <div class="col mt-10">
+                    <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
+                  </div> -->
+                  <div class="">
+                    <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress(addressList)">Change Address</a>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row pt-10 btn-show">
+                <div class="col mt-10">
+                  <a class="btn view-all-btn mx-auto d-block">Deliver Here</a>
+                </div>
+                <div class="col mt-10">
+                  <a class="btn view-all-btn mx-auto d-block" (click)="goToChangeAddress()">Change Address</a>
+                </div>
+              </div> -->
+            </div><!--Address Block End-->
+            <div class="_2Y8lQ1"><img height="14" width="14" src="" class="_2hT5Bw"><a (click)="goToChangeAddress('')">Add a new address</a></div>
+          </div><!--Address Block Wrapper End-->
+          <!--Order Summary Starts-->
+          <div class="col-sm-12 bg-white shadow pt-20">
+            <div class="cart-title">
+              <h4>Order Summary <span class="cart-product-values" *ngIf="salesOrderData!=undefined">({{salesOrderData.totalItems}})</span></h4>
+            </div><!--Cart Title End-->
+            <!--Product One-->
+            <div class="products pt-30" *ngFor="let salesproduct of salesOrderList;let i=index;">
+              <div class="row">
+                <div class="col-12 col-md-3 img-full">
+                  <img  src={{salesproduct.imageUrl}}/>
+                </div>
+                <div class="col-12 col-md-9">
+                  <div class="single-product-content">
+                    <h4 class="single-product-name ">{{salesproduct.productName}}</h4>
+                    <div class="single-product-price">
+                      <div class="product-discount mb-0">
+                        <span class="price">AED {{salesproduct.cost}}</span>
+                        <!-- <span class="regular-price">AED 82</span> -->
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <p>Quantity : {{salesproduct.quantity}}</p>
+                    </div>
+                  </div>
+                  <div class="single-product-action">
+                    <form action="#">
+                      <div class="product-add-to-cart">
+                        <div class="card_left" (click)="decreaseQuantity(salesproduct.productId, salesproduct.quantity-1)">
+                          <img src="assets/img/minus.png">
+                        </div>
+                        <div class="card_center">
+                          <p>{{salesproduct.quantity}}</p>
+                        </div>
+                        <div class="card_right" (click)="increaseQuantity(salesproduct.productId, salesproduct.quantity+1)">
+                          <img src="assets/img/plus.png">
+                        </div>
+                      <span class="control-label" style="cursor:pointer"><a (click)="removeFromCart(salesproduct.productId)">Remove</a></span>
+                      </div>
+                      <div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div><!--Product End-->
+            <div class="row ptb-20 btn-show">
+              <div class="col-12 col-md-6 offset-md-6 pull-right">
+                <a class="btn view-all-btn d-block" title="Next Step" (click)="goToNext()">Place Order</a>
+              </div>
+            </div>
+          </div><!--Order Summary End-->
+        </div><!--Cart Details End-->
+        <div class="clearfix"></div>
+        <!--Price Summary Starts-->
+        <div class="col-12 col-md-6 col-lg-4 mb-30">
+          <div class="col-sm-12 price-summary bg-white shadow pt-20">
+            <!--Price Table Starts-->
+            <div class="price-table">
+              <div class="pricedetail-title mb-20">
+                <h4>Price Details</h4>
+              </div>
+              <!--Price Summary Starts-->
+              <div class="price-list-group">
+                <div class="sub-total">
+                  <div class="w-75">
+                    <h5 class="font-weight-bold">Sub Total 
+                      (<span class="cart-product-values">{{salesOrderData.totalItemsQty}}</span>items)
+                    </h5>
+                  </div>
+                  <div class="w-25 product-price">
+                    <span class="price">AED {{salesOrderData.subTotal}}</span>
+                  </div>
+                </div>
+              </div><!--Sub Total End-->
+              <div class="price-list-group">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Tax</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED {{salesOrderData.taxAmount}}</span>
+                </div>
+              </div><!--Tax End-->								
+              <div class="price-list-group">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Shipping </h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED {{salesOrderData.shippingAmount}}</span>
+                </div>
+              </div><!--Shipping End-->								
+              <!-- <div class="price-list-group border-bottom">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Discount</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED 00</span>
+                </div>
+              </div> -->
+              <!--Discount End-->
+              <!-- <div class="price-list-group">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Promotional Discount</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED 24</span>
+                </div>
+              </div> -->
+              <!--Promotional Discount End-->
+              <!-- <div class="price-list-group border-bottom">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Total</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED 264</span>
+                </div>
+              </div> -->
+              <!--Total End-->								
+              <div class="price-list-group border-bottom">
+                <div class="w-75">
+                  <h5 class="font-weight-bold">Grand Total</h5>
+                </div>
+                <div class="w-25 product-price">
+                  <span class="price">AED {{salesOrderData.grandTotal}}</span>
+                </div>
+              </div><!--Grand Total End-->
+              <!--Promo code section start-->
+              <!-- <div class="promo-code btn-show">
+                <input class="promo float-left w-75" type="text" placeholder="Have Promocode" />
+                <a class="btn view-all-btn float-left rounded-0 w-25">Apply</a>
+              </div> -->
+              <!--Promo code section End-->
+            </div><!--Price Table End-->
+          </div>
+        </div><!--Price Summary End-->
+      </div><!--Row End-->
+    </div><!--Container End-->
+  </div><!--Cart Area End-->
+</section><!--Cart Area Section End-->
+ 
+
+<!-- <form [action]="paymentUrl" method="POST" name="paymentReq", id="paymentReq">
+  <input type="hidden" name="customerId" [value]="customerId"/>
+  <input type="hidden" name="quoteId" [value]="quoteId"/>
+  <input type="hidden" name="currency" [value]="currency"/>
+  <input type="hidden" name="amount" [value]="amount"/>
+  <button type="submit" class="btn view-all-btn d-block" id="paymentBtn"></button>
+</form> -->

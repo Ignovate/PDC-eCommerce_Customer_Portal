@@ -25,7 +25,7 @@
                     <h4 class="single-product-name ">{{salesproduct.productName}}</h4>
                     <div class="single-product-price">
                       <div class="product-discount mb-0">
-                        <span class="price">AED {{salesproduct.cost}}</span>
+                        <span class="price">AED {{salesproduct.price}}</span>
                         <!-- <span class="regular-price">AED {{salesproduct.cost}}</span> -->
                       </div>
                     </div>
@@ -90,16 +90,16 @@
               </div>
               <!--Price Summary Starts-->
               <div class="price-list-group">
-                <div class="sub-total">
-                  <div class="w-75">
-                    <h5 class="font-weight-bold">Price (
-                      <span class="cart-product-values">{{cart_count_quantity}} </span>items)
-                    </h5>
-                  </div>
-                  <div class="w-25 product-price">
-                    <span class="price" *ngIf="salesOrderData!=undefined">AED {{salesOrderData.subTotal}}</span>
-                  </div>
-                </div>
+                  <div class="sub-total" *ngFor="let salesproduct of salesOrderList;let i=index;">
+                      <div class="w-60">
+                        <h5 class="font-weight-bold"> {{salesproduct.productName}} (
+                          <span class="cart-product-values"> {{salesproduct.quantity}} </span>items)
+                        </h5>
+                      </div>
+                      <div class="w-40 product-price">
+                        <span class="price" *ngIf="salesOrderData!=undefined">AED {{salesproduct.cost}}</span>
+                      </div>
+                    </div>
               </div>
               <!--Sub Total End-->
             </div>

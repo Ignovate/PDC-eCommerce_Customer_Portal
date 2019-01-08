@@ -4,6 +4,7 @@ import { HyperService } from '../core/services/http.service';
 import { CustomScript } from '../core/services/custom-script';
 import { LocalStore } from '../store/local-store';
 import { Util } from '../util/util';
+import { LocalStorage } from '../core/services/local_storage.service';
 
 declare var $: any;
 
@@ -21,6 +22,7 @@ export class ProductsComponent implements OnInit {
   cat_name:string='';
   bread_crumb:any=[];
   input:any;
+  sortType:string='asc';
 
   constructor(private router: Router,
     private activatedroute:ActivatedRoute,
@@ -34,14 +36,18 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.activatedroute.params.subscribe(
       params => {
+        this.categoryId = params['id'];
+        this.searchProducts(this.categoryId, this.categoryId);
         this.input = LocalStore.getAndRemove("products");
         console.log("products:input", this.input);
         if(this.input) {
           this.cat_name = this.input.name;
-          this.categoryId = this.input.value;
-          this.searchProducts(this.input.key, this.input.value);
+          // this.categoryId = this.input.value;
+          
+          this.searchProducts(this.input.key, this.categoryId);
           this.getBreadcrumb();
         } else {
           console.log("input not available");
@@ -71,6 +77,7 @@ export class ProductsComponent implements OnInit {
         console.log("products", data);
         if (data.status == 200) {
           this.catProductList = data.result;
+          this.onChangeSortType(this.sortType);
         }
         else {
 
@@ -79,11 +86,11 @@ export class ProductsComponent implements OnInit {
   }
 
   goToSingleProduct(product){
-    console.log('click product');
     // this.router.navigateByUrl('single-product/' + product.categoryId +'/'+  product.productId);
-    LocalStore.add('relate_product_id', this.realteProductList);
-    LocalStore.add("product", Util.getProductParam(product.categoryId, product.productId));
-    this.router.navigateByUrl("product/"+product.productId);
+    // LocalStore.add('relate_product_id', this.realteProductList);
+    // LocalStore.add("product", Util.getProductParam(product.categoryId, product.productId));
+    // this.router.navigateByUrl("product/"+product.productId);
+    this.router.navigateByUrl("product/"+product.categoryId+"/"+product.productId);
   }
 
   getBreadcrumb(){
@@ -99,9 +106,25 @@ export class ProductsComponent implements OnInit {
         }
       });
   }
-
+  goToCategory(id,name) {
+    LocalStore.add("products", Util.getProductsParam("categoryId", id,name));
+    LocalStorage.setValue("products",id)
+    this.router.navigateByUrl("products/"+id);
+  }
   clickedBreadcrumb(id){
     this.router.navigateByUrl('products/' + id);
   }
+  onChangeSortType(value){
+    this.server.get("product/search?categoryId="+this.categoryId+"&sort="+this.sortType+"&page=1&pageSize=10")
+    .then((data) => {
+      console.log(data)
+      if (data.status == 200) {
+        console.log('bread crumb',data.result)
+        this.catProductList=data.result;
+      }
+      else {
 
+      }
+    });
+  }
 }

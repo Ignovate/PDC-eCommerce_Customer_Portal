@@ -115,20 +115,22 @@
              </div>
               
             </div>
+            <div class="clearfix"></div>
             <h4 class="mtb-20">Gender</h4>
             <div class="row pb-20">
               <div class="custom-input pl-15">
                 <div class="input-group" *ngIf="is_name_edit">
-                  <input type="radio" name="gender" id="male"  class="input-new disable" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'" *ngIf="is_name_edit"disabled="false"  [ngModelOptions]="{standalone: true}"/>
+                  <input type="radio" name="gender" id="male"  class="input-new disable" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'" *ngIf="is_name_edit" disabled="false"  [ngModelOptions]="{standalone: true}"/>
                   <label for="male" style="cursor:not-allowed">Male</label>
                   <div class="check"></div>
                 </div>
                 <div class="input-group" *ngIf="!is_name_edit">
-                    <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'"  [ngModelOptions]="{standalone: true}" />
+                    <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" (change)="onChangeGender('male')" [checked]="user_profile.gender=='male'"  [ngModelOptions]="{standalone: true}" />
                     <label for="male" >Male</label>
                     <div class="check"></div>
                   </div>
               </div>
+              <div class="clearfix"></div>
               <div class="custom-input pl-15">
                 <div class="input-group"  *ngIf="is_name_edit">
                   <input type="radio" name="gender" id="female"   class="input-new disable" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'" *ngIf="is_name_edit" disabled="false"  [ngModelOptions]="{standalone: true}"/>
@@ -136,10 +138,11 @@
                   <div class="check"></div>
                 </div>
                 <div class="input-group" *ngIf="!is_name_edit">
-                    <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'"  [ngModelOptions]="{standalone: true}"  />
+                    <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" (change)="onChangeGender('female')" [checked]="user_profile.gender=='female'"  [ngModelOptions]="{standalone: true}"  />
                     <label for="female" >Female</label>
                     <div class="check"></div>
                   </div>
+
               </div>
               <button type="button" class="btn btn-primary save_cls" *ngIf="is_name_save==true" (click)="nameSave()">Save</button>
               <!-- <div class="color_error shake" *ngIf="!profileform1.controls['gender'].valid  && form1_message==''">

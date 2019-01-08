@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit,EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { CustomScript } from '../core/services/custom-script';
 import { HyperService } from '../core/services/http.service';
@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { LocalStore } from '../store/local-store';
 import { Util } from '../util/util';
 import { LocalStorage } from '../core/services/local_storage.service';
+import { masterService } from '../core/services/master.service';
 declare var $: any;
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,7 @@ declare var $: any;
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  
+  value:string;
   isLogged: boolean;
   salesOrderList: any = [];
   salesQuote_data: any;
@@ -31,17 +32,19 @@ export class CartComponent implements OnInit {
   input:any;
   cart_count:number=0;
   cart_count_quantity:number=0;
-
   constructor(private router: Router,
     private activatedroute:ActivatedRoute,
     private customs: CustomScript,
-    private server: HyperService) {
+    private server: HyperService,private masterService:masterService) {
     this.customs.loadScript()
     // this.salesQuote_data = LocalStorage.getValue('salesQuoteItems');
   }
 
   ngOnInit() {
     console.log(LocalStorage.getValue('cartItemCount'),"cartItemCountcartItemCount11")
+    this.value=LocalStorage.getValue('cartItemCount')
+    this.masterService.castLogin.subscribe(value => this.isLogged = LocalStorage.getValue('loggedIn'))
+    this.masterService.casting.subscribe(value => this.value = LocalStorage.getValue('cartItemCount'))
     if(LocalStore.get("loggedIn")) {
       this.input = LocalStore.getAndRemove("cart");
       if(this.input) {
@@ -57,6 +60,8 @@ export class CartComponent implements OnInit {
                console.log("cart_count",this.cart_count)
               // LocalStore.add('quoteId', this.salesOrderData.id);
               LocalStorage.setValue('cartItemCount',data.result.totalItems)
+              this.masterService.variableWatchesLogin('true')
+              this.masterService.variableWatches(data.result.totalItems)
             }
             else {
   
@@ -84,6 +89,7 @@ export class CartComponent implements OnInit {
   }
 
   addToCart(params) {
+    
     this.server.post("cart/new", params)
       .then((data) => {
         console.log(data)
@@ -95,6 +101,8 @@ export class CartComponent implements OnInit {
           LocalStore.add('quoteId', this.salesOrderData.id);
           // LocalStore.add("cartItemCount", data.result.totalItems);
           LocalStorage.setValue('cartItemCount',data.result.totalItems)
+          this.masterService.variableWatchesLogin('true')
+          this.masterService.variableWatches(data.result.totalItems)
         }
         else {
 
@@ -115,6 +123,8 @@ export class CartComponent implements OnInit {
           LocalStore.add("cartItemCount", data.result.totalItems);
           // LocalStorage.setValue("cartItemCount", data.result.totalItems);
           LocalStorage.setValue('cartItemCount',data.result.totalItems)
+          this.masterService.variableWatchesLogin('true')
+          this.masterService.variableWatches(data.result.totalItems)
         }
         else {
 
@@ -134,6 +144,8 @@ export class CartComponent implements OnInit {
           LocalStore.add('quoteId', this.salesOrderData.id);
           LocalStore.add("cartItemCount", data.result.totalItems);
           LocalStorage.setValue('cartItemCount',data.result.totalItems)
+          this.masterService.variableWatchesLogin('true')
+          this.masterService.variableWatches(data.result.totalItems)
         }
         else {
 
@@ -148,5 +160,6 @@ export class CartComponent implements OnInit {
   decreaseQuantity(productId, quantity) {
     this.updateToCart(Util.buildCartParam(productId, quantity));
   }
+
 
 }

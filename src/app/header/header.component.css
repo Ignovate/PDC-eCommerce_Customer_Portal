@@ -154,11 +154,11 @@
 .search-dropdown-box{
     position: absolute;
     z-index: 99;
-    height: 350px;
+    height: 500px;
     background: #fff;
     width: 100%;
     border: 1px solid #ccc;
-    overflow-y: scroll;
+    overflow-y: hidden;
     list-style-type:none;
 }
 .search-dropdown-box li:hover{
@@ -172,6 +172,8 @@
 }
 .prod_box{
     padding:10px;
+    height: 120px;
+    overflow: auto;
 }
 .badge{
     position: absolute;
@@ -187,4 +189,7 @@
     color: #f0f0f0;
     line-height: 11px;
     font-size: 12px;
+}
+.search-brand-img:hover{
+    border:1px solid #A5A198;
 }

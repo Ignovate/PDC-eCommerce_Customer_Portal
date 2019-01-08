@@ -1,0 +1,119 @@
+ 
+<!--Cart Area Start-->
+<section>
+  <div class="cart-area bg-light ptb-30">
+    <div class="container">
+      <div class="row">
+        <!--Cart Details Start-->
+        <div class="col-12 col-md-7 col-lg-8 mb-30">
+          <!--Order Summary Starts-->
+          <div class="col-sm-12 bg-white shadow pt-20">
+            <div class="cart-title">
+              <h4>My Cart (
+                <span class="cart-product-values">{{cart_count}}</span> )
+              </h4>
+            </div>
+            <!--Cart Title End-->
+            <!--Product One-->
+            <div class="products pt-30" *ngFor="let salesproduct of salesOrderList;let i=index;">
+              <div class="row">
+                <div class="col-12 col-md-3 img-full">
+                  <img src={{salesproduct.imageUrl}} />
+                </div>
+                <div class="col-12 col-md-9">
+                  <div class="single-product-content">
+                    <h4 class="single-product-name ">{{salesproduct.productName}}</h4>
+                    <div class="single-product-price">
+                      <div class="product-discount mb-0">
+                        <span class="price">AED {{salesproduct.cost}}</span>
+                        <!-- <span class="regular-price">AED {{salesproduct.cost}}</span> -->
+                      </div>
+                    </div>
+                    <div class="product-info">
+                      <p>Quantity : {{salesproduct.quantity}}</p>
+                    </div>
+                  </div>
+                  <div class="single-product-action">
+                    <form action="#">
+                      <div class="product-add-to-cart">
+                        <!-- <div class="cart-plus-minus">
+                          <input class="cart-plus-minus-box" type="text" name="qtybutton[i]" value="0">
+                        </div> -->
+                        <!-- <input type='button' value='-' (click)="minus($event,i,salesproduct)" class='qtyminus'  />
+                        <input type='text' name='quantity' [value]="salesproduct.quantity" class='qty' id='test_{{i}}' readonly/>
+                        <input type='button' value='+' class='qtyplus' (click)="add($event,i,salesproduct)" /> -->
+                        <div class="card_left" *ngIf="salesproduct.quantity-1<=0" >
+                          <img src="assets/img/minus.png">
+                        </div>
+                        <div class="card_left" *ngIf="salesproduct.quantity-1>0" (click)="decreaseQuantity(salesproduct.productId, salesproduct.quantity-1)">
+                          <img src="assets/img/minus.png">
+                        </div>
+                        <div class="card_center">
+                          <p>{{salesproduct.quantity}}</p>
+                        </div>
+                        <div class="card_right" (click)="increaseQuantity(salesproduct.productId, salesproduct.quantity+1)">
+                          <img src="assets/img/plus.png">
+                        </div>
+                        <span class="control-label"  style="cursor:pointer">
+                          <a (click)="removeFromCart(salesproduct.productId)">Remove</a>
+                        </span>
+                      </div>
+                      <div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Product End-->
+
+            <div class="row ptb-20 btn-show">
+              <div class="col-md-6">
+                <a class="btn view-all-btn d-block" title="Previous Step" (click)="goToContinue()">Continue Shopping</a>
+              </div>
+              <div class="col-md-6">
+                <a class="btn view-all-btn d-block" title="Next Step" (click)="placeOrder()">Place Order</a>
+              </div>
+            </div>
+          </div>
+          <!--Order Summary End-->
+        </div>
+        <!--Cart Details End-->
+        <div class="clearfix"></div>
+        <!--Price Summary Starts-->
+        <div class="col-12 col-md-5 col-lg-4 mb-30">
+          <div class="col-sm-12 price-summary bg-white shadow pt-20">
+            <!--Price Table Starts-->
+            <div class="price-table">
+              <div class="pricedetail-title mb-20">
+                <h4>Price Details</h4>
+              </div>
+              <!--Price Summary Starts-->
+              <div class="price-list-group">
+                <div class="sub-total">
+                  <div class="w-75">
+                    <h5 class="font-weight-bold">Price (
+                      <span class="cart-product-values">{{cart_count_quantity}} </span>items)
+                    </h5>
+                  </div>
+                  <div class="w-25 product-price">
+                    <span class="price" *ngIf="salesOrderData!=undefined">AED {{salesOrderData.subTotal}}</span>
+                  </div>
+                </div>
+              </div>
+              <!--Sub Total End-->
+            </div>
+            <!--Price Table End-->
+          </div>
+        </div>
+        <!--Price Summary End-->
+      </div>
+      <!--Row End-->
+    </div>
+    <!--Container End-->
+  </div>
+  <!--Cart Area End-->
+</section>
+<!--Cart Area Section End-->
+
+ 
