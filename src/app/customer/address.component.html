@@ -101,7 +101,7 @@
                        required placeholder="Country" autocomplete="no" /> -->
                         <select id="country" #country [(ngModel)]="user_request.countryId" formControlName="country"  class="form-control" name="country" (change)="getState($event.target.value)" required>
                          <option value="" selected disabled>Select Country  </option>
-                         <option *ngFor="let country of countries" [value]="country.id">{{country.name}}</option>
+                         <option *ngFor="let country of countries" [value]="country.id">{{country.name | titlecase}}</option>
                        </select> 
                        <div class="color_error shake" *ngIf="!contactform.controls['country'].valid && err_message==''">
                          <a class="text-left shake text-red">
@@ -112,7 +112,7 @@
                     <div class="col">
                       <select id="state" [(ngModel)]="user_request.state" formControlName="state"  class="form-control" name="state" (change)="getCity(country.value, $event.target.value)" required>
                         <option value="" selected disabled>Select State  </option>
-                        <option *ngFor="let state of states" [value]="state.id">{{state.name}}</option>
+                        <option *ngFor="let state of states" [value]="state.id">{{state.name | titlecase}}</option>
                       </select> 
                       <div class="color_error shake" *ngIf="!contactform.controls['state'].valid && err_message==''?'error_cls':''">
                         <a class="text-left shake text-red">
@@ -124,7 +124,7 @@
                       <div class="col">
                           <select id="city" [(ngModel)]="user_request.city" formControlName="city"  class="form-control" name="city" required>
                               <option value="" selected disabled>Select City  </option>
-                            <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+                            <option *ngFor="let city of cities" [value]="city.id">{{city.name | titlecase}}</option>
                           </select> 
                           <div class="color_error shake" *ngIf="!contactform.controls['city'].valid && err_message==''">
                             <a class="text-left shake text-red">

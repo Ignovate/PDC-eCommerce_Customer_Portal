@@ -92,8 +92,9 @@ export class HeaderComponent implements OnInit {
 
   clickSearchResult(key, obj) {
     if(key === "productId") {
+      console.log('in prodS');
       LocalStore.add("product", Util.getProductParam(obj.categoryId, obj.productId));
-      this.router.navigateByUrl('product/'+obj.productId);
+      this.router.navigateByUrl('product/' +obj.categoryId+"/"+obj.productId);
     } else if(key === "brandId") {
       LocalStore.add("products", Util.getProductsParam(key, obj.brandId, obj.name));
       this.router.navigateByUrl('products/'+obj.brandId);

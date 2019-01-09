@@ -49,7 +49,7 @@
     
     <div class="order-body-detail">
       <div class="order-history-list row">
-        <div class="order-details-left col-md-9">
+        <div class="order-details-left col-md-8">
 
           <div class="row product-list" *ngFor="let orderItems of orderList.saleOrderItems; let j=index;">
             <div class="col-md-4 col-lg-3">
@@ -73,7 +73,7 @@
           </div> <!-- LIST ONE END -->
            <!-- LIST ONE END -->
         </div>
-        <div class="order-details-right col-md-3">
+        <div class="order-details-right col-md-4">
           <div class="pl-0">
             <!-- <ul class="order-history-links">
               <li><a  title="Order Details" (click)="goToDetail()">Order Details</a></li>
@@ -89,7 +89,7 @@
                 <div class="sub-total">
                   <div class="w-50">
                     <h5 class="font-weight-bold">Sub Total 
-                      (<span class="cart-product-values">{{orderList.totalItemsQty}}</span>items)
+                      ( <span class="cart-product-values">{{orderList.totalItemsQty}}</span> items )
                     </h5>
                   </div>
                   <div class="w-50 product-price">
