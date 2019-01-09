@@ -1,19 +1,21 @@
 <div class="wrapper">
-	 
-	<div class="land-owl-caro hero-slider owl-carousel">
-		<owl-carousel [options]="mySlideOptions" [items]="myCarouselImages">
-			<div class="item" *ngFor="let image of myCarouselImages; let i = index">
-				<div>
-					<img (click)="goToCategory('1001','For Hair That Shines')" style="cursor: pointer" src={{image.imageUrl}} />
-				</div>
-			</div>
-		</owl-carousel>
-	</div>
-
 	<div class="slider-area mb-30">
 		<div class="hero-slider owl-carousel">
+		<!-- <div class="owl-carousel"> -->
+			<owl-carousel [options]="mySlideOptions" [items]="myCarouselImages">
+				<div class="item" *ngFor="let image of myCarouselImages; let i = index">
+					<div>
+						<img (click)="goToCategory('1001','For Hair That Shines')" style="cursor: pointer" src={{image.imageUrl}} />
+					</div>
+				</div>
+			</owl-carousel>
 		</div>
 	</div>
+
+	<!-- <div class="slider-area mb-30">
+		<div class="hero-slider owl-carousel">
+		</div>
+	</div> -->
 
 	<!--Slider Area End-->
 	<!--Banner Section Area Start-->

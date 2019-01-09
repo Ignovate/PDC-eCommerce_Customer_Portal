@@ -31,7 +31,7 @@ top_selling_images_arr:any=[];
 wishlist_images_arr:any=[];
 mySlideImages = [1,2,3].map((i)=> `https://picsum.photos/640/480?image=${i}`);
 myCarouselImages:any = [];
-mySlideOptions={items: 1, dots: false, nav: true};
+mySlideOptions = { loop:true, items: 1, dots: true, nav: true, autoplay: true };
 myCarouselOptions={items:3, dots: false, nav: true};
 exclusideSlides:any;
 exclusivelOptions:any;
@@ -99,7 +99,7 @@ getLandingBanner(){
           this.banner_list.forEach(function (item, index) {
             item.tempID="1001";
             })
-          console.log(this.main_list)
+          console.log("Banner List: ",this.main_list)
           this.myCarouselImages = this.banner_list;
           this.exclusive_list=this.main_list[1].bannerImages;
           for(let i=0; i<this.exclusive_list.length;i++){
