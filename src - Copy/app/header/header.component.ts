@@ -9,6 +9,7 @@ import { UpperCasePipe } from '@angular/common';
 import { LocalStore } from '../store/local-store';
 import { LocalStorage } from '../core/services/local_storage.service';
 import { Util } from '../util/util';
+import { masterService } from '../core/services/master.service';
 declare var $: any;
 
 @Component({
@@ -31,13 +32,19 @@ export class HeaderComponent implements OnInit {
   prod:any=[];
   isDataLoaded:boolean = false;
   cartItemCount:number;
+  value:string='';
 
   constructor(private router: Router,
     private server: HyperService,
-    private completerService: CompleterService) {
-    // this.loggedIn = LocalStorage.getValue('loggedIn')
-    // this.firstname=LocalStorage.getValue('userData');
-    console.log(LocalStorage.getValue('cartItemCount'),"cartItemCountcartItemCount11")
+    private completerService: CompleterService,private masterService:masterService) {
+      if (LocalStorage.isSetJWT()) {
+        LocalStorage.loadJWT();
+        // if (LocalStorage.getValue('loggedIn') == true || LocalStorage.getValue('loggedIn') == 'true') { }
+    } else {
+        LocalStorage.createJWT();
+    }
+    this.loggedIn = LocalStorage.getValue('loggedIn')
+   
   }
 
   onvalueChange(newValue) {
@@ -58,13 +65,18 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(LocalStorage.getValue('cartItemCount'),"cartItemCountcartItemCount11")
-    this.loggedIn = LocalStore.get("loggedIn");
-    this.cartItemCount=LocalStorage.getValue("cartItemCount");
-    console.log(LocalStorage.getValue('cartItemCount'),"cartItemCountcartItemCount22")
-    this.user=LocalStore.getJson("user");
-    console.log("Logged In frm header", this.loggedIn,this.cartItemCount);
-    console.log("User object frm header", this.user);
+    this.masterService.castLogin.subscribe(value => this.loggedIn = LocalStorage.getValue('loggedIn'));
+    this.masterService.castLoginUser.subscribe(value => this.user = LocalStorage.getValue('user'));
+    this.masterService.casting.subscribe(value => this.value = LocalStorage.getValue('cartItemCount'));
+    this.value = LocalStorage.getValue('cartItemCount')
+    // this.value = LocalStorage.getValue('cartItemCount')
+    // console.log(this.value,"value")
+    // this.loggedIn = LocalStore.get("loggedIn");
+    // this.cartItemCount=LocalStorage.getValue("cartItemCount");
+    // console.log(LocalStorage.getValue('cartItemCount'),"cartItemCountcartItemCount22")
+    // this.user=LocalStore.getJson("user");
+    // console.log("Logged In frm header", this.loggedIn,this.cartItemCount);
+    // console.log("User object frm header", this.user);
     this._url = this.router.url.split("/");
     if(this._url[1]=='login' || this._url[1]=='registration'){
       this.loggedIn =false;
@@ -109,12 +121,16 @@ export class HeaderComponent implements OnInit {
   clickMenu(id, obj){
     this.search_text=''
     LocalStore.add("products", Util.getProductsParam("categoryId", id, obj.categoryName));
+    LocalStorage.setValue("products",id)
     this.router.navigateByUrl("products/"+id);
   }
 
   signOut(){
     LocalStore.remove('user');
     LocalStore.remove('loggedIn');
+    LocalStorage.setValue("cartItemCount",'0')
+    LocalStorage.setValue("user",{})
+    LocalStorage.setValue("loggedIn",false)
     CONFIG._loggedIn=false;
     this.loggedIn=false;
     this.router.navigate(['']);

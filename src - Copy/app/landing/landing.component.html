@@ -1,19 +1,21 @@
 <div class="wrapper">
-	 
-	<div class="land-owl-caro hero-slider owl-carousel">
-		<owl-carousel [options]="mySlideOptions" [items]="myCarouselImages">
-			<div class="item" *ngFor="let image of myCarouselImages;let i = index">
-				<div>
-					<img (click)="goToCategory(image)" src={{image.imageUrl}} />
-				</div>
-			</div>
-		</owl-carousel>
-	</div>
-
 	<div class="slider-area mb-30">
 		<div class="hero-slider owl-carousel">
+		<!-- <div class="owl-carousel"> -->
+			<owl-carousel [options]="mySlideOptions" [items]="myCarouselImages">
+				<div class="item" *ngFor="let image of myCarouselImages; let i = index">
+					<div>
+						<img (click)="goToCategory('1001','For Hair That Shines')" style="cursor: pointer" src={{image.imageUrl}} />
+					</div>
+				</div>
+			</owl-carousel>
 		</div>
 	</div>
+
+	<!-- <div class="slider-area mb-30">
+		<div class="hero-slider owl-carousel">
+		</div>
+	</div> -->
 
 	<!--Slider Area End-->
 	<!--Banner Section Area Start-->
@@ -22,9 +24,9 @@
 			<h2>Exclusives</h2>
 			
 			<owl-carousel [options]="exclusivelOptions" [items]="exclusideSlides">
-				<div class="item" *ngFor="let image of exclusideSlides;let i = index">
+				<div class="item" *ngFor="let image of exclusideSlides; let i = index">
 					<div>
-						<img (click)="goToCategory(image)" src={{image.imageUrl}} class="img_css" />
+						<img (click)="goToCategory('1002','Lippie Love')" style="cursor: pointer" src={{image.imageUrl}} class="img_css" />
 					</div>
 				</div>
 			</owl-carousel>
@@ -46,7 +48,7 @@
 						<span>
 							<h2>Amazing Offer Just for You</h2>
 						</span>
-						<a class="btn view-all-btn pull-right" (click)="goToCategory(amazeImages[0])">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToCategory('1005','Protein Powder')">View All</a>
 					</div>
 				</div>
 			</div>
@@ -57,7 +59,7 @@
 			<owl-carousel [options]="amazeOptions" [items]="amazeImages">
 				<div class="item" *ngFor="let image of amazeImages;let i = index">
 					<div>
-						<img (click)="goToCategory(image)" src={{image.imageUrl}} class="img_css_amaze" />
+						<img (click)="goToCategory('1005','Protein Powder')" style="cursor: pointer" src={{image.imageUrl}} class="img_css_amaze" />
 					</div>
 				</div>
 			</owl-carousel>
@@ -78,7 +80,7 @@
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>Inspired by your Wishlist</h2>
-						<a class="btn view-all-btn pull-right"(click)="goToProduct('22')">View All</a>
+						<a class="btn view-all-btn pull-right"(click)="goToSingleProduct(wish_list[0].categoryId,wish_list[0].productId)">View All</a>
 					</div>
 				</div>
 			</div>
@@ -91,7 +93,7 @@
 					<div class="item-group">
 						<a (click)="goToSingleProduct(wish_list[i].categoryId,wish_list[i].productId)">
 							<div class="item-img">
-								<img src={{image}} alt="" style="width:100%;">
+								<img src={{image}} alt="" style="cursor: pointer" style="width:100%;">
 							</div>
 							<div class="item-title">
 								{{wish_list[i].name}}
@@ -115,7 +117,7 @@
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>Trending Brands</h2>
-						<a class="btn view-all-btn pull-right" (click)="goToCategory(trend_images[0])">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToCategory('1010','Antiseptics')">View All</a>
 					</div>
 				</div>
 				<!--Section Title End-->
@@ -125,23 +127,23 @@
 							<div class="trend-col-1">
 									<!-- {{trending_list[0].imageUrl}} -->
 								<div class="img-full">
-									<img (click)="goToCategory(trend_images[0])" src={{trend_images[0]}} alt="trend_image1" class="mb-20" />
-									<img (click)="goToCategory(trend_images[1])" src={{trend_images[1]}} alt="trend_image2" />
+									<img (click)="goToCategory('1010','Antiseptics')" style="cursor: pointer" src={{trend_images[0]}} alt="trend_image1" class="mb-20" />
+									<img (click)="goToCategory('1011','Skin Care')" style="cursor: pointer" src={{trend_images[1]}} alt="trend_image2" />
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="trend-col-2">
 								<div class="img-full">
-									<img (click)="goToCategory(trend_images[2])" src={{trend_images[2]}} alt="trend_image3" />
+									<img (click)="goToCategory('1012','Lorem Products')" style="cursor: pointer" src={{trend_images[2]}} alt="trend_image3" />
 								</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="trend-col-3">
 								<div class="img-full">
-									<img (click)="goToCategory(trend_images[3])" src={{trend_images[3]}} alt="trend_image4" class="mb-20" />
-									<img (click)="goToCategory(trend_images[4])" src={{trend_images[4]}} alt="trend_image5" />
+									<img (click)="goToCategory('1013','Baby Stuff')" style="cursor: pointer" src={{trend_images[3]}} alt="trend_image4" class="mb-20" />
+									<img (click)="goToCategory('1014','Herbal Products')" style="cursor: pointer" src={{trend_images[4]}} alt="trend_image5" />
 								</div>
 							</div>
 						</div>
@@ -159,7 +161,7 @@
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>Top Selling</h2>
-						<a class="btn view-all-btn pull-right" (click)="goToProduct('23')">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToSingleProduct(wish_list[0].categoryId,wish_list[0].productId)">View All</a>
 					</div>
 				</div>
 				<!--Section Title End-->
@@ -174,7 +176,7 @@
 					<div class="item-group">
 						<a (click)="goToSingleProduct(wish_list[i].categoryId,wish_list[i].productId)">
 							<div class="item-img">
-								<img src={{image}} alt="">
+								<img style="cursor: pointer" src={{image}} alt="">
 							</div>
 							<div class="item-title">
 								{{top_selling_list[i].name}}
@@ -205,7 +207,7 @@
 				<div class="col-12">
 					<div class="section-title section-title-left">
 						<h2>What's New</h2>
-						<a class="btn view-all-btn pull-right" (click)="goToProduct('23')">View All</a>
+						<a class="btn view-all-btn pull-right" (click)="goToCategory('1015','New Products')">View All</a>
 					</div>
 				</div>
 				<!--Section Title End-->
@@ -220,15 +222,15 @@
 										<p>"Brand new, just for you!"</p>
 									</div>
 									<div class="action-button mt-10">
-										<a class="btn view-all-btn" (click)="goToCategory(whats_new_images[0])">Shop Now</a>
+										<a class="btn view-all-btn" (click)="goToCategory('1015','New Products')">Shop Now</a>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-7">
 							<div class="new-products img-full">
-								<img (click)="goToCategory(whats_new_images[0])" src={{whats_new_images[0]}} alt="" />
-								<img (click)="goToCategory(whats_new_images[1])" src={{whats_new_images[1]}} alt="" />
+								<img (click)="goToCategory('1016','Ayurvedic Products')" style="cursor: pointer" src={{whats_new_images[0]}} alt="" />
+								<img (click)="goToCategory('1017','Purex Products')" style="cursor: pointer" src={{whats_new_images[1]}} alt="" />
 							</div>
 						</div>
 					</div>

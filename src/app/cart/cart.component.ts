@@ -59,9 +59,9 @@ export class CartComponent implements OnInit {
                this.cart_count=this.salesOrderData.totalItems;
                console.log("cart_count",this.cart_count)
               // LocalStore.add('quoteId', this.salesOrderData.id);
-              LocalStorage.setValue('cartItemCount',data.result.totalItems)
+              LocalStorage.setValue('cartItemCount',data.result.totalItemsQty)
               this.masterService.variableWatchesLogin('true')
-              this.masterService.variableWatches(data.result.totalItems)
+              this.masterService.variableWatches(data.result.totalItemsQty)
             }
             else {
   
@@ -100,9 +100,9 @@ export class CartComponent implements OnInit {
           this.cart_count_quantity=this.salesOrderData.totalItemsQty;
           LocalStore.add('quoteId', this.salesOrderData.id);
           // LocalStore.add("cartItemCount", data.result.totalItems);
-          LocalStorage.setValue('cartItemCount',data.result.totalItems)
+          LocalStorage.setValue('cartItemCount',data.result.totalItemsQty)
           this.masterService.variableWatchesLogin('true')
-          this.masterService.variableWatches(data.result.totalItems)
+          this.masterService.variableWatches(data.result.totalItemsQty)
         }
         else {
 
@@ -122,9 +122,9 @@ export class CartComponent implements OnInit {
           LocalStore.add('quoteId', this.salesOrderData.id);
           LocalStore.add("cartItemCount", data.result.totalItems);
           // LocalStorage.setValue("cartItemCount", data.result.totalItems);
-          LocalStorage.setValue('cartItemCount',data.result.totalItems)
+          LocalStorage.setValue('cartItemCount',data.result.totalItemsQty)
           this.masterService.variableWatchesLogin('true')
-          this.masterService.variableWatches(data.result.totalItems)
+          this.masterService.variableWatches(data.result.totalItemsQty)
         }
         else {
 
@@ -143,9 +143,9 @@ export class CartComponent implements OnInit {
           this.salesOrderList = data.result.quoteOrderItems;
           LocalStore.add('quoteId', this.salesOrderData.id);
           LocalStore.add("cartItemCount", data.result.totalItems);
-          LocalStorage.setValue('cartItemCount',data.result.totalItems)
+          LocalStorage.setValue('cartItemCount',data.result.totalItemsQty)
           this.masterService.variableWatchesLogin('true')
-          this.masterService.variableWatches(data.result.totalItems)
+          this.masterService.variableWatches(data.result.totalItemsQty)
         }
         else {
 

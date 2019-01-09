@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LocalStorage } from './core/services/local_storage.service';
+import { masterService } from './core/services/master.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -6,12 +8,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  constructor() {
-    // if (LocalStorage.isSetJWT()) {
-    //     LocalStorage.loadJWT();
-    //     // if (LocalStorage.getValue('loggedIn') == true || LocalStorage.getValue('loggedIn') == 'true') { }
-    // } else {
-    //     LocalStorage.createJWT();
-    // }
+  constructor(private masterService:masterService) {
+    if (LocalStorage.isSetJWT()) {
+      LocalStorage.loadJWT();
+      // if (LocalStorage.getValue('loggedIn') == true || LocalStorage.getValue('loggedIn') == 'true') { }
+  } else {
+      LocalStorage.createJWT();
+  }
+  this.masterService.variableWatches(LocalStorage.getValue('cartItemCount'))
+  this.masterService.variableWatchesLogin(LocalStorage.getValue('loggedIn'))
 }
 }

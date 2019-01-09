@@ -765,7 +765,7 @@ Common Style CSS
 	        animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
 }
 .header-sticky.is-sticky nav {
-	width: 1200px;
+	width: 180px;
 	margin: 0 auto;
 	padding: 0 20px;
 }

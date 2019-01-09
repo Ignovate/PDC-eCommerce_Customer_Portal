@@ -43,7 +43,7 @@ export const routes: Routes = [
    { path: 'return-exchange', component: ReturnExchangeComponent },
    { path: 'ship-delivery', component: ShipDeliveryComponent },
    { path: 'store-locator', component: StoreLocatorComponent },
-   { path: 'product/:id', component: ProductComponent },
+   { path: 'product/:catid/:id', component: ProductComponent },
    { path: 'products/:id', component: ProductsComponent }
    
 ]

@@ -115,6 +115,7 @@ onlineLogin(){
       this.err_message = data.result.message;
       if (data.result.message == null) {
         this.userData = data.result.customer;
+        let user = data.result.customer;
           LocalStore.addJson("user", this.userData);
           LocalStore.add("userId", this.userData.customerId);
           LocalStore.add("loggedIn", true);
@@ -122,7 +123,27 @@ onlineLogin(){
           LocalStorage.setValue('loggedIn', true);
           LocalStorage.setValue('user', this.userData);
          CONFIG._loggedIn = true;
-        this.router.navigateByUrl('');
+         
+         if(user.quoteId)
+           LocalStore.add("quoteId", user.quoteId);
+         if(user.cartItemCount){
+          LocalStore.add("cartItemCount", user.cartItemCount);
+          LocalStorage.setValue('cartItemCount',data.result.customer.cartItemCount)
+          this.masterService.variableWatchesLogin(LocalStorage.getValue('loggedIn'))
+         }
+           
+         let cart = LocalStore.getAndRemove("cart");
+         if(cart){
+           // let params = Object.assign({}, this.cart);
+           cart["customerId"] = LocalStore.get("userId");
+           if(LocalStore.get("quoteId"))
+             cart["quoteId"] = LocalStore.get("quoteId");
+           
+           LocalStore.add("cart", cart);
+           this.router.navigateByUrl("cart");
+         } else {
+           this.router.navigateByUrl('');
+         }
       }
     }
     else {

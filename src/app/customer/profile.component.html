@@ -104,43 +104,42 @@
                         Please enter firstname</a>
                   </div>
                 </div>
-              <input type="text" class="input-new col-sm-5 float-left disable" placeholder="Enter your last name" [(ngModel)]="user_profile.lastName" disabled="false" *ngIf="is_name_edit" [ngModelOptions]="{standalone: true}"/>
+              <input type="text" class="input-new col-sm-5 float-left disable" placeholder="Enter your last name" [(ngModel)]="user_profile.lastname" disabled="false" *ngIf="is_name_edit" [ngModelOptions]="{standalone: true}"/>
               <div class="col-sm-5  float-left" *ngIf="!is_name_edit"> 
                 <input class="input-new "  type="text"  id="lastName"  [(ngModel)]="user_profile.lastname" formControlName="lastname" 
-                 aria-describedby="" placeholder="Enter your last name" autocomplete="off" *ngIf="!is_name_edit" required />
+                 aria-describedby="" placeholder="Enter your last name" autocomplete="off" *ngIf="!is_name_edit"   />
                 <!-- <div class="color_error shake" *ngIf="!profileform1.controls['lastname'].valid  && form1_message==''">
                     <a class="text-left shake text-red">
                       Please enter lastname</a>
                 </div> -->
              </div>
-              
             </div>
             <div class="clearfix"></div>
             <h4 class="mtb-20">Gender</h4>
             <div class="row pb-20">
               <div class="custom-input pl-15">
-                <div class="input-group" *ngIf="is_name_edit">
-                  <input type="radio" name="gender" id="male"  class="input-new disable" [value]="male" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='male'" *ngIf="is_name_edit" disabled="false"  [ngModelOptions]="{standalone: true}"/>
-                  <label for="male" style="cursor:not-allowed">Male</label>
+                <div class="input-group-radio" *ngIf="is_name_edit">
+                    <input type="radio" class="input-new radio-css"  value="male" name="gender" [(ngModel)]="user_profile.gender" [ngModelOptions]="{standalone: true}" disable="false"> Male
                   <div class="check"></div>
                 </div>
-                <div class="input-group" *ngIf="!is_name_edit">
-                    <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" (change)="onChangeGender('male')" [checked]="user_profile.gender=='male'"  [ngModelOptions]="{standalone: true}" />
+                <div class="input-group-radio"  *ngIf="!is_name_edit">
+                    <!-- <input type="radio" name="gender" id="male"  class="input-new" [value]="male" [(ngModel)]="user_profile.gender" (change)="onChangeGender('male')" [checked]="user_profile.gender=='male'"  [ngModelOptions]="{standalone: true}" />
                     <label for="male" >Male</label>
-                    <div class="check"></div>
+                    <div class="check"></div> -->
+                    <input type="radio" class="input-new radio-css"  value="male" name="gender" [(ngModel)]="user_profile.gender" [ngModelOptions]="{standalone: true}" disable="false"> Male
                   </div>
               </div>
               <div class="clearfix"></div>
               <div class="custom-input pl-15">
-                <div class="input-group"  *ngIf="is_name_edit">
-                  <input type="radio" name="gender" id="female"   class="input-new disable" [value]="female" [(ngModel)]="user_profile.gender" [checked]="user_profile.gender=='female'" *ngIf="is_name_edit" disabled="false"  [ngModelOptions]="{standalone: true}"/>
-                  <label for="female" style="cursor:not-allowed">Female</label>
+                <div class="input-group-radio"  *ngIf="is_name_edit">
+                    <input type="radio" class="input-new radio-css"  value="female" name="gender" [(ngModel)]="user_profile.gender" [ngModelOptions]="{standalone: true}" > Female
                   <div class="check"></div>
                 </div>
-                <div class="input-group" *ngIf="!is_name_edit">
-                    <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" (change)="onChangeGender('female')" [checked]="user_profile.gender=='female'"  [ngModelOptions]="{standalone: true}"  />
+                <div  class="input-group-radio" *ngIf="!is_name_edit">
+                    <!-- <input type="radio" name="gender" id="female"   class="input-new" [value]="female" [(ngModel)]="user_profile.gender" (change)="onChangeGender('female')" [checked]="user_profile.gender=='female'"  [ngModelOptions]="{standalone: true}"  />
                     <label for="female" >Female</label>
-                    <div class="check"></div>
+                    <div class="check"></div>  -->
+                    <input type="radio" class="input-new radio-css"  value="female" name="gender" [(ngModel)]="user_profile.gender" [ngModelOptions]="{standalone: true}" > Female
                   </div>
 
               </div>
@@ -151,7 +150,8 @@
               </div> -->
             </div>
             </form>
-             
+              
+            
             <h4 class="mtb-20">
               Email Address
               <span class="text-primary">

@@ -102,6 +102,30 @@
                     </div>
               </div>
               <!--Sub Total End-->
+              <div class="price-list-group">
+                <div class="w-60">
+                  <h5 class="font-weight-bold">Tax (5%)</h5>
+                </div>
+                <div class="w-40 product-price">
+                  <span class="price">AED {{salesOrderData.taxAmount}}</span>
+                </div>
+              </div><!--Tax End-->
+              <div class="price-list-group">
+                <div class="w-60">
+                  <h5 class="font-weight-bold">Shipping </h5>
+                </div>
+                <div class="w-40 product-price">
+                  <span class="price">AED {{salesOrderData.shippingAmount}}</span>
+                </div>
+              </div><!--Shipping End-->	
+              <div class="price-list-group border-bottom">
+                <div class="w-60">
+                  <h5 class="font-weight-bold">Grand Total</h5>
+                </div>
+                <div class="w-40 product-price">
+                  <span class="price">AED {{salesOrderData.grandTotal}}</span>
+                </div>
+              </div><!--Grand Total End-->
             </div>
             <!--Price Table End-->
           </div>

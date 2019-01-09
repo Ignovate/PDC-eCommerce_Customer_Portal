@@ -52,8 +52,8 @@ export class CustomerProfileComponent implements OnInit {
   nameformBuild() {
     this.profileform1 = this.formBuilder.group({
       firstname: [null, Validators.compose([Validators.required])],
-      lastname: [null],
-      gender: ['']
+      lastname: [null ],
+      gender: [null ]
      });
   }
   formBuild() {
@@ -114,21 +114,21 @@ onChangeGender(gender :string){
     this.profileform3.markAsUntouched();
   }
   nameSave(){
-    console.log(this.user_profile.gender,"this.user_profile.gender")
-    if (this.profileform1.valid) {
-      console.log("lastname",this.user_profile.lastName)
+    console.log("outttttttttt", this.profileform1.valid,this.user_profile.lastname,this.user_profile.lastname)
+   if (this.profileform1.valid) {
+      console.log("lastname",this.user_profile)
       this.server.put("customers/"+this.user_profile.customerId,{
         "id": this.user_profile.customerId,
         "username": this.user_profile.firstName,
-        // "lastname":  this.user_profile.lastName,
+        "lastname":  this.user_profile.lastname,
         "gender":this.user_profile.gender
     }).then((data) => {
-    console.log(data)
-    if (data.status == 200 ) {
-      // alert("Updated successfully")
-      this.is_name_edit = true;
-      this.is_name_save = false;
-      this.form1_message='err';
+     if (data.status == 200 ) {
+       this.is_name_edit = true;
+       this.is_name_save = false;
+       this.user_profile=this.user_profile;
+       console.log(this.user_profile,"this.user_profilethis.user_profile")
+        this.form1_message='err';
     } 
     else if (data.result.response == "failed") {
       alert("failed")
@@ -139,6 +139,7 @@ onChangeGender(gender :string){
     }else{
       this.validateAllFormFields1(this.profileform1);
       this.form1_message = "";
+      console.log("innnnnnnnnnn", this.validateAllFormFields1(this.profileform1))
     }
   }
   mobileSave(){

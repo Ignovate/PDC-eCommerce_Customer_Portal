@@ -15,7 +15,10 @@ declare var $: any;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  host: {
+    '(document:click)': 'onClick($event)',
+  }
 })
 export class HeaderComponent implements OnInit {
   loggedIn:boolean = false;
@@ -138,5 +141,11 @@ export class HeaderComponent implements OnInit {
   }
   underConstruction(){
     this.router.navigateByUrl('coming-soon');
+  }
+  onClick(event) {
+    if (event.target.className!='search-dropdown-box'  ){
+       this.search_text= '';
+       event.stopPropagation();
+   } 
   }
 }
